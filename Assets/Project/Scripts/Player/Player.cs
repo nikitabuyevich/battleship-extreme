@@ -8,8 +8,11 @@ public class Player : MonoBehaviour
 	[Header("Setup")]
 	public bool isAllowedToMove = true;
 	public float moveSpeed = 1f;
-	public int gridHeight = 1;
-	public int gridWidth = 1;
+	public int visionRadius = 1;
+	[Range(0, 1)]
+	public float revealAlphaLevel = 1f;
+	[Range(0, 1)]
+	public float visitedAlphaLevel = 0.75f;
 
 	[Header("Starting Position")]
 	public float startingX;
@@ -20,6 +23,9 @@ public class Player : MonoBehaviour
 	public Sprite eastSprite;
 	public Sprite southSprite;
 	public Sprite westSprite;
+
+	[Header("GameObjects")]
+	public GameObject level;
 
 	internal bool _isMoving = false;
 	internal Vector2 _input;
@@ -38,6 +44,9 @@ public class Player : MonoBehaviour
 
 		// move player to starting pos
 		transform.position = new Vector3(startingX, startingY, transform.position.z);
+
+		// reveal fog of starting location
+		_movementHelper.ChangeFogOfWar(this, revealAlphaLevel);
 	}
 
 	void Update()

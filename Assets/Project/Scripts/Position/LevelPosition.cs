@@ -15,6 +15,16 @@ public class LevelPosition : MonoBehaviour
 		transform.position = GetRepositionVector3(transform.position);
 	}
 
+	public Vector3Int GetStartingTileLocation()
+	{
+		var startingFloorLocation = GetRepositionVector3(transform.position);
+		return new Vector3Int(
+			(-1 * (int) (startingFloorLocation.x + 0.5f)),
+			(-1 * (int) (startingFloorLocation.y + 0.5f)),
+			(int) startingFloorLocation.z
+		);
+	}
+
 	public Vector3 GetRepositionVector3(Vector3 pos)
 	{
 		var children = GetComponentsInChildren<Transform>();

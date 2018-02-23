@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 public enum Direction
 {
@@ -46,52 +47,9 @@ public class PlayerMovementHelper : MonoBehaviour
 		return Direction.North;
 	}
 
-	public bool PlayerCanMoveThere(Player player)
-	{
-		if (player._input != Vector2.zero)
-		{
-			var direction = GetDirection(player._input);
-
-			if (direction == Direction.West)
-			{
-				if ((player.transform.position.x - 1) < 0)
-				{
-					return false;
-				}
-			}
-
-			else if (direction == Direction.East)
-			{
-				if ((player.transform.position.x + 1) > (player.gridWidth - 1))
-				{
-					return false;
-				}
-			}
-
-			else if (direction == Direction.South)
-			{
-				if ((player.transform.position.y - 1) < 0)
-				{
-					return false;
-				}
-			}
-
-			else if (direction == Direction.North)
-			{
-				if ((player.transform.position.y + 1) > (player.gridHeight - 1))
-				{
-					return false;
-				}
-			}
-
-			return true;
-		}
-
-		return false;
-	}
-
 	public IEnumerator Move(Player player)
 	{
+		ChangeFogOfWar(player, player.visitedAlphaLevel);
 		player._isMoving = true;
 		var startPos = player.transform.position;
 		var t = 0f;
@@ -105,7 +63,89 @@ public class PlayerMovementHelper : MonoBehaviour
 			yield return null;
 		}
 
+		ChangeFogOfWar(player, player.revealAlphaLevel);
 		player._isMoving = false;
 		yield return 0;
+	}
+
+	private Vector3Int GetTileLocationOfPlayer(Player player, Tilemap tilemap, Vector3 pos)
+	{
+		var startingTileLocation = player.level.GetComponent<LevelPosition>().GetStartingTileLocation();
+
+		return new Vector3Int(
+			startingTileLocation.x + (int) pos.x,
+			startingTileLocation.y + (int) pos.y,
+			startingTileLocation.z);
+	}
+
+	public void ChangeFogOfWar(Player player, float alphaLevel)
+	{
+		// Reveal North Block
+		var northCollisions = Physics2D.RaycastAll(new Vector2(player.transform.position.x, player.transform.position.y), Vector2.right, 1f);
+		foreach (var collision in northCollisions)
+		{
+			if (collision.collider.tag != "Game")
+			{
+				var levelParent = collision.collider.gameObject.transform.parent.gameObject.transform.parent;
+				var tilemaps = levelParent.GetComponentsInChildren<Tilemap>();
+
+				foreach (var tilemap in tilemaps)
+				{
+					// Reveal PLayer tile
+					ChangeAlphaLevelOfTile(player, tilemap, GetTileLocationOfPlayer(player, tilemap, player.transform.position), alphaLevel);
+
+					for (int i = 1; i < player.visionRadius + 1; i++)
+					{
+						// North
+						ChangeAlphaLevelOfTile(player, tilemap, GetTileLocationOfPlayer(player, tilemap,
+							new Vector3(
+								player.transform.position.x,
+								player.transform.position.y + i,
+								player.transform.position.z
+							)), alphaLevel);
+
+						// South
+						ChangeAlphaLevelOfTile(player, tilemap, GetTileLocationOfPlayer(player, tilemap,
+							new Vector3(
+								player.transform.position.x,
+								player.transform.position.y - i,
+								player.transform.position.z
+							)), alphaLevel);
+
+						// West
+						ChangeAlphaLevelOfTile(player, tilemap, GetTileLocationOfPlayer(player, tilemap,
+							new Vector3(
+								player.transform.position.x - i,
+								player.transform.position.y,
+								player.transform.position.z
+							)), alphaLevel);
+
+						// East
+						ChangeAlphaLevelOfTile(player, tilemap, GetTileLocationOfPlayer(player, tilemap,
+							new Vector3(
+								player.transform.position.x + i,
+								player.transform.position.y,
+								player.transform.position.z
+							)), alphaLevel);
+					}
+				}
+			}
+		}
+	}
+
+	private void ChangeAlphaLevelOfTile(Player player, Tilemap tilemap, Vector3Int location, float alphaLevel)
+	{
+		tilemap.RemoveTileFlags(
+			location,
+			TileFlags.LockColor
+		);
+		var tileColor = tilemap.GetColor(location);
+		var revealedColor = new Color(
+			tileColor.r,
+			tileColor.g,
+			tileColor.b,
+			alphaLevel
+		);
+		tilemap.SetColor(location, revealedColor);
 	}
 }
