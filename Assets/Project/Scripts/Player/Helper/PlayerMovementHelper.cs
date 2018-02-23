@@ -80,57 +80,50 @@ public class PlayerMovementHelper : MonoBehaviour
 
 	public void ChangeFogOfWar(Player player, float alphaLevel)
 	{
-		// Reveal North Block
-		var northCollisions = Physics2D.RaycastAll(new Vector2(player.transform.position.x, player.transform.position.y), Vector2.right, 1f);
-		foreach (var collision in northCollisions)
+		var overallParent = player.transform.parent.gameObject;
+		var tilemaps = overallParent.GetComponentsInChildren<Tilemap>();
+
+		foreach (var tilemap in tilemaps)
 		{
-			if (collision.collider.tag != "Game")
+			// Reveal PLayer tile
+			ChangeAlphaLevelOfTile(player, tilemap, GetTileLocationOfPlayer(player, tilemap, player.transform.position), alphaLevel);
+
+			for (int i = 1; i < player.visionRadius + 1; i++)
 			{
-				var levelParent = collision.collider.gameObject.transform.parent.gameObject.transform.parent;
-				var tilemaps = levelParent.GetComponentsInChildren<Tilemap>();
+				// North
+				ChangeAlphaLevelOfTile(player, tilemap, GetTileLocationOfPlayer(player, tilemap,
+					new Vector3(
+						player.transform.position.x,
+						player.transform.position.y + i,
+						player.transform.position.z
+					)), alphaLevel);
 
-				foreach (var tilemap in tilemaps)
-				{
-					// Reveal PLayer tile
-					ChangeAlphaLevelOfTile(player, tilemap, GetTileLocationOfPlayer(player, tilemap, player.transform.position), alphaLevel);
+				// South
+				ChangeAlphaLevelOfTile(player, tilemap, GetTileLocationOfPlayer(player, tilemap,
+					new Vector3(
+						player.transform.position.x,
+						player.transform.position.y - i,
+						player.transform.position.z
+					)), alphaLevel);
 
-					for (int i = 1; i < player.visionRadius + 1; i++)
-					{
-						// North
-						ChangeAlphaLevelOfTile(player, tilemap, GetTileLocationOfPlayer(player, tilemap,
-							new Vector3(
-								player.transform.position.x,
-								player.transform.position.y + i,
-								player.transform.position.z
-							)), alphaLevel);
+				// West
+				ChangeAlphaLevelOfTile(player, tilemap, GetTileLocationOfPlayer(player, tilemap,
+					new Vector3(
+						player.transform.position.x - i,
+						player.transform.position.y,
+						player.transform.position.z
+					)), alphaLevel);
 
-						// South
-						ChangeAlphaLevelOfTile(player, tilemap, GetTileLocationOfPlayer(player, tilemap,
-							new Vector3(
-								player.transform.position.x,
-								player.transform.position.y - i,
-								player.transform.position.z
-							)), alphaLevel);
-
-						// West
-						ChangeAlphaLevelOfTile(player, tilemap, GetTileLocationOfPlayer(player, tilemap,
-							new Vector3(
-								player.transform.position.x - i,
-								player.transform.position.y,
-								player.transform.position.z
-							)), alphaLevel);
-
-						// East
-						ChangeAlphaLevelOfTile(player, tilemap, GetTileLocationOfPlayer(player, tilemap,
-							new Vector3(
-								player.transform.position.x + i,
-								player.transform.position.y,
-								player.transform.position.z
-							)), alphaLevel);
-					}
-				}
+				// East
+				ChangeAlphaLevelOfTile(player, tilemap, GetTileLocationOfPlayer(player, tilemap,
+					new Vector3(
+						player.transform.position.x + i,
+						player.transform.position.y,
+						player.transform.position.z
+					)), alphaLevel);
 			}
 		}
+
 	}
 
 	private void ChangeAlphaLevelOfTile(Player player, Tilemap tilemap, Vector3Int location, float alphaLevel)
