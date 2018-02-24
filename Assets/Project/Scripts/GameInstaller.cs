@@ -8,5 +8,6 @@ public class GameInstaller : MonoInstaller
         Container.Bind<IPlayerMovement>().To<PlayerMovement>().AsSingle();
         Container.Bind<IPlayerCollisions>().To<PlayerCollisions>().AsSingle();
         Container.Bind<IPlayerSpriteRenderer>().To<PlayerSpriteRenderer>().AsSingle();
+        Container.Bind<IPlayerFogOfWar>().To<PlayerFogOfWar>().AsSingle();
     }
 }

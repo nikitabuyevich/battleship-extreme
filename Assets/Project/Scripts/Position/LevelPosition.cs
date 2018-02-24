@@ -10,12 +10,12 @@ public class LevelPosition : MonoBehaviour
 	public GameObject playerObj;
 	private Vector3 leftMostCorner;
 
-	private IPlayerMovement _playerMovement;
+	private IPlayerFogOfWar _playerFogOfWar;
 
 	[Inject]
-	public void Construct(IPlayerMovement playerMovement)
+	public void Construct(IPlayerFogOfWar playerFogOfWar)
 	{
-		_playerMovement = playerMovement;
+		_playerFogOfWar = playerFogOfWar;
 	}
 
 	// Use this for initialization
@@ -25,7 +25,7 @@ public class LevelPosition : MonoBehaviour
 
 		// reveal fog of starting location
 		var player = playerObj.GetComponent<Player>();
-		_playerMovement.ChangeFogOfWar(player, player.revealAlphaLevel);
+		_playerFogOfWar.ChangeFogOfWar(player, player.revealAlphaLevel);
 	}
 
 	public Vector3Int GetStartingTileLocation()

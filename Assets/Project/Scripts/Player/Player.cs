@@ -14,6 +14,7 @@ public class Player : MonoBehaviour
 	public float revealAlphaLevel = 1f;
 	[Range(0, 1)]
 	public float visitedAlphaLevel = 0.75f;
+	public bool squareVision = true;
 
 	[Header("Starting Position")]
 	public float startingX;

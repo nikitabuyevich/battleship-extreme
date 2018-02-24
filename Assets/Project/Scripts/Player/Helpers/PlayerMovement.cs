@@ -13,6 +13,13 @@ public enum Direction
 
 public class PlayerMovement : IPlayerMovement
 {
+  readonly private IPlayerFogOfWar _playerFogOfWar;
+
+  public PlayerMovement(IPlayerFogOfWar playerFogOfWar)
+  {
+    _playerFogOfWar = playerFogOfWar;
+  }
+
   public void GetInput(Player player)
   {
     player._input = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
@@ -49,7 +56,7 @@ public class PlayerMovement : IPlayerMovement
 
   public IEnumerator Move(Player player)
   {
-    ChangeFogOfWar(player, player.visitedAlphaLevel);
+    _playerFogOfWar.ChangeFogOfWar(player, player.visitedAlphaLevel);
     player._isMoving = true;
     var startPos = player.transform.position;
     var t = 0f;
@@ -63,82 +70,8 @@ public class PlayerMovement : IPlayerMovement
       yield return null;
     }
 
-    ChangeFogOfWar(player, player.revealAlphaLevel);
+    _playerFogOfWar.ChangeFogOfWar(player, player.revealAlphaLevel);
     player._isMoving = false;
     yield return 0;
-  }
-
-  private Vector3Int GetTileLocationOfPlayer(Player player, Tilemap tilemap, Vector3 pos)
-  {
-    var startingTileLocation = player.level.GetComponent<LevelPosition>().GetStartingTileLocation();
-
-    return new Vector3Int(
-      startingTileLocation.x + (int) pos.x,
-      startingTileLocation.y + (int) pos.y,
-      startingTileLocation.z);
-  }
-
-  public void ChangeFogOfWar(Player player, float alphaLevel)
-  {
-    var overallParent = player.transform.parent.gameObject.transform.parent.gameObject;
-    var tilemaps = overallParent.GetComponentsInChildren<Tilemap>();
-
-    foreach (var tilemap in tilemaps)
-    {
-      // Reveal PLayer tile
-      ChangeAlphaLevelOfTile(player, tilemap, GetTileLocationOfPlayer(player, tilemap, player.transform.position), alphaLevel);
-
-      for (int i = 1; i < player.visionRadius + 1; i++)
-      {
-        // North
-        ChangeAlphaLevelOfTile(player, tilemap, GetTileLocationOfPlayer(player, tilemap,
-          new Vector3(
-            player.transform.position.x,
-            player.transform.position.y + i,
-            player.transform.position.z
-          )), alphaLevel);
-
-        // South
-        ChangeAlphaLevelOfTile(player, tilemap, GetTileLocationOfPlayer(player, tilemap,
-          new Vector3(
-            player.transform.position.x,
-            player.transform.position.y - i,
-            player.transform.position.z
-          )), alphaLevel);
-
-        // West
-        ChangeAlphaLevelOfTile(player, tilemap, GetTileLocationOfPlayer(player, tilemap,
-          new Vector3(
-            player.transform.position.x - i,
-            player.transform.position.y,
-            player.transform.position.z
-          )), alphaLevel);
-
-        // East
-        ChangeAlphaLevelOfTile(player, tilemap, GetTileLocationOfPlayer(player, tilemap,
-          new Vector3(
-            player.transform.position.x + i,
-            player.transform.position.y,
-            player.transform.position.z
-          )), alphaLevel);
-      }
-    }
-
-  }
-
-  private void ChangeAlphaLevelOfTile(Player player, Tilemap tilemap, Vector3Int location, float alphaLevel)
-  {
-    tilemap.RemoveTileFlags(
-      location,
-      TileFlags.LockColor
-    );
-    var tileColor = tilemap.GetColor(location);
-    var revealedColor = new Color(
-      tileColor.r,
-      tileColor.g,
-      tileColor.b,
-      alphaLevel
-    );
-    tilemap.SetColor(location, revealedColor);
   }
 }

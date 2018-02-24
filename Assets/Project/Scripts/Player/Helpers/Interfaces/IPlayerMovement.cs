@@ -7,5 +7,4 @@ public interface IPlayerMovement
 	void GetInput(Player player);
 	Direction GetDirection(Vector2 input);
 	IEnumerator Move(Player player);
-	void ChangeFogOfWar(Player player, float alphaLevel);
 }
