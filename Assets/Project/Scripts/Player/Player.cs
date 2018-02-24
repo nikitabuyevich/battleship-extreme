@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Zenject;
 
 public class Player : MonoBehaviour
 {
@@ -31,17 +32,23 @@ public class Player : MonoBehaviour
 	internal Vector2 _input;
 
 	// Helpers
-	public PlayerMovementHelper _movementHelper;
-	internal PlayerSpriteRendererHelper _spriteRendererHelper;
-	internal PlayerCollisionHelper _collisionHelper;
+	private IPlayerMovement _playerMovement;
+	private IPlayerSpriteRenderer _spriteRenderer;
+	private IPlayerCollisions _playerCollisions;
+
+	[Inject]
+	public void Construct(
+		IPlayerMovement playerMovement,
+		IPlayerSpriteRenderer spriteRenderer,
+		IPlayerCollisions playerCollisions)
+	{
+		_playerMovement = playerMovement;
+		_spriteRenderer = spriteRenderer;
+		_playerCollisions = playerCollisions;
+	}
 
 	void Start()
 	{
-		// Initialize helpers
-		_movementHelper = GetComponent<PlayerMovementHelper>();
-		_spriteRendererHelper = GetComponent<PlayerSpriteRendererHelper>();
-		_collisionHelper = GetComponent<PlayerCollisionHelper>();
-
 		// move player to starting pos
 		transform.position = new Vector3(startingX, startingY, transform.position.z);
 	}
@@ -53,12 +60,11 @@ public class Player : MonoBehaviour
 		// start moving
 		if (!_isMoving && isAllowedToMove)
 		{
-			_movementHelper.GetInput(this);
-
-			if (!_collisionHelper.SpaceIsBlocked(this))
+			_playerMovement.GetInput(this);
+			if (!_playerCollisions.SpaceIsBlocked(this))
 			{
-				_spriteRendererHelper.RenderDirection(this);
-				StartCoroutine(_movementHelper.Move(this));
+				_spriteRenderer.RenderDirection(this);
+				StartCoroutine(_playerMovement.Move(this));
 			}
 		}
 	}

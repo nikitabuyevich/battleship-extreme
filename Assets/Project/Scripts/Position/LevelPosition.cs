@@ -2,12 +2,21 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using Zenject;
 
 public class LevelPosition : MonoBehaviour
 {
 
 	public GameObject playerObj;
 	private Vector3 leftMostCorner;
+
+	private IPlayerMovement _playerMovement;
+
+	[Inject]
+	public void Construct(IPlayerMovement playerMovement)
+	{
+		_playerMovement = playerMovement;
+	}
 
 	// Use this for initialization
 	void Start()
@@ -16,7 +25,7 @@ public class LevelPosition : MonoBehaviour
 
 		// reveal fog of starting location
 		var player = playerObj.GetComponent<Player>();
-		player._movementHelper.ChangeFogOfWar(player, player.revealAlphaLevel);
+		_playerMovement.ChangeFogOfWar(player, player.revealAlphaLevel);
 	}
 
 	public Vector3Int GetStartingTileLocation()
