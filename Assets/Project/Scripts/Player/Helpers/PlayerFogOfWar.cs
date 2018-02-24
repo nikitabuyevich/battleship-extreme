@@ -5,11 +5,11 @@ using UnityEngine.Tilemaps;
 
 public class PlayerFogOfWar : IPlayerFogOfWar
 {
+
   public void ChangeFogOfWar(Player player, float alphaLevel)
   {
     var overallParent = player.transform.parent.gameObject.transform.parent.gameObject;
     var tilemaps = overallParent.GetComponentsInChildren<Tilemap>();
-
     foreach (var tilemap in tilemaps)
     {
       if (player.squareVision)
@@ -18,7 +18,7 @@ public class PlayerFogOfWar : IPlayerFogOfWar
         {
           for (int j = -(player.visionRadius * 2 - player.visionRadius); j < (player.visionRadius + 1); j++)
           {
-            ChangeAlphaLevelOfTile(player, tilemap, GetTileLocationOfPlayer(player, tilemap,
+            ChangeAlphaLevelOfTile(tilemap, GetTileLocationOfPlayer(player,
               new Vector3(
                 player.transform.position.x + j,
                 player.transform.position.y + i,
@@ -30,12 +30,12 @@ public class PlayerFogOfWar : IPlayerFogOfWar
       else
       {
         // Reveal PLayer tile
-        ChangeAlphaLevelOfTile(player, tilemap, GetTileLocationOfPlayer(player, tilemap, player.transform.position), alphaLevel);
+        ChangeAlphaLevelOfTile(tilemap, GetTileLocationOfPlayer(player, player.transform.position), alphaLevel);
 
         for (int i = 1; i < player.visionRadius + 1; i++)
         {
           // North
-          ChangeAlphaLevelOfTile(player, tilemap, GetTileLocationOfPlayer(player, tilemap,
+          ChangeAlphaLevelOfTile(tilemap, GetTileLocationOfPlayer(player,
             new Vector3(
               player.transform.position.x,
               player.transform.position.y + i,
@@ -43,7 +43,7 @@ public class PlayerFogOfWar : IPlayerFogOfWar
             )), alphaLevel);
 
           // South
-          ChangeAlphaLevelOfTile(player, tilemap, GetTileLocationOfPlayer(player, tilemap,
+          ChangeAlphaLevelOfTile(tilemap, GetTileLocationOfPlayer(player,
             new Vector3(
               player.transform.position.x,
               player.transform.position.y - i,
@@ -51,7 +51,7 @@ public class PlayerFogOfWar : IPlayerFogOfWar
             )), alphaLevel);
 
           // West
-          ChangeAlphaLevelOfTile(player, tilemap, GetTileLocationOfPlayer(player, tilemap,
+          ChangeAlphaLevelOfTile(tilemap, GetTileLocationOfPlayer(player,
             new Vector3(
               player.transform.position.x - i,
               player.transform.position.y,
@@ -59,7 +59,7 @@ public class PlayerFogOfWar : IPlayerFogOfWar
             )), alphaLevel);
 
           // East
-          ChangeAlphaLevelOfTile(player, tilemap, GetTileLocationOfPlayer(player, tilemap,
+          ChangeAlphaLevelOfTile(tilemap, GetTileLocationOfPlayer(player,
             new Vector3(
               player.transform.position.x + i,
               player.transform.position.y,
@@ -68,10 +68,9 @@ public class PlayerFogOfWar : IPlayerFogOfWar
         }
       }
     }
-
   }
 
-  private Vector3Int GetTileLocationOfPlayer(Player player, Tilemap tilemap, Vector3 pos)
+  private Vector3Int GetTileLocationOfPlayer(Player player, Vector3 pos)
   {
     var startingTileLocation = player.level.GetComponent<LevelPosition>().GetStartingTileLocation();
 
@@ -81,7 +80,7 @@ public class PlayerFogOfWar : IPlayerFogOfWar
       startingTileLocation.z);
   }
 
-  private void ChangeAlphaLevelOfTile(Player player, Tilemap tilemap, Vector3Int location, float alphaLevel)
+  private void ChangeAlphaLevelOfTile(Tilemap tilemap, Vector3Int location, float alphaLevel)
   {
     tilemap.RemoveTileFlags(
       location,
@@ -97,4 +96,30 @@ public class PlayerFogOfWar : IPlayerFogOfWar
     tilemap.SetColor(location, revealedColor);
   }
 
+  // public IEnumerator FadeTiles(Player player)
+  // {
+  //   var startPos = player.transform.position;
+  //   var t = 0f;
+
+  //   var endPos = new Vector3(startPos.x + System.Math.Sign(player._input.x), startPos.y + System.Math.Sign(player._input.y), startPos.z);
+
+  //   var currentAlphaLevel = player.revealAlphaLevel;
+  //   var endingAlphaLevel = player.visitedAlphaLevel;
+
+  //   while (player.transform.position != endPos)
+  //   {
+  //     currentAlphaLevel -= Time.deltaTime * 0.5f;
+  //     if (currentAlphaLevel > endingAlphaLevel)
+  //     {
+  //       _playerFogOfWar.LeavingFogOfWar(player, currentAlphaLevel);
+  //     }
+  //     t += Time.deltaTime * player.moveSpeed;
+  //     player.transform.position = Vector3.Lerp(startPos, endPos, t);
+  //     yield return null;
+  //   }
+
+  //   // _playerFogOfWar.ChangeFogOfWar(player, player.revealAlphaLevel);
+  //   player._isMoving = false;
+  //   yield return 0;
+  // }
 }

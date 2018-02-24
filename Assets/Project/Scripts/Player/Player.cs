@@ -62,7 +62,7 @@ public class Player : MonoBehaviour
 		if (!_isMoving && isAllowedToMove)
 		{
 			_playerMovement.GetInput(this);
-			if (!_playerCollisions.SpaceIsBlocked(this))
+			if (_input != Vector2.zero && !_playerCollisions.SpaceIsBlocked(this))
 			{
 				_spriteRenderer.RenderDirection(this);
 				StartCoroutine(_playerMovement.Move(this));

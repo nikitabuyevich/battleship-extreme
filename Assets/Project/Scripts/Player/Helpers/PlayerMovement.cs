@@ -57,6 +57,7 @@ public class PlayerMovement : IPlayerMovement
   public IEnumerator Move(Player player)
   {
     _playerFogOfWar.ChangeFogOfWar(player, player.visitedAlphaLevel);
+
     player._isMoving = true;
     var startPos = player.transform.position;
     var t = 0f;
