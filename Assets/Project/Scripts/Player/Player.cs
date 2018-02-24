@@ -31,7 +31,7 @@ public class Player : MonoBehaviour
 	internal Vector2 _input;
 
 	// Helpers
-	internal PlayerMovementHelper _movementHelper;
+	public PlayerMovementHelper _movementHelper;
 	internal PlayerSpriteRendererHelper _spriteRendererHelper;
 	internal PlayerCollisionHelper _collisionHelper;
 
@@ -44,9 +44,6 @@ public class Player : MonoBehaviour
 
 		// move player to starting pos
 		transform.position = new Vector3(startingX, startingY, transform.position.z);
-
-		// reveal fog of starting location
-		_movementHelper.ChangeFogOfWar(this, revealAlphaLevel);
 	}
 
 	void Update()
@@ -58,7 +55,7 @@ public class Player : MonoBehaviour
 		{
 			_movementHelper.GetInput(this);
 
-			if (_collisionHelper.SpaceIsNotBlocked(this))
+			if (!_collisionHelper.SpaceIsBlocked(this))
 			{
 				_spriteRendererHelper.RenderDirection(this);
 				StartCoroutine(_movementHelper.Move(this));

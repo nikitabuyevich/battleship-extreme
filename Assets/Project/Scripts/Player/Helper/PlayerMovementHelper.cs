@@ -80,7 +80,7 @@ public class PlayerMovementHelper : MonoBehaviour
 
 	public void ChangeFogOfWar(Player player, float alphaLevel)
 	{
-		var overallParent = player.transform.parent.gameObject;
+		var overallParent = player.transform.parent.gameObject.transform.parent.gameObject;
 		var tilemaps = overallParent.GetComponentsInChildren<Tilemap>();
 
 		foreach (var tilemap in tilemaps)

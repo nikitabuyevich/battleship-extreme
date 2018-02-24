@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerCollisionHelper : MonoBehaviour
 {
 
-	public bool SpaceIsNotBlocked(Player player)
+	public bool SpaceIsBlocked(Player player)
 	{
 		if (player._input != Vector2.zero)
 		{
@@ -13,49 +13,37 @@ public class PlayerCollisionHelper : MonoBehaviour
 
 			if (direction == Direction.North)
 			{
-				var northBlocked = Physics2D.Raycast(new Vector2(player.transform.position.x, player.transform.position.y), Vector2.up, 1f);
-				if (northBlocked.collider != null && (SpaceIsBlocked(northBlocked.collider.gameObject.GetComponentsInParent<Transform>())))
-				{
-					return false;
-				}
+				var northCollisions = Physics2D.RaycastAll(new Vector2(player.transform.position.x, player.transform.position.y), Vector2.up, 1f);
+				return IsBlocked(northCollisions);
 			}
 			else if (direction == Direction.South)
 			{
-				var southBlocked = Physics2D.Raycast(new Vector2(player.transform.position.x, player.transform.position.y), Vector2.down, 1f);
-				if (southBlocked.collider != null && (SpaceIsBlocked(southBlocked.collider.gameObject.GetComponentsInParent<Transform>())))
-				{
-					return false;
-				}
+				var southCollisions = Physics2D.RaycastAll(new Vector2(player.transform.position.x, player.transform.position.y), Vector2.down, 1f);
+				return IsBlocked(southCollisions);
 			}
 			else if (direction == Direction.West)
 			{
-				var westBlocked = Physics2D.Raycast(new Vector2(player.transform.position.x, player.transform.position.y), Vector2.left, 1f);
-				if (westBlocked.collider != null && (SpaceIsBlocked(westBlocked.collider.gameObject.GetComponentsInParent<Transform>())))
-				{
-					return false;
-				}
+				var westCollisions = Physics2D.RaycastAll(new Vector2(player.transform.position.x, player.transform.position.y), Vector2.left, 1f);
+				return IsBlocked(westCollisions);
 			}
 			// otherwise check East
 			else
 			{
-				var eastBlocked = Physics2D.Raycast(new Vector2(player.transform.position.x, player.transform.position.y), Vector2.right, 1f);
-				if (eastBlocked.collider != null && (SpaceIsBlocked(eastBlocked.collider.gameObject.GetComponentsInParent<Transform>())))
-				{
-					return false;
-				}
+				var eastCollisions = Physics2D.RaycastAll(new Vector2(player.transform.position.x, player.transform.position.y), Vector2.right, 1f);
+				return IsBlocked(eastCollisions);
 			}
-
-			return true;
 		}
 
 		return false;
 	}
 
-	private bool SpaceIsBlocked(Transform[] transforms)
+	private bool IsBlocked(RaycastHit2D[] collisions)
 	{
-		foreach (var transform in transforms)
+		foreach (var collision in collisions)
 		{
-			if (transform.tag == "Block")
+			var parentTransform = collision.transform.parent;
+
+			if (parentTransform.tag == "Game" || parentTransform.tag == "Block")
 			{
 				return true;
 			}

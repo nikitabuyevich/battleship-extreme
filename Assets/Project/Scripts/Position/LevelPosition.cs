@@ -6,13 +6,17 @@ using UnityEngine.Tilemaps;
 public class LevelPosition : MonoBehaviour
 {
 
-	public GameObject player;
+	public GameObject playerObj;
 	private Vector3 leftMostCorner;
 
 	// Use this for initialization
 	void Start()
 	{
 		transform.position = GetRepositionVector3(transform.position);
+
+		// reveal fog of starting location
+		var player = playerObj.GetComponent<Player>();
+		player._movementHelper.ChangeFogOfWar(player, player.revealAlphaLevel);
 	}
 
 	public Vector3Int GetStartingTileLocation()
