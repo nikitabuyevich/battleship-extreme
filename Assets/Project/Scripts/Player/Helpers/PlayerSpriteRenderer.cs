@@ -19,16 +19,16 @@ public class PlayerSpriteRenderer : IPlayerSpriteRenderer
 		switch (currentDir)
 		{
 			case Direction.North:
-				player.gameObject.GetComponent<SpriteRenderer>().sprite = player.northSprite;
+				player.gameObject.GetComponentInChildren<SpriteRenderer>().sprite = player.northSprite;
 				break;
 			case Direction.East:
-				player.gameObject.GetComponent<SpriteRenderer>().sprite = player.eastSprite;
+				player.gameObject.GetComponentInChildren<SpriteRenderer>().sprite = player.eastSprite;
 				break;
 			case Direction.South:
-				player.gameObject.GetComponent<SpriteRenderer>().sprite = player.southSprite;
+				player.gameObject.GetComponentInChildren<SpriteRenderer>().sprite = player.southSprite;
 				break;
 			case Direction.West:
-				player.gameObject.GetComponent<SpriteRenderer>().sprite = player.westSprite;
+				player.gameObject.GetComponentInChildren<SpriteRenderer>().sprite = player.westSprite;
 				break;
 		}
 	}

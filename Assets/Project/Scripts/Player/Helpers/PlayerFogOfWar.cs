@@ -82,44 +82,20 @@ public class PlayerFogOfWar : IPlayerFogOfWar
 
   private void ChangeAlphaLevelOfTile(Tilemap tilemap, Vector3Int location, float alphaLevel)
   {
-    tilemap.RemoveTileFlags(
-      location,
-      TileFlags.LockColor
-    );
-    var tileColor = tilemap.GetColor(location);
-    var revealedColor = new Color(
-      tileColor.r,
-      tileColor.g,
-      tileColor.b,
-      alphaLevel
-    );
-    tilemap.SetColor(location, revealedColor);
+    if (tilemap.tag != "Fog of War")
+    {
+      tilemap.RemoveTileFlags(
+        location,
+        TileFlags.LockColor
+      );
+      var tileColor = tilemap.GetColor(location);
+      var revealedColor = new Color(
+        tileColor.r,
+        tileColor.g,
+        tileColor.b,
+        alphaLevel
+      );
+      tilemap.SetColor(location, revealedColor);
+    }
   }
-
-  // public IEnumerator FadeTiles(Player player)
-  // {
-  //   var startPos = player.transform.position;
-  //   var t = 0f;
-
-  //   var endPos = new Vector3(startPos.x + System.Math.Sign(player._input.x), startPos.y + System.Math.Sign(player._input.y), startPos.z);
-
-  //   var currentAlphaLevel = player.revealAlphaLevel;
-  //   var endingAlphaLevel = player.visitedAlphaLevel;
-
-  //   while (player.transform.position != endPos)
-  //   {
-  //     currentAlphaLevel -= Time.deltaTime * 0.5f;
-  //     if (currentAlphaLevel > endingAlphaLevel)
-  //     {
-  //       _playerFogOfWar.LeavingFogOfWar(player, currentAlphaLevel);
-  //     }
-  //     t += Time.deltaTime * player.moveSpeed;
-  //     player.transform.position = Vector3.Lerp(startPos, endPos, t);
-  //     yield return null;
-  //   }
-
-  //   // _playerFogOfWar.ChangeFogOfWar(player, player.revealAlphaLevel);
-  //   player._isMoving = false;
-  //   yield return 0;
-  // }
 }

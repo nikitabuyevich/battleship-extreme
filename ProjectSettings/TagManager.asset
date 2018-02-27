@@ -6,6 +6,8 @@ TagManager:
   tags:
   - Block
   - Game
+  - Fog of War
+  - Rocks
   layers:
   - Default
   - TransparentFX
@@ -40,6 +42,9 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: Background
+    uniqueID: 3689554707
+    locked: 0
   - name: Default
     uniqueID: 0
     locked: 0

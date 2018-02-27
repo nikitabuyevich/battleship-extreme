@@ -73,6 +73,7 @@ TextureImporter:
     21300132: TilesetExample_66
     21300134: TilesetExample_67
     21300136: TilesetExample_68
+    21300138: TilesetExample_69
   externalObjects: {}
   serializedVersion: 4
   mipmaps:
@@ -834,7 +835,7 @@ TextureImporter:
       name: TilesetExample_48
       rect:
         serializedVersion: 2
-        x: 96
+        x: 0
         y: 128
         width: 32
         height: 32
@@ -848,7 +849,7 @@ TextureImporter:
       name: TilesetExample_49
       rect:
         serializedVersion: 2
-        x: 128
+        x: 96
         y: 128
         width: 32
         height: 32
@@ -862,7 +863,7 @@ TextureImporter:
       name: TilesetExample_50
       rect:
         serializedVersion: 2
-        x: 224
+        x: 128
         y: 128
         width: 32
         height: 32
@@ -876,7 +877,7 @@ TextureImporter:
       name: TilesetExample_51
       rect:
         serializedVersion: 2
-        x: 256
+        x: 224
         y: 128
         width: 32
         height: 32
@@ -890,8 +891,8 @@ TextureImporter:
       name: TilesetExample_52
       rect:
         serializedVersion: 2
-        x: 96
-        y: 96
+        x: 256
+        y: 128
         width: 32
         height: 32
       alignment: 0
@@ -904,7 +905,7 @@ TextureImporter:
       name: TilesetExample_53
       rect:
         serializedVersion: 2
-        x: 128
+        x: 96
         y: 96
         width: 32
         height: 32
@@ -918,7 +919,7 @@ TextureImporter:
       name: TilesetExample_54
       rect:
         serializedVersion: 2
-        x: 160
+        x: 128
         y: 96
         width: 32
         height: 32
@@ -932,7 +933,7 @@ TextureImporter:
       name: TilesetExample_55
       rect:
         serializedVersion: 2
-        x: 192
+        x: 160
         y: 96
         width: 32
         height: 32
@@ -946,7 +947,7 @@ TextureImporter:
       name: TilesetExample_56
       rect:
         serializedVersion: 2
-        x: 224
+        x: 192
         y: 96
         width: 32
         height: 32
@@ -960,7 +961,7 @@ TextureImporter:
       name: TilesetExample_57
       rect:
         serializedVersion: 2
-        x: 256
+        x: 224
         y: 96
         width: 32
         height: 32
@@ -974,8 +975,8 @@ TextureImporter:
       name: TilesetExample_58
       rect:
         serializedVersion: 2
-        x: 96
-        y: 64
+        x: 256
+        y: 96
         width: 32
         height: 32
       alignment: 0
@@ -988,7 +989,7 @@ TextureImporter:
       name: TilesetExample_59
       rect:
         serializedVersion: 2
-        x: 128
+        x: 96
         y: 64
         width: 32
         height: 32
@@ -1002,7 +1003,7 @@ TextureImporter:
       name: TilesetExample_60
       rect:
         serializedVersion: 2
-        x: 160
+        x: 128
         y: 64
         width: 32
         height: 32
@@ -1016,7 +1017,7 @@ TextureImporter:
       name: TilesetExample_61
       rect:
         serializedVersion: 2
-        x: 192
+        x: 160
         y: 64
         width: 32
         height: 32
@@ -1030,7 +1031,7 @@ TextureImporter:
       name: TilesetExample_62
       rect:
         serializedVersion: 2
-        x: 224
+        x: 192
         y: 64
         width: 32
         height: 32
@@ -1044,7 +1045,7 @@ TextureImporter:
       name: TilesetExample_63
       rect:
         serializedVersion: 2
-        x: 256
+        x: 224
         y: 64
         width: 32
         height: 32
@@ -1058,8 +1059,8 @@ TextureImporter:
       name: TilesetExample_64
       rect:
         serializedVersion: 2
-        x: 96
-        y: 32
+        x: 256
+        y: 64
         width: 32
         height: 32
       alignment: 0
@@ -1072,7 +1073,7 @@ TextureImporter:
       name: TilesetExample_65
       rect:
         serializedVersion: 2
-        x: 128
+        x: 96
         y: 32
         width: 32
         height: 32
@@ -1086,7 +1087,7 @@ TextureImporter:
       name: TilesetExample_66
       rect:
         serializedVersion: 2
-        x: 160
+        x: 128
         y: 32
         width: 32
         height: 32
@@ -1100,7 +1101,7 @@ TextureImporter:
       name: TilesetExample_67
       rect:
         serializedVersion: 2
-        x: 192
+        x: 160
         y: 32
         width: 32
         height: 32
@@ -1112,6 +1113,20 @@ TextureImporter:
       tessellationDetail: 0
     - serializedVersion: 2
       name: TilesetExample_68
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 32
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: TilesetExample_69
       rect:
         serializedVersion: 2
         x: 224

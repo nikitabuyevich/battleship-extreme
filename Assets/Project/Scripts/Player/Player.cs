@@ -8,13 +8,14 @@ public class Player : MonoBehaviour
 
 	[Header("Setup")]
 	public bool isAllowedToMove = true;
+	public bool squareVision = true;
 	public float moveSpeed = 1f;
 	public int visionRadius = 1;
+	public int numberOfMovesPerTurn = 1;
 	[Range(0, 1)]
 	public float revealAlphaLevel = 1f;
 	[Range(0, 1)]
 	public float visitedAlphaLevel = 0.75f;
-	public bool squareVision = true;
 
 	[Header("Starting Position")]
 	public float startingX;

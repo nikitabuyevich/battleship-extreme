@@ -6,6 +6,7 @@ public class CameraPosition : MonoBehaviour
 {
 
 	public GameObject levelObj;
+	public GameObject background;
 
 	// Use this for initialization
 	void Start()
@@ -22,5 +23,11 @@ public class CameraPosition : MonoBehaviour
 
 		// Set zoom
 		GetComponent<Camera>().orthographicSize = 6.25f;
+
+		background.transform.position = new Vector3(
+			transform.position.x,
+			transform.position.y,
+			background.transform.position.z
+		);
 	}
 }
