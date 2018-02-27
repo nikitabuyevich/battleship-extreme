@@ -15,20 +15,45 @@ public class PlayerSpriteRenderer : IPlayerSpriteRenderer
 	public void RenderDirection(Player player)
 	{
 		var currentDir = _playerMovement.GetDirection(player._input);
+		SpriteRenderer playerComponent;
 
 		switch (currentDir)
 		{
 			case Direction.North:
-				player.gameObject.GetComponentInChildren<SpriteRenderer>().sprite = player.northSprite;
+				playerComponent = player.GetComponentInChildren<SpriteRenderer>();
+				playerComponent.sprite = player.northSprite;
+				playerComponent.transform.position = new Vector3(
+					player.transform.position.x,
+					player.transform.position.y,
+					player.transform.position.z
+				);
 				break;
 			case Direction.East:
-				player.gameObject.GetComponentInChildren<SpriteRenderer>().sprite = player.eastSprite;
+				playerComponent = player.GetComponentInChildren<SpriteRenderer>();
+				playerComponent.sprite = player.eastSprite;
+				playerComponent.transform.position = new Vector3(
+					player.transform.position.x - 0.1f,
+					player.transform.position.y + 0.14f,
+					player.transform.position.z
+				);
 				break;
 			case Direction.South:
-				player.gameObject.GetComponentInChildren<SpriteRenderer>().sprite = player.southSprite;
+				playerComponent = player.GetComponentInChildren<SpriteRenderer>();
+				playerComponent.sprite = player.southSprite;
+				playerComponent.transform.position = new Vector3(
+					player.transform.position.x,
+					player.transform.position.y,
+					player.transform.position.z
+				);
 				break;
 			case Direction.West:
-				player.gameObject.GetComponentInChildren<SpriteRenderer>().sprite = player.westSprite;
+				playerComponent = player.GetComponentInChildren<SpriteRenderer>();
+				playerComponent.sprite = player.westSprite;
+				playerComponent.transform.position = new Vector3(
+					player.transform.position.x - 0.1f,
+					player.transform.position.y + 0.14f,
+					player.transform.position.z
+				);
 				break;
 		}
 	}

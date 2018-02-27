@@ -7,7 +7,6 @@ using Zenject;
 public class LevelPosition : MonoBehaviour
 {
 
-	public GameObject playerObj;
 	private Vector3 leftMostCorner;
 
 	private IPlayerFogOfWar _playerFogOfWar;
@@ -24,8 +23,15 @@ public class LevelPosition : MonoBehaviour
 		transform.position = GetRepositionVector3(transform.position);
 
 		// reveal fog of starting location
-		var player = playerObj.GetComponent<Player>();
-		_playerFogOfWar.ChangeFogOfWar(player, player.revealAlphaLevel);
+		var players = transform.parent.GetComponentsInChildren<Player>();
+		foreach (var player in players)
+		{
+			Debug.Log(player.isAllowedToMove);
+			if (player.isAllowedToMove)
+			{
+				_playerFogOfWar.ChangeFogOfWar(player, player.revealAlphaLevel);
+			}
+		}
 	}
 
 	public Vector3Int GetStartingTileLocation()
