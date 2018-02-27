@@ -32,8 +32,8 @@ public class PlayerSpriteRenderer : IPlayerSpriteRenderer
 				playerComponent = player.GetComponentInChildren<SpriteRenderer>();
 				playerComponent.sprite = player.eastSprite;
 				playerComponent.transform.position = new Vector3(
-					player.transform.position.x - 0.1f,
-					player.transform.position.y + 0.14f,
+					player.transform.position.x + player.eastWestOffsetX,
+					player.transform.position.y + player.eastWestOffsetY,
 					player.transform.position.z
 				);
 				break;
@@ -50,8 +50,8 @@ public class PlayerSpriteRenderer : IPlayerSpriteRenderer
 				playerComponent = player.GetComponentInChildren<SpriteRenderer>();
 				playerComponent.sprite = player.westSprite;
 				playerComponent.transform.position = new Vector3(
-					player.transform.position.x - 0.1f,
-					player.transform.position.y + 0.14f,
+					player.transform.position.x - player.eastWestOffsetX,
+					player.transform.position.y + player.eastWestOffsetY,
 					player.transform.position.z
 				);
 				break;

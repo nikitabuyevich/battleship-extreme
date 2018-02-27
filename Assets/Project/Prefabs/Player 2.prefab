@@ -147,7 +147,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 654064a6ae522495cbaa57e0f5a75b9a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isAllowedToMove: 1
+  isAllowedToMove: 0
   squareVision: 1
   moveSpeed: 2
   visionRadius: 1
@@ -160,6 +160,8 @@ MonoBehaviour:
   eastSprite: {fileID: 21300000, guid: 1b2ce01e8ec0546a29fcffca3cbbf0c0, type: 3}
   southSprite: {fileID: 21300000, guid: af8dd4e24244f47c5a3224d4a882162e, type: 3}
   westSprite: {fileID: 21300000, guid: b1642c6b8d93c419aa13f77479240434, type: 3}
+  eastWestOffsetX: 0.1
+  eastWestOffsetY: 0.14
   level: {fileID: 0}
 --- !u!212 &212380208532095916
 SpriteRenderer:
@@ -196,7 +198,7 @@ SpriteRenderer:
   m_SortingLayer: 1
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 1b2ce01e8ec0546a29fcffca3cbbf0c0, type: 3}
-  m_Color: {r: 0.8206897, g: 1, b: 0, a: 1}
+  m_Color: {r: 1, g: 0, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0

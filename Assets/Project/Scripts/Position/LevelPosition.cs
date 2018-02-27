@@ -26,7 +26,9 @@ public class LevelPosition : MonoBehaviour
 		var players = transform.parent.GetComponentsInChildren<Player>();
 		foreach (var player in players)
 		{
-			Debug.Log(player.isAllowedToMove);
+			// move player to starting pos
+			player.transform.position = new Vector3(player.startingX, player.startingY, transform.position.z);
+
 			if (player.isAllowedToMove)
 			{
 				_playerFogOfWar.ChangeFogOfWar(player, player.revealAlphaLevel);

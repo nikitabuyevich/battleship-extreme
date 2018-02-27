@@ -26,12 +26,19 @@ public class Player : MonoBehaviour
 	public Sprite eastSprite;
 	public Sprite southSprite;
 	public Sprite westSprite;
+	public float eastWestOffsetX = 0.1f;
+	public float eastWestOffsetY = 0.14f;
 
 	[Header("GameObjects")]
 	public GameObject level;
 
 	internal bool _isMoving = false;
 	internal Vector2 _input;
+
+	// Events
+	public delegate void MovementHandler();
+
+	public event MovementHandler OnPlayerMovement;
 
 	// Helpers
 	private IPlayerMovement _playerMovement;
@@ -49,12 +56,6 @@ public class Player : MonoBehaviour
 		_playerCollisions = playerCollisions;
 	}
 
-	void Start()
-	{
-		// move player to starting pos
-		transform.position = new Vector3(startingX, startingY, transform.position.z);
-	}
-
 	void Update()
 	{
 		// TODO: display spaces player can move to
@@ -67,6 +68,10 @@ public class Player : MonoBehaviour
 			{
 				_spriteRenderer.RenderDirection(this);
 				StartCoroutine(_playerMovement.Move(this));
+				if (OnPlayerMovement != null)
+				{
+					OnPlayerMovement();
+				}
 			}
 		}
 	}
