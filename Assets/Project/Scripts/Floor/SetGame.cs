@@ -19,6 +19,6 @@ public class SetGame : MonoBehaviour
 	// Use this for initialization
 	void Start()
 	{
-		_fogOfWar.SetFogOfWar(this);
+		_fogOfWar.SetFogOfWar();
 	}
 }

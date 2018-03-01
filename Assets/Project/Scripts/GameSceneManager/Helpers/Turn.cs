@@ -66,8 +66,7 @@ public class Turn : ITurn
   {
     if (CurrentPlayer().fogOfWar.Count == 0)
     {
-      var setGame = gameSceneManager.floor.GetComponent<SetGame>();
-      _fogOfWar.SetFogOfWar(setGame);
+      _fogOfWar.SetFogOfWar();
       _playerFogOfWar.ChangeFogOfWar(CurrentPlayer(), CurrentPlayer().revealAlphaLevel);
     }
     else

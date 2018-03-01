@@ -1,14 +1,18 @@
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using Zenject;
 
 public class FogOfWar : IFogOfWar
 {
+  [Inject]
+  private readonly SetGame _game;
+
   public string GetFogOfWarKey(string tilemapName, Vector3Int position)
   {
     return string.Format("{0}_{1}", tilemapName, position);
   }
 
-  public void SetFogOfWar(SetGame game)
+  public void SetFogOfWar()
   {
     // Set tilemaps to 50% transparency 
     var tilemaps = GameObject.Find("Floor").GetComponentsInChildren<Tilemap>();
@@ -27,7 +31,7 @@ public class FogOfWar : IFogOfWar
 
           // set black background for fog of war tile
           var fogOfWarTile = FindTilemap(tilemaps, "Fog of War");
-          fogOfWarTile.SetTile(tilePosition.Current, game.blackTile);
+          fogOfWarTile.SetTile(tilePosition.Current, _game.blackTile);
 
           tilemap.RemoveTileFlags(tilePosition.Current, TileFlags.LockColor);
           var tileColor = tilemap.GetColor(tilePosition.Current);
@@ -35,7 +39,7 @@ public class FogOfWar : IFogOfWar
             tileColor.r,
             tileColor.g,
             tileColor.b,
-            game.fogOfWarAlphaLevel
+            _game.fogOfWarAlphaLevel
           );
           tilemap.SetColor(tilePosition.Current, revealedColor);
         }

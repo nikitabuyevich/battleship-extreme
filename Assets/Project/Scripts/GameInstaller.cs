@@ -4,6 +4,7 @@ using Zenject;
 public class GameInstaller : MonoInstaller
 {
     public LevelPosition level;
+    public SetGame floor;
 
     public override void InstallBindings()
     {
@@ -17,7 +18,9 @@ public class GameInstaller : MonoInstaller
         Container.Bind<IReposition>().To<Reposition>().AsSingle();
 
         Container.Bind<Reposition>().AsSingle();
+        Container.Bind<FogOfWar>().AsSingle();
 
         Container.BindInstance(level);
+        Container.BindInstance(floor);
     }
 }
