@@ -1,12 +1,25 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using Zenject;
 
 public class Player : MonoBehaviour
 {
+	private IPlayerMovement _playerMovement;
+	private IPlayerSpriteRenderer _spriteRenderer;
+	private IPlayerCollisions _playerCollisions;
 
-	[Header("Setup")]
+	[Inject]
+	public void Construct(
+		IPlayerMovement playerMovement,
+		IPlayerSpriteRenderer spriteRenderer,
+		IPlayerCollisions playerCollisions)
+	{
+		_playerMovement = playerMovement;
+		_spriteRenderer = spriteRenderer;
+		_playerCollisions = playerCollisions;
+	}
+
+	[Header("Gameplay")]
 	public bool isAllowedToMove = true;
 	public bool squareVision = true;
 	public float moveSpeed = 1f;
@@ -29,32 +42,17 @@ public class Player : MonoBehaviour
 	public float eastWestOffsetX = 0.1f;
 	public float eastWestOffsetY = 0.14f;
 
-	[Header("GameObjects")]
+	[Header("Setup")]
 	public GameObject level;
 
 	internal bool _isMoving = false;
 	internal Vector2 _input;
+	internal Dictionary<string, Color> fogOfWar = new Dictionary<string, Color>();
 
 	// Events
 	public delegate void MovementHandler();
 
 	public event MovementHandler OnPlayerMovement;
-
-	// Helpers
-	private IPlayerMovement _playerMovement;
-	private IPlayerSpriteRenderer _spriteRenderer;
-	private IPlayerCollisions _playerCollisions;
-
-	[Inject]
-	public void Construct(
-		IPlayerMovement playerMovement,
-		IPlayerSpriteRenderer spriteRenderer,
-		IPlayerCollisions playerCollisions)
-	{
-		_playerMovement = playerMovement;
-		_spriteRenderer = spriteRenderer;
-		_playerCollisions = playerCollisions;
-	}
 
 	void Update()
 	{

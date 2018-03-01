@@ -24,7 +24,7 @@ GameObject:
   - component: {fileID: 50373786309433070}
   m_Layer: 0
   m_Name: Player 1
-  m_TagString: Game
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -130,7 +130,7 @@ CapsuleCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: -0.007081747, y: -0.106226325}
@@ -147,7 +147,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 654064a6ae522495cbaa57e0f5a75b9a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isAllowedToMove: 0
+  isAllowedToMove: 1
   squareVision: 1
   moveSpeed: 2
   visionRadius: 1

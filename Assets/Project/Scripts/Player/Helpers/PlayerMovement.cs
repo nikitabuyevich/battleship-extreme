@@ -1,22 +1,15 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-public enum Direction
-{
-  North,
-  East,
-  South,
-  West
-}
-
 public class PlayerMovement : IPlayerMovement
 {
+  readonly private IFogOfWar _fogOfWar;
   readonly private IPlayerFogOfWar _playerFogOfWar;
 
-  public PlayerMovement(IPlayerFogOfWar playerFogOfWar)
+  public PlayerMovement(IFogOfWar fogOfWar, IPlayerFogOfWar playerFogOfWar)
   {
+    _fogOfWar = fogOfWar;
     _playerFogOfWar = playerFogOfWar;
   }
 
@@ -73,6 +66,27 @@ public class PlayerMovement : IPlayerMovement
 
     _playerFogOfWar.ChangeFogOfWar(player, player.revealAlphaLevel);
     player._isMoving = false;
+    GetAllTiles(player);
     yield return 0;
+  }
+
+  private void GetAllTiles(Player player)
+  {
+    // Empty list every time you move
+    player.fogOfWar.Clear();
+
+    // Get all tiles and save them in fogOfWar object
+    var overallParent = GameObject.FindGameObjectWithTag("Overall Parent");
+    var tilemaps = overallParent.GetComponentsInChildren<Tilemap>();
+    foreach (var tilemap in tilemaps)
+    {
+      BoundsInt bounds = tilemap.cellBounds;
+      var tilePosition = bounds.allPositionsWithin;
+      while (tilePosition.MoveNext())
+      {
+        var currentTileColor = tilemap.GetColor(tilePosition.Current);
+        player.fogOfWar.Add(_fogOfWar.GetFogOfWarKey(tilemap.name, tilePosition.Current), currentTileColor);
+      }
+    }
   }
 }

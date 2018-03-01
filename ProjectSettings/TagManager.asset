@@ -8,6 +8,7 @@ TagManager:
   - Game
   - Fog of War
   - Rocks
+  - Overall Parent
   layers:
   - Default
   - TransparentFX

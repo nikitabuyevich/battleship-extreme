@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.Tilemaps;
 using Zenject;
 
@@ -8,14 +6,6 @@ public class LevelPosition : MonoBehaviour
 {
 
 	private Vector3 leftMostCorner;
-
-	private IPlayerFogOfWar _playerFogOfWar;
-
-	[Inject]
-	public void Construct(IPlayerFogOfWar playerFogOfWar)
-	{
-		_playerFogOfWar = playerFogOfWar;
-	}
 
 	// Use this for initialization
 	void Start()
@@ -28,11 +18,6 @@ public class LevelPosition : MonoBehaviour
 		{
 			// move player to starting pos
 			player.transform.position = new Vector3(player.startingX, player.startingY, transform.position.z);
-
-			if (player.isAllowedToMove)
-			{
-				_playerFogOfWar.ChangeFogOfWar(player, player.revealAlphaLevel);
-			}
 		}
 	}
 
