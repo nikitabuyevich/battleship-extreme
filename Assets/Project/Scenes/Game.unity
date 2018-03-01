@@ -1168,6 +1168,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   level: {fileID: 380947120}
   floor: {fileID: 501445990}
+  gameSceneManager: {fileID: 310367512}
 --- !u!114 &1683592299
 MonoBehaviour:
   m_ObjectHideFlags: 0

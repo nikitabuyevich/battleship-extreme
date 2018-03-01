@@ -1,8 +1,12 @@
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using Zenject;
 
 public class Turn : ITurn
 {
+  [Inject]
+  private GameSceneManager _gameSceneManager;
+
   readonly private IFogOfWar _fogOfWar;
   readonly private IPlayerFogOfWar _playerFogOfWar;
 
@@ -12,20 +16,11 @@ public class Turn : ITurn
     _playerFogOfWar = playerFogOfWar;
   }
 
-  private Player[] players;
-  private GameSceneManager gameSceneManager;
-
-  public void Init(Player[] players, GameSceneManager gameSceneManager)
-  {
-    this.players = players;
-    this.gameSceneManager = gameSceneManager;
-  }
-
   public void ResetAll()
   {
-    for (int i = 0; i < players.Length; i++)
+    for (int i = 0; i < _gameSceneManager.players.Length; i++)
     {
-      var player = players[i];
+      var player = _gameSceneManager.players[i];
       if (i == 0)
       {
         player.isAllowedToMove = true;
@@ -38,7 +33,7 @@ public class Turn : ITurn
       }
     }
 
-    gameSceneManager.numberOfMoves = CurrentPlayer().numberOfMovesPerTurn;
+    _gameSceneManager.numberOfMoves = CurrentPlayer().numberOfMovesPerTurn;
   }
 
   public void NextPlayer()
@@ -46,18 +41,18 @@ public class Turn : ITurn
     CurrentPlayer().OnPlayerMovement -= OnPlayerMovement;
     CurrentPlayer().isAllowedToMove = false;
 
-    if ((gameSceneManager.currentPlayersTurn + 1) != players.Length)
+    if ((_gameSceneManager.currentPlayersTurn + 1) != _gameSceneManager.players.Length)
     {
-      gameSceneManager.currentPlayersTurn += 1;
+      _gameSceneManager.currentPlayersTurn += 1;
     }
     else
     {
-      gameSceneManager.currentPlayersTurn = 0;
+      _gameSceneManager.currentPlayersTurn = 0;
     }
 
     CurrentPlayer().isAllowedToMove = true;
     CurrentPlayer().OnPlayerMovement += OnPlayerMovement;
-    gameSceneManager.numberOfMoves = CurrentPlayer().numberOfMovesPerTurn;
+    _gameSceneManager.numberOfMoves = CurrentPlayer().numberOfMovesPerTurn;
 
     LoadPlayersFogOfWar();
   }
@@ -77,13 +72,13 @@ public class Turn : ITurn
 
   public Player CurrentPlayer()
   {
-    return players[gameSceneManager.currentPlayersTurn];
+    return _gameSceneManager.players[_gameSceneManager.currentPlayersTurn];
   }
 
   private void OnPlayerMovement()
   {
-    gameSceneManager.numberOfMoves -= 1;
-    if (gameSceneManager.numberOfMoves == 0)
+    _gameSceneManager.numberOfMoves -= 1;
+    if (_gameSceneManager.numberOfMoves == 0)
     {
       CurrentPlayer().isAllowedToMove = false;
     }

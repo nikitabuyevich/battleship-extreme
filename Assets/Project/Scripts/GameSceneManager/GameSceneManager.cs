@@ -15,7 +15,6 @@ public class GameSceneManager : MonoBehaviour
 		_turn = turn;
 
 		players = GameObject.FindObjectsOfType(typeof(Player)) as Player[];
-		_turn.Init(players, this);
 	}
 
 	[Header("UI")]
@@ -24,7 +23,7 @@ public class GameSceneManager : MonoBehaviour
 	[Header("Setup")]
 	public GameObject floor;
 
-	private Player[] players;
+	internal Player[] players;
 	internal int currentPlayersTurn = 0;
 
 	private int _numberOfMoves;
