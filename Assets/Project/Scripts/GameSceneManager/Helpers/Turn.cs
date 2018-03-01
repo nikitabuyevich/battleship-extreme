@@ -5,7 +5,7 @@ using Zenject;
 public class Turn : ITurn
 {
   [Inject]
-  private GameSceneManager _gameSceneManager;
+  private readonly GameSceneManager _gameSceneManager;
 
   readonly private IFogOfWar _fogOfWar;
   readonly private IPlayerFogOfWar _playerFogOfWar;

@@ -5,18 +5,28 @@ public class CameraPosition : MonoBehaviour
 {
 
 	private IReposition _reposition;
+	private ITurn _turn;
 
 	[Inject]
-	public void Construct(IReposition reposition)
+	public void Construct(IReposition reposition, ITurn turn)
 	{
 		_reposition = reposition;
+		_turn = turn;
 	}
 
 	public GameObject levelObj;
 	public GameObject background;
 
-	// Use this for initialization
-	void Start()
+	void Update()
+	{
+		transform.position = new Vector3(
+			_turn.CurrentPlayer().transform.position.x,
+			_turn.CurrentPlayer().transform.position.y,
+			transform.position.z
+		);
+	}
+
+	private void ViewOverallGame()
 	{
 		var levelPosition = _reposition.GetRepositionVector3(transform.position);
 

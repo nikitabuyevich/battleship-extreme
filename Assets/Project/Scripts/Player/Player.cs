@@ -21,7 +21,6 @@ public class Player : MonoBehaviour
 
 	[Header("Gameplay")]
 	public bool isAllowedToMove = true;
-	public bool squareVision = true;
 	public float moveSpeed = 1f;
 	public int visionRadius = 1;
 	public int numberOfMovesPerTurn = 1;
