@@ -4,6 +4,13 @@ using UnityEngine.Tilemaps;
 public class PlayerFogOfWar : IPlayerFogOfWar
 {
 
+  private readonly IReposition _reposition;
+
+  public PlayerFogOfWar(IReposition reposition)
+  {
+    _reposition = reposition;
+  }
+
   public void ChangeFogOfWar(Player player, float alphaLevel)
   {
     var overallParent = player.transform.parent.gameObject.transform.parent.gameObject;
@@ -70,7 +77,7 @@ public class PlayerFogOfWar : IPlayerFogOfWar
 
   private Vector3Int GetTileLocationOfPlayer(Player player, Vector3 pos)
   {
-    var startingTileLocation = player.level.GetComponent<LevelPosition>().GetStartingTileLocation();
+    var startingTileLocation = _reposition.GetStartingTileLocation();
 
     return new Vector3Int(
       startingTileLocation.x + (int) pos.x,

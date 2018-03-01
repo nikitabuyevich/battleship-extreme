@@ -1,7 +1,18 @@
 ﻿using UnityEngine;
+using Zenject;
 
 public class CameraPosition : MonoBehaviour
 {
+
+	private IReposition _reposition;
+
+	[Inject]
+	public void Construct(IReposition reposition)
+	{
+		_reposition = reposition;
+		var levelPosition = levelObj.GetComponent<LevelPosition>();
+		_reposition.Init(levelPosition);
+	}
 
 	public GameObject levelObj;
 	public GameObject background;
@@ -9,8 +20,7 @@ public class CameraPosition : MonoBehaviour
 	// Use this for initialization
 	void Start()
 	{
-		var positionScript = levelObj.GetComponent<LevelPosition>();
-		var levelPosition = positionScript.GetRepositionVector3(transform.position);
+		var levelPosition = _reposition.GetRepositionVector3(transform.position);
 
 		// Put level in the bottom left positio no of the camera
 		transform.position = new Vector3(

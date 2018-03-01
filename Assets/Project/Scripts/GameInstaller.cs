@@ -12,5 +12,6 @@ public class GameInstaller : MonoInstaller
 
         Container.Bind<IFogOfWar>().To<FogOfWar>().AsSingle();
         Container.Bind<ITurn>().To<Turn>().AsSingle();
+        Container.Bind<IReposition>().To<Reposition>().AsSingle();
     }
 }
