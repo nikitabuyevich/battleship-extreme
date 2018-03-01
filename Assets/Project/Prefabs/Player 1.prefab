@@ -148,7 +148,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isAllowedToMove: 1
-  squareVision: 1
   moveSpeed: 2
   visionRadius: 1
   numberOfMovesPerTurn: 1
