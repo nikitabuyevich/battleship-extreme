@@ -11,7 +11,6 @@ public class LevelPosition : MonoBehaviour
 	public void Construct(IReposition reposition)
 	{
 		_reposition = reposition;
-		_reposition.Init(this);
 	}
 
 	internal Vector3 leftMostCorner;

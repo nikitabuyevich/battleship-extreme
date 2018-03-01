@@ -4,19 +4,8 @@ using Zenject;
 
 public class Reposition : IReposition
 {
-
-  // [Inject]
-  // public void Init(LevelPosition levelPosition)
-  // {
-
-  // }
-
-  private LevelPosition _levelPosition;
-
-  public void Init(LevelPosition levelPosition)
-  {
-    _levelPosition = levelPosition;
-  }
+  [Inject]
+  private readonly LevelPosition _levelPosition;
 
   public Vector3Int GetStartingTileLocation()
   {

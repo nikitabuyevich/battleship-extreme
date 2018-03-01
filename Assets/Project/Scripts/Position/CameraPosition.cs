@@ -10,8 +10,6 @@ public class CameraPosition : MonoBehaviour
 	public void Construct(IReposition reposition)
 	{
 		_reposition = reposition;
-		var levelPosition = levelObj.GetComponent<LevelPosition>();
-		_reposition.Init(levelPosition);
 	}
 
 	public GameObject levelObj;
