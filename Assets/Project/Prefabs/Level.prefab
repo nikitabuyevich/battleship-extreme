@@ -53,7 +53,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4931671330245286}
   - component: {fileID: 2569400265685211342}
-  - component: {fileID: 114700407729173686}
   m_Layer: 0
   m_Name: Floor
   m_TagString: Untagged
@@ -296,19 +295,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8aea62032c0ec4fa7aba4ed6eafa20b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &114700407729173686
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1161559550919818}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8bbf75b30a6f04bb5bfa763803b16f90, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  fogOfWarAlphaLevel: 0.5
-  blackTile: {fileID: 11400000, guid: 0d819682e1a4a414a9f11f440d1c1248, type: 2}
 --- !u!19719996 &2113883504298324908
 TilemapCollider2D:
   m_ObjectHideFlags: 1

@@ -5,13 +5,17 @@ using Zenject;
 
 public class GameSceneManager : MonoBehaviour
 {
+	private IFogOfWar _fogOfWar;
 	private IPlayerFogOfWar _playerFogOfWar;
+	private IReposition _reposition;
 	private ITurn _turn;
 
 	[Inject]
-	public void Construct(IPlayerFogOfWar playerFogOfWar, ITurn turn)
+	public void Construct(IFogOfWar fogOfWar, IPlayerFogOfWar playerFogOfWar, IReposition reposition, ITurn turn)
 	{
+		_fogOfWar = fogOfWar;
 		_playerFogOfWar = playerFogOfWar;
+		_reposition = reposition;
 		_turn = turn;
 
 		players = GameObject.FindObjectsOfType(typeof(Player)) as Player[];
@@ -22,6 +26,11 @@ public class GameSceneManager : MonoBehaviour
 
 	[Header("Setup")]
 	public GameObject floor;
+
+	[Header("Fog of War")]
+	[Range(0, 1)]
+	public float fogOfWarAlphaLevel = 0.5f;
+	public TileBase blackTile;
 
 	internal Player[] players;
 	internal int currentPlayersTurn = 0;
@@ -42,12 +51,15 @@ public class GameSceneManager : MonoBehaviour
 
 	void Start()
 	{
+		_reposition.SetLevel();
+		_fogOfWar.SetFogOfWar();
 		_turn.ResetAll();
 		_playerFogOfWar.ChangeFogOfWar(_turn.CurrentPlayer(), _turn.CurrentPlayer().revealAlphaLevel);
 	}
 
 	public void EndTurnBtn()
 	{
+		_playerFogOfWar.ChangeFogOfWar(_turn.CurrentPlayer(), _turn.CurrentPlayer().revealAlphaLevel);
 		if (numberOfMoves == 0)
 		{
 			_turn.NextPlayer();

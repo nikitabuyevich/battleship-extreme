@@ -281,6 +281,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   numberOfMovesText: {fileID: 2116332224}
   floor: {fileID: 501445989}
+  fogOfWarAlphaLevel: 0.5
+  blackTile: {fileID: 11400000, guid: 0d819682e1a4a414a9f11f440d1c1248, type: 2}
 --- !u!1 &380947118 stripped
 GameObject:
   m_PrefabParentObject: {fileID: 1586376229064238, guid: dbd42431289c74979a20aa0576bc85aa,
@@ -291,12 +293,6 @@ Transform:
   m_PrefabParentObject: {fileID: 4627185079579754, guid: dbd42431289c74979a20aa0576bc85aa,
     type: 2}
   m_PrefabInternal: {fileID: 583123358}
---- !u!114 &380947120 stripped
-MonoBehaviour:
-  m_PrefabParentObject: {fileID: 114399402109680452, guid: dbd42431289c74979a20aa0576bc85aa,
-    type: 2}
-  m_PrefabInternal: {fileID: 583123358}
-  m_Script: {fileID: 11500000, guid: 8aea62032c0ec4fa7aba4ed6eafa20b1, type: 3}
 --- !u!1 &430508586
 GameObject:
   m_ObjectHideFlags: 0
@@ -429,12 +425,6 @@ GameObject:
   m_PrefabParentObject: {fileID: 1161559550919818, guid: dbd42431289c74979a20aa0576bc85aa,
     type: 2}
   m_PrefabInternal: {fileID: 583123358}
---- !u!114 &501445990 stripped
-MonoBehaviour:
-  m_PrefabParentObject: {fileID: 114700407729173686, guid: dbd42431289c74979a20aa0576bc85aa,
-    type: 2}
-  m_PrefabInternal: {fileID: 583123358}
-  m_Script: {fileID: 11500000, guid: 8bbf75b30a6f04bb5bfa763803b16f90, type: 3}
 --- !u!1001 &583123358
 Prefab:
   m_ObjectHideFlags: 0
@@ -474,7 +464,8 @@ Prefab:
       propertyPath: m_RootOrder
       value: 2
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 114399402109680452, guid: dbd42431289c74979a20aa0576bc85aa, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: dbd42431289c74979a20aa0576bc85aa, type: 2}
   m_IsPrefabParent: 0
 --- !u!1001 &685245275
@@ -1313,8 +1304,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 796c607e8b29b4f2ea2e4887f2afa221, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  level: {fileID: 380947120}
-  floor: {fileID: 501445990}
+  level: {fileID: 380947118}
   gameSceneManager: {fileID: 310367512}
 --- !u!114 &1683592299
 MonoBehaviour:

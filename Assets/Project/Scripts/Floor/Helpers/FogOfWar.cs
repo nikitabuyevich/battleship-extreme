@@ -5,7 +5,7 @@ using Zenject;
 public class FogOfWar : IFogOfWar
 {
   [Inject]
-  private readonly SetGame _game;
+  private readonly GameSceneManager _game;
 
   public string GetFogOfWarKey(string tilemapName, Vector3Int position)
   {

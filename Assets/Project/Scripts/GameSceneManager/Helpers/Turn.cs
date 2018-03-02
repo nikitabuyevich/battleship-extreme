@@ -18,6 +18,8 @@ public class Turn : ITurn
 
   public void ResetAll()
   {
+    _gameSceneManager.currentPlayersTurn = 0;
+
     for (int i = 0; i < _gameSceneManager.players.Length; i++)
     {
       var player = _gameSceneManager.players[i];

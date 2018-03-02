@@ -1,10 +1,10 @@
 using System;
+using UnityEngine;
 using Zenject;
 
 public class GameInstaller : MonoInstaller
 {
-    public LevelPosition level;
-    public SetGame floor;
+    public GameObject level;
     public GameSceneManager gameSceneManager;
 
     public override void InstallBindings()
@@ -23,7 +23,6 @@ public class GameInstaller : MonoInstaller
         Container.Bind<Turn>().AsSingle();
 
         Container.BindInstance(level);
-        Container.BindInstance(floor);
         Container.BindInstance(gameSceneManager);
     }
 }

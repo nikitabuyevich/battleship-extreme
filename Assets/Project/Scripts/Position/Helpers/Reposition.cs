@@ -5,7 +5,7 @@ using Zenject;
 public class Reposition : IReposition
 {
   [Inject]
-  private readonly LevelPosition _levelPosition;
+  private readonly GameObject _levelPosition;
 
   public Vector3Int GetStartingTileLocation()
   {
@@ -19,12 +19,14 @@ public class Reposition : IReposition
 
   public Vector3 GetRepositionVector3(Vector3 pos)
   {
+    Vector3 leftMostCorner = new Vector3();
+
     var children = _levelPosition.GetComponentsInChildren<Transform>();
     foreach (var child in children)
     {
       if (child.transform.name == "Base")
       {
-        _levelPosition.leftMostCorner = child.GetComponent<Tilemap>().origin;
+        leftMostCorner = child.GetComponent<Tilemap>().origin;
       }
     }
 
@@ -32,9 +34,22 @@ public class Reposition : IReposition
     var moveUnits = 1.5f;
 
     return new Vector3(
-      Mathf.Abs(_levelPosition.leftMostCorner.x + moveUnits),
-      Mathf.Abs(_levelPosition.leftMostCorner.y + moveUnits),
+      Mathf.Abs(leftMostCorner.x + moveUnits),
+      Mathf.Abs(leftMostCorner.y + moveUnits),
       pos.z
     );
+  }
+
+  public void SetLevel()
+  {
+    _levelPosition.transform.position = GetRepositionVector3(_levelPosition.transform.position);
+
+    // reveal fog of starting location
+    var players = GameObject.FindGameObjectWithTag("Overall Parent").GetComponentsInChildren<Player>();
+    foreach (var player in players)
+    {
+      // move player to starting pos
+      player.transform.position = new Vector3(player.startingX, player.startingY, _levelPosition.transform.position.z);
+    }
   }
 }
