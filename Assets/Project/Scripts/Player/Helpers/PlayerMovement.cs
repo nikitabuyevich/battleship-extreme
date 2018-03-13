@@ -16,44 +16,46 @@ public class PlayerMovement : IPlayerMovement
     _cameraPosition = cameraPosition;
   }
 
-  public Vector3 GetMouseClick(Player player)
+  public bool ClickIsValid(Player player)
+  {
+    if (Input.GetMouseButtonDown(0))
+    {
+      var mousePos = GetMousePos(player);
+      Debug.Log(mousePos);
+      if (_cameraPosition.ClickIsBoundValid(mousePos))
+      {
+        return true;
+      }
+    }
+
+    return false;
+  }
+
+  public Vector3 GetMousePos(Player player)
   {
     var returnedCameraPos = player.gameCamera.GetComponent<Camera>().ScreenToWorldPoint(Input.mousePosition);
-    var test = player.transform.position - returnedCameraPos;
-    Debug.Log(returnedCameraPos);
-    var clickPos = new Vector3(
-      Mathf.Floor(returnedCameraPos.x) + 1,
-      Mathf.Floor(returnedCameraPos.y) + 1,
+    return new Vector3(
+      Mathf.Floor(returnedCameraPos.x - 0.5f) + 1f,
+      Mathf.Floor(returnedCameraPos.y - 0.5f) + 1f,
       player.transform.position.z
     );
-    // Debug.Log("before round x: " + clickPos.x);
-    var xRounded = Mathf.RoundToInt(returnedCameraPos.x);
-    var yRounded = Mathf.FloorToInt(returnedCameraPos.y);
-    var clickedTile = new Vector3(
-      clickPos.x,
-      clickPos.y,
-      returnedCameraPos.z
-    );
-
-    Debug.Log(clickedTile);
-    return _cameraPosition.GetGameBounds(clickedTile);
   }
 
   public Direction GetDirection(Player player)
   {
     var startPos = player.transform.position;
 
-    if (startPos.x - GetMouseClick(player).x > 0)
+    if (startPos.x - GetMousePos(player).x > 0)
     {
       return Direction.West;
     }
 
-    else if (startPos.x - GetMouseClick(player).x < 0)
+    else if (startPos.x - GetMousePos(player).x < 0)
     {
       return Direction.East;
     }
 
-    else if (startPos.y - GetMouseClick(player).y < 0)
+    else if (startPos.y - GetMousePos(player).y < 0)
     {
       return Direction.South;
     }
@@ -70,7 +72,7 @@ public class PlayerMovement : IPlayerMovement
     var startPos = player.transform.position;
     var t = 0f;
 
-    var endPos = new Vector3(GetMouseClick(player).x, GetMouseClick(player).y, startPos.z);
+    var endPos = new Vector3(GetMousePos(player).x, GetMousePos(player).y, startPos.z);
 
     while (player.transform.position != endPos)
     {

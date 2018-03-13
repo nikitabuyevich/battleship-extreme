@@ -57,12 +57,12 @@ public class Player : MonoBehaviour
 	void Update()
 	{
 		// TODO: display spaces player can move to
-		_playerMovement.GetMouseClick(this);
-
+		var returnedCameraPos = gameCamera.GetComponent<Camera>().ScreenToWorldPoint(Input.mousePosition);
+		Debug.Log(returnedCameraPos);
 		// start moving
 		if (!_isMoving && isAllowedToMove)
 		{
-			if (Input.GetMouseButtonDown(0) && !_playerCollisions.SpaceIsBlocked(this))
+			if (_playerMovement.ClickIsValid(this) && !_playerCollisions.SpaceIsBlocked(this))
 			{
 				_spriteRenderer.RenderDirection(this);
 				StartCoroutine(_playerMovement.Move(this));
