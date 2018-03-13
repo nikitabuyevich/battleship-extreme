@@ -43,6 +43,7 @@ public class Player : MonoBehaviour
 
 	[Header("Setup")]
 	public GameObject level;
+	public GameObject gameCamera;
 
 	internal bool _isMoving = false;
 	internal Vector2 _input;
@@ -56,6 +57,15 @@ public class Player : MonoBehaviour
 	void Update()
 	{
 		// TODO: display spaces player can move to
+
+		if (Input.GetMouseButtonDown(0))
+		{
+			// Debug.Log(Input.mousePosition);
+			Vector3 pos = gameCamera.GetComponent<Camera>().ScreenToWorldPoint(Input.mousePosition);
+			var xRounded = Mathf.RoundToInt(pos.x);
+			var yRounded = Mathf.RoundToInt(pos.y);
+			Debug.Log("X: " + xRounded + " Y: " + yRounded);
+		}
 
 		// start moving
 		if (!_isMoving && isAllowedToMove)

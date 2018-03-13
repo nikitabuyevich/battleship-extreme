@@ -94,7 +94,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1317283990787316}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4651092475127968}
@@ -154,7 +154,7 @@ MonoBehaviour:
   revealAlphaLevel: 1
   visitedAlphaLevel: 0.75
   startingX: 10
-  startingY: 5
+  startingY: 6
   northSprite: {fileID: 21300000, guid: 63af2cef08269480f8a5c413cd407b1d, type: 3}
   eastSprite: {fileID: 21300000, guid: 1b2ce01e8ec0546a29fcffca3cbbf0c0, type: 3}
   southSprite: {fileID: 21300000, guid: af8dd4e24244f47c5a3224d4a882162e, type: 3}
@@ -162,6 +162,7 @@ MonoBehaviour:
   eastWestOffsetX: 0.1
   eastWestOffsetY: 0.14
   level: {fileID: 0}
+  gameCamera: {fileID: 0}
 --- !u!212 &212656545944526582
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -197,7 +198,7 @@ SpriteRenderer:
   m_SortingLayer: 1
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 1b2ce01e8ec0546a29fcffca3cbbf0c0, type: 3}
-  m_Color: {r: 0.81960785, g: 1, b: 0, a: 1}
+  m_Color: {r: 1, g: 0, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
