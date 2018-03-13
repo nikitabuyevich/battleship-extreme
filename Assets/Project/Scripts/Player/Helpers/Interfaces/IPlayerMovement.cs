@@ -3,7 +3,7 @@ using UnityEngine;
 
 public interface IPlayerMovement
 {
-	void GetInput(Player player);
-	Direction GetDirection(Vector2 input);
+	Vector3 GetMouseClick(Player player);
+	Direction GetDirection(Player player);
 	IEnumerator Move(Player player);
 }

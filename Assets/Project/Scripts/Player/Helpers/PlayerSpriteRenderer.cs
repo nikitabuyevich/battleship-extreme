@@ -12,7 +12,7 @@ public class PlayerSpriteRenderer : IPlayerSpriteRenderer
 
 	public void RenderDirection(Player player)
 	{
-		var currentDir = _playerMovement.GetDirection(player._input);
+		var currentDir = _playerMovement.GetDirection(player);
 		SpriteRenderer playerComponent;
 
 		switch (currentDir)

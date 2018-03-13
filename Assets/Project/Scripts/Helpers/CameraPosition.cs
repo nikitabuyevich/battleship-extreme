@@ -19,9 +19,17 @@ public class CameraPosition : ICameraPosition
   public Vector3 GetCameraPoisition(float zPos)
   {
     return new Vector3(
-      Mathf.Clamp(_turn.CurrentPlayer().transform.position.x, 4.76f, GetBounds().xMax + 1 + magicNumber),
-      Mathf.Clamp(_turn.CurrentPlayer().transform.position.y, 2f, GetBounds().yMax),
+      Mathf.Clamp(_turn.CurrentPlayer().transform.position.x, 4.76f, _bounds.xMax + 1 + magicNumber),
+      Mathf.Clamp(_turn.CurrentPlayer().transform.position.y, 2f, _bounds.yMax),
       zPos);
+  }
+
+  public Vector3 GetGameBounds(Vector3 pos)
+  {
+    return new Vector3(
+      Mathf.Clamp(pos.x, 0f, _bounds.size.x - 3),
+      Mathf.Clamp(pos.y, 0f, _bounds.size.y - 3),
+      pos.z);
   }
 
   private BoundsInt GetBounds()

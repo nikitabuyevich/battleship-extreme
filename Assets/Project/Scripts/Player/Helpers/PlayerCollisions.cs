@@ -11,7 +11,7 @@ public class PlayerCollisions : IPlayerCollisions
 
 	public bool SpaceIsBlocked(Player player)
 	{
-		var direction = _playerMovement.GetDirection(player._input);
+		var direction = _playerMovement.GetDirection(player);
 
 		if (direction == Direction.North)
 		{

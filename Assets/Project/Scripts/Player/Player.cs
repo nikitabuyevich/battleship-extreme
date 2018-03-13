@@ -57,21 +57,12 @@ public class Player : MonoBehaviour
 	void Update()
 	{
 		// TODO: display spaces player can move to
-
-		if (Input.GetMouseButtonDown(0))
-		{
-			// Debug.Log(Input.mousePosition);
-			Vector3 pos = gameCamera.GetComponent<Camera>().ScreenToWorldPoint(Input.mousePosition);
-			var xRounded = Mathf.RoundToInt(pos.x);
-			var yRounded = Mathf.RoundToInt(pos.y);
-			Debug.Log("X: " + xRounded + " Y: " + yRounded);
-		}
+		_playerMovement.GetMouseClick(this);
 
 		// start moving
 		if (!_isMoving && isAllowedToMove)
 		{
-			_playerMovement.GetInput(this);
-			if (_input != Vector2.zero && !_playerCollisions.SpaceIsBlocked(this))
+			if (Input.GetMouseButtonDown(0) && !_playerCollisions.SpaceIsBlocked(this))
 			{
 				_spriteRenderer.RenderDirection(this);
 				StartCoroutine(_playerMovement.Move(this));

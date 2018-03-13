@@ -6,7 +6,6 @@ using Zenject;
 
 public class GameCamera : MonoBehaviour
 {
-
 	private ICameraPosition _cameraPosition;
 
 	[Inject]

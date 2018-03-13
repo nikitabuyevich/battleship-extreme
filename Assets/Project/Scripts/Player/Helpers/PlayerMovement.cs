@@ -1,44 +1,59 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using Zenject;
 
 public class PlayerMovement : IPlayerMovement
 {
   readonly private IFogOfWar _fogOfWar;
   readonly private IPlayerFogOfWar _playerFogOfWar;
+  readonly private ICameraPosition _cameraPosition;
 
-  public PlayerMovement(IFogOfWar fogOfWar, IPlayerFogOfWar playerFogOfWar)
+  public PlayerMovement(IFogOfWar fogOfWar, IPlayerFogOfWar playerFogOfWar, ICameraPosition cameraPosition)
   {
     _fogOfWar = fogOfWar;
     _playerFogOfWar = playerFogOfWar;
+    _cameraPosition = cameraPosition;
   }
 
-  public void GetInput(Player player)
+  public Vector3 GetMouseClick(Player player)
   {
-    player._input = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
-    if (Mathf.Abs(player._input.x) > Mathf.Abs(player._input.y))
-    {
-      player._input.y = 0;
-    }
-    else
-    {
-      player._input.x = 0;
-    }
+    var returnedCameraPos = player.gameCamera.GetComponent<Camera>().ScreenToWorldPoint(Input.mousePosition);
+    var test = player.transform.position - returnedCameraPos;
+    Debug.Log(returnedCameraPos);
+    var clickPos = new Vector3(
+      Mathf.Floor(returnedCameraPos.x) + 1,
+      Mathf.Floor(returnedCameraPos.y) + 1,
+      player.transform.position.z
+    );
+    // Debug.Log("before round x: " + clickPos.x);
+    var xRounded = Mathf.RoundToInt(returnedCameraPos.x);
+    var yRounded = Mathf.FloorToInt(returnedCameraPos.y);
+    var clickedTile = new Vector3(
+      clickPos.x,
+      clickPos.y,
+      returnedCameraPos.z
+    );
+
+    Debug.Log(clickedTile);
+    return _cameraPosition.GetGameBounds(clickedTile);
   }
 
-  public Direction GetDirection(Vector2 input)
+  public Direction GetDirection(Player player)
   {
-    if (input.x < 0)
+    var startPos = player.transform.position;
+
+    if (startPos.x - GetMouseClick(player).x > 0)
     {
       return Direction.West;
     }
 
-    else if (input.x > 0)
+    else if (startPos.x - GetMouseClick(player).x < 0)
     {
       return Direction.East;
     }
 
-    else if (input.y < 0)
+    else if (startPos.y - GetMouseClick(player).y < 0)
     {
       return Direction.South;
     }
@@ -55,7 +70,7 @@ public class PlayerMovement : IPlayerMovement
     var startPos = player.transform.position;
     var t = 0f;
 
-    var endPos = new Vector3(startPos.x + System.Math.Sign(player._input.x), startPos.y + System.Math.Sign(player._input.y), startPos.z);
+    var endPos = new Vector3(GetMouseClick(player).x, GetMouseClick(player).y, startPos.z);
 
     while (player.transform.position != endPos)
     {

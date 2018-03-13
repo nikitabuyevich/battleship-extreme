@@ -4103,6 +4103,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 796c607e8b29b4f2ea2e4887f2afa221, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameCamera: {fileID: 1059947600}
   level: {fileID: 380947118}
   gameSceneManager: {fileID: 310367512}
 --- !u!114 &1683592299
