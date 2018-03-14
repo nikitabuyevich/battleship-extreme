@@ -7,13 +7,13 @@ public class PlayerMovement : IPlayerMovement
 {
   readonly private IFogOfWar _fogOfWar;
   readonly private IPlayerFogOfWar _playerFogOfWar;
-  readonly private ICameraPosition _cameraPosition;
+  readonly private IBounds _bounds;
 
-  public PlayerMovement(IFogOfWar fogOfWar, IPlayerFogOfWar playerFogOfWar, ICameraPosition cameraPosition)
+  public PlayerMovement(IFogOfWar fogOfWar, IPlayerFogOfWar playerFogOfWar, IBounds bounds)
   {
     _fogOfWar = fogOfWar;
     _playerFogOfWar = playerFogOfWar;
-    _cameraPosition = cameraPosition;
+    _bounds = bounds;
   }
 
   public bool ClickIsValid(Player player)
@@ -21,8 +21,7 @@ public class PlayerMovement : IPlayerMovement
     if (Input.GetMouseButtonDown(0))
     {
       var mousePos = GetMousePos(player);
-      Debug.Log(mousePos);
-      if (_cameraPosition.ClickIsBoundValid(mousePos))
+      if (_bounds.ClickIsValid(mousePos))
       {
         return true;
       }
@@ -39,6 +38,29 @@ public class PlayerMovement : IPlayerMovement
       Mathf.Floor(returnedCameraPos.y - 0.5f) + 1f,
       player.transform.position.z
     );
+  }
+
+  public Direction GetMoveDirection(Vector3 mousePos, Player player)
+  {
+    var startPos = player.transform.position;
+
+    if (startPos.x - mousePos.x > 0)
+    {
+      return Direction.West;
+    }
+
+    else if (startPos.x - mousePos.x < 0)
+    {
+      return Direction.East;
+    }
+
+    else if (startPos.y - mousePos.y > 0)
+    {
+      return Direction.South;
+    }
+
+    // Otherwise moving North
+    return Direction.North;
   }
 
   public Direction GetDirection(Player player)

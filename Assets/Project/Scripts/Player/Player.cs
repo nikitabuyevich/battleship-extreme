@@ -19,11 +19,15 @@ public class Player : MonoBehaviour
 		_playerCollisions = playerCollisions;
 	}
 
+	[Header("Upgrades")]
+	public bool canMoveAcross = false;
+	public int numberOfSpacesPerTurn = 1;
+	public int numberOfMovesPerTurn = 1;
+	public int visionRadius = 1;
+
 	[Header("Gameplay")]
 	public bool isAllowedToMove = true;
-	public float moveSpeed = 1f;
-	public int visionRadius = 1;
-	public int numberOfMovesPerTurn = 1;
+	public float moveSpeed = 2f;
 	[Range(0, 1)]
 	public float revealAlphaLevel = 1f;
 	[Range(0, 1)]
@@ -57,8 +61,7 @@ public class Player : MonoBehaviour
 	void Update()
 	{
 		// TODO: display spaces player can move to
-		var returnedCameraPos = gameCamera.GetComponent<Camera>().ScreenToWorldPoint(Input.mousePosition);
-		Debug.Log(returnedCameraPos);
+
 		// start moving
 		if (!_isMoving && isAllowedToMove)
 		{
