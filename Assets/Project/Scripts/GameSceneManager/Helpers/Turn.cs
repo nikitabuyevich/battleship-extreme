@@ -25,13 +25,11 @@ public class Turn : ITurn
       var player = _gameSceneManager.players[i];
       if (i == 0)
       {
-        player.isAllowedToMove = true;
         player.OnPlayerMovement += OnPlayerMovement;
         player.GetComponent<PlayerStateMachine>().ChangeState(new PlayerMoveState(player));
       }
       else
       {
-        player.isAllowedToMove = false;
         player.OnPlayerMovement -= OnPlayerMovement;
         player.GetComponent<PlayerStateMachine>().ChangeState(new PlayerWaitingTurnState(player));
       }
@@ -43,7 +41,7 @@ public class Turn : ITurn
   public void NextPlayer()
   {
     CurrentPlayer().OnPlayerMovement -= OnPlayerMovement;
-    CurrentPlayer().isAllowedToMove = false;
+    CurrentPlayer().GetComponent<PlayerStateMachine>().ChangeState(new PlayerWaitingTurnState(CurrentPlayer()));
 
     if ((_gameSceneManager.currentPlayersTurn + 1) != _gameSceneManager.players.Length)
     {
@@ -54,7 +52,7 @@ public class Turn : ITurn
       _gameSceneManager.currentPlayersTurn = 0;
     }
 
-    CurrentPlayer().isAllowedToMove = true;
+    CurrentPlayer().GetComponent<PlayerStateMachine>().ChangeState(new PlayerMoveState(CurrentPlayer()));
     CurrentPlayer().OnPlayerMovement += OnPlayerMovement;
     _gameSceneManager.numberOfMoves = CurrentPlayer().numberOfMovesPerTurn;
 
@@ -84,7 +82,7 @@ public class Turn : ITurn
     _gameSceneManager.numberOfMoves -= 1;
     if (_gameSceneManager.numberOfMoves == 0)
     {
-      CurrentPlayer().isAllowedToMove = false;
+      CurrentPlayer().GetComponent<PlayerStateMachine>().ChangeState(new PlayerWaitingTurnState(CurrentPlayer()));
     }
   }
 }

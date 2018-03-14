@@ -164,7 +164,6 @@ MonoBehaviour:
   numberOfSpacesPerTurn: 1
   numberOfMovesPerTurn: 1
   visionRadius: 1
-  isAllowedToMove: 1
   moveSpeed: 2
   revealAlphaLevel: 1
   visitedAlphaLevel: 0.75
@@ -178,7 +177,7 @@ MonoBehaviour:
   eastWestOffsetY: 0.14
   level: {fileID: 0}
   gameCamera: {fileID: 0}
-  playerState: {fileID: 0}
+  moveSuggestion: {fileID: 0}
 --- !u!212 &212656545944526582
 SpriteRenderer:
   m_ObjectHideFlags: 1

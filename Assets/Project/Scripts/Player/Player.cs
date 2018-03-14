@@ -27,7 +27,6 @@ public class Player : MonoBehaviour
 	public int visionRadius = 1;
 
 	[Header("Gameplay")]
-	public bool isAllowedToMove = true;
 	public float moveSpeed = 2f;
 	[Range(0, 1)]
 	public float revealAlphaLevel = 1f;
@@ -49,6 +48,7 @@ public class Player : MonoBehaviour
 	[Header("Setup")]
 	public GameObject level;
 	public GameObject gameCamera;
+	public GameObject moveSuggestion;
 
 	internal bool _isMoving = false;
 	internal Vector2 _input;
@@ -62,9 +62,11 @@ public class Player : MonoBehaviour
 	void Update()
 	{
 		GetComponent<PlayerStateMachine>().ExecuteStateUpdate();
+	}
 
-		// start moving
-		if (!_isMoving && isAllowedToMove)
+	public void Move()
+	{
+		if (!_isMoving)
 		{
 			if (_playerMovement.ClickIsValid(this) && !_playerCollisions.SpaceIsBlocked(this))
 			{

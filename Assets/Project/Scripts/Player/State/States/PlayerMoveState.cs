@@ -16,7 +16,8 @@ public class PlayerMoveState : IState
 
 	public void Execute()
 	{
-		Debug.Log(_player.name + " execute waiting state");
+		_player.Move();
+		_player.moveSuggestion.GetComponent<MouseMovement>().DrawPossibleMoves();
 	}
 
 	public void Exit()

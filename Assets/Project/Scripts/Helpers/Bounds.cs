@@ -47,7 +47,7 @@ public class Bounds : IBounds
     return new BoundsInt();
   }
 
-  private IEnumerable<Vector3> GetValidPositions()
+  public List<Vector3> GetValidPositions()
   {
     var validPositions = new List<Vector3>();
     for (int i = 1; i < _turn.CurrentPlayer().numberOfSpacesPerTurn + 1; i++)
