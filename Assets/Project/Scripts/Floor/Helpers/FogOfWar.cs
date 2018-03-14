@@ -53,12 +53,15 @@ public class FogOfWar : IFogOfWar
     var tilemaps = overallParent.GetComponentsInChildren<Tilemap>();
     foreach (var tilemap in tilemaps)
     {
-      BoundsInt bounds = tilemap.cellBounds;
-      var tilePosition = bounds.allPositionsWithin;
-      while (tilePosition.MoveNext())
+      if (tilemap.transform.parent.name != "UI")
       {
-        tilemap.SetColor(tilePosition.Current,
-          player.fogOfWar[GetFogOfWarKey(tilemap.name, tilePosition.Current)]);
+        BoundsInt bounds = tilemap.cellBounds;
+        var tilePosition = bounds.allPositionsWithin;
+        while (tilePosition.MoveNext())
+        {
+          tilemap.SetColor(tilePosition.Current,
+            player.fogOfWar[GetFogOfWarKey(tilemap.name, tilePosition.Current)]);
+        }
       }
     }
   }

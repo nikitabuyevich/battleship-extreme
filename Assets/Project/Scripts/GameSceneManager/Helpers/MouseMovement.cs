@@ -22,6 +22,8 @@ public class MouseMovement : MonoBehaviour
 	public TileBase moveSuggestion;
 	public TileBase attackSuggestion;
 
+	private Vector3Int lastMousePos;
+
 	public void DrawPossibleMoves()
 	{
 		var returnedCameraPos = _turn.CurrentPlayer().gameCamera.GetComponent<Camera>().ScreenToWorldPoint(Input.mousePosition);
@@ -32,48 +34,23 @@ public class MouseMovement : MonoBehaviour
 		);
 
 		var validMoves = _bounds.GetValidPositions();
-		if (validMoves.Contains(mousePos))
+		if (lastMousePos != mousePos)
 		{
-			DisplaySuggestion(mousePos, moveSuggestion);
-		}
-		else
-		{
+			lastMousePos = mousePos;
 			ClearSuggestions();
+
+			if (validMoves.Contains(mousePos))
+			{
+				DisplaySuggestion(mousePos, moveSuggestion);
+			}
+			else { }
 		}
+
 	}
 
-	private Color GetTileColor(Vector3 pos)
+	public void ClearSuggestions()
 	{
-		var startingTileLocation = _reposition.GetStartingTileLocation();
-
-		var location = new Vector3Int(
-			startingTileLocation.x + (int) pos.x,
-			startingTileLocation.y + (int) pos.y,
-			startingTileLocation.z);
-		var overallParent = _turn.CurrentPlayer().transform.parent.gameObject.transform.parent.gameObject;
-		var tilemaps = overallParent.GetComponentsInChildren<Tilemap>();
-		foreach (var tilemap in tilemaps)
-		{
-			if (tilemap.transform.parent.name == "Free")
-			{
-				return tilemap.GetColor(location);
-			}
-		}
-
-		return new Color(0, 0, 0, 0);
-	}
-
-	private void ClearSuggestions()
-	{
-		var overallParent = _turn.CurrentPlayer().transform.parent.gameObject.transform.parent.gameObject;
-		var tilemaps = overallParent.GetComponentsInChildren<Tilemap>();
-		foreach (var tilemap in tilemaps)
-		{
-			if (tilemap.transform.parent.name == "UI")
-			{
-				tilemap.ClearAllTiles();
-			}
-		}
+		GameObject.Find("UI").GetComponentInChildren<Tilemap>().ClearAllTiles();
 	}
 
 	private void DisplaySuggestion(Vector3 pos, TileBase suggestion)
