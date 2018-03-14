@@ -27,11 +27,13 @@ public class Turn : ITurn
       {
         player.isAllowedToMove = true;
         player.OnPlayerMovement += OnPlayerMovement;
+        player.GetComponent<PlayerStateMachine>().ChangeState(new PlayerMoveState(player));
       }
       else
       {
         player.isAllowedToMove = false;
         player.OnPlayerMovement -= OnPlayerMovement;
+        player.GetComponent<PlayerStateMachine>().ChangeState(new PlayerWaitingTurnState(player));
       }
     }
 

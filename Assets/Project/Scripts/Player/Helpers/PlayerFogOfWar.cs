@@ -22,7 +22,7 @@ public class PlayerFogOfWar : IPlayerFogOfWar
       for (int i = 1; i < player.visionRadius + 2; i++)
       {
         // North
-        ChangeAlphaLevelOfTile(tilemap, GetTileLocationOfPlayer(player,
+        ChangeAlphaLevelOfTile(tilemap, GetTileLocationOfPlayer(
           new Vector3(
             player.transform.position.x,
             player.transform.position.y + i,
@@ -30,7 +30,7 @@ public class PlayerFogOfWar : IPlayerFogOfWar
           )), alphaLevel);
 
         // South
-        ChangeAlphaLevelOfTile(tilemap, GetTileLocationOfPlayer(player,
+        ChangeAlphaLevelOfTile(tilemap, GetTileLocationOfPlayer(
           new Vector3(
             player.transform.position.x,
             player.transform.position.y - i,
@@ -38,7 +38,7 @@ public class PlayerFogOfWar : IPlayerFogOfWar
           )), alphaLevel);
 
         // West
-        ChangeAlphaLevelOfTile(tilemap, GetTileLocationOfPlayer(player,
+        ChangeAlphaLevelOfTile(tilemap, GetTileLocationOfPlayer(
           new Vector3(
             player.transform.position.x - i,
             player.transform.position.y,
@@ -46,7 +46,7 @@ public class PlayerFogOfWar : IPlayerFogOfWar
           )), alphaLevel);
 
         // East
-        ChangeAlphaLevelOfTile(tilemap, GetTileLocationOfPlayer(player,
+        ChangeAlphaLevelOfTile(tilemap, GetTileLocationOfPlayer(
           new Vector3(
             player.transform.position.x + i,
             player.transform.position.y,
@@ -59,7 +59,7 @@ public class PlayerFogOfWar : IPlayerFogOfWar
       {
         for (int j = -(player.visionRadius * 2 - player.visionRadius); j < (player.visionRadius + 1); j++)
         {
-          ChangeAlphaLevelOfTile(tilemap, GetTileLocationOfPlayer(player,
+          ChangeAlphaLevelOfTile(tilemap, GetTileLocationOfPlayer(
             new Vector3(
               player.transform.position.x + j,
               player.transform.position.y + i,
@@ -70,7 +70,7 @@ public class PlayerFogOfWar : IPlayerFogOfWar
     }
   }
 
-  private Vector3Int GetTileLocationOfPlayer(Player player, Vector3 pos)
+  private Vector3Int GetTileLocationOfPlayer(Vector3 pos)
   {
     var startingTileLocation = _reposition.GetStartingTileLocation();
 

@@ -20,6 +20,7 @@ public class Player : MonoBehaviour
 	}
 
 	[Header("Upgrades")]
+	public int health = 3;
 	public bool canMoveAcross = false;
 	public int numberOfSpacesPerTurn = 1;
 	public int numberOfMovesPerTurn = 1;
@@ -60,7 +61,7 @@ public class Player : MonoBehaviour
 
 	void Update()
 	{
-		// TODO: display spaces player can move to
+		GetComponent<PlayerStateMachine>().ExecuteStateUpdate();
 
 		// start moving
 		if (!_isMoving && isAllowedToMove)

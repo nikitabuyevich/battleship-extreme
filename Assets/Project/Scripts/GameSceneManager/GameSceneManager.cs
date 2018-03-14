@@ -57,6 +57,16 @@ public class GameSceneManager : MonoBehaviour
 		_playerFogOfWar.ChangeFogOfWar(_turn.CurrentPlayer(), _turn.CurrentPlayer().revealAlphaLevel);
 	}
 
+	void LateUpdate()
+	{
+		
+	}
+
+	private void ChangeColorOfTile(Vector3 pos)
+	{
+
+	}
+
 	public void EndTurnBtn()
 	{
 		_playerFogOfWar.ChangeFogOfWar(_turn.CurrentPlayer(), _turn.CurrentPlayer().revealAlphaLevel);
