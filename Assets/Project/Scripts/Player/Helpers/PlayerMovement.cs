@@ -20,7 +20,7 @@ public class PlayerMovement : IPlayerMovement
   {
     if (Input.GetMouseButtonDown(0))
     {
-      player.moveSuggestion.GetComponent<MouseMovement>().ClearSuggestions();
+      player.mouseUI.GetComponent<MouseUI>().Clear();
       var mousePos = GetMousePos(player);
       if (_bounds.ClickIsValid(mousePos))
       {

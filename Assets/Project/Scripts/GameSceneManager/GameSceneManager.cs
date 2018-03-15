@@ -26,6 +26,9 @@ public class GameSceneManager : MonoBehaviour
 
 	[Header("Setup")]
 	public GameObject floor;
+	public int screenWidth = 640;
+	public int screenHeight = 360;
+	public bool gameIsFullscreen = true;
 
 	[Header("Fog of War")]
 	[Range(0, 1)]
@@ -51,19 +54,12 @@ public class GameSceneManager : MonoBehaviour
 
 	void Start()
 	{
+		Screen.SetResolution(screenWidth, screenHeight, gameIsFullscreen);
+
 		_reposition.SetLevel();
 		_fogOfWar.SetFogOfWar();
 		_turn.ResetAll();
 		_playerFogOfWar.ChangeFogOfWar(_turn.CurrentPlayer(), _turn.CurrentPlayer().revealAlphaLevel);
-	}
-
-	void LateUpdate()
-	{
-		
-	}
-
-	private void ChangeColorOfTile(Vector3 pos)
-	{
 
 	}
 

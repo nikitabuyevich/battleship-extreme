@@ -48,7 +48,7 @@ public class Player : MonoBehaviour
 	[Header("Setup")]
 	public GameObject level;
 	public GameObject gameCamera;
-	public GameObject moveSuggestion;
+	public GameObject mouseUI;
 
 	internal bool _isMoving = false;
 	internal Vector2 _input;

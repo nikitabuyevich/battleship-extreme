@@ -9,9 +9,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 1
   m_Script: {fileID: 13312, guid: 0000000000000000e000000000000000, type: 0}
-  m_Name: move_here_2
+  m_Name: thinking_about_moving_here
   m_EditorClassIdentifier: 
-  m_Sprite: {fileID: 21300000, guid: 7ea8a0fe68b774408ace40ce96458baa, type: 3}
+  m_Sprite: {fileID: 21300000, guid: f667a5049b055493a9859b8f009f5e20, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Transform:
     e00: 1

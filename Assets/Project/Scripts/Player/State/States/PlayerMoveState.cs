@@ -12,12 +12,13 @@ public class PlayerMoveState : IState
 	public void Enter()
 	{
 		Debug.Log(_player.name + " entering move state");
+		_player.mouseUI.GetComponent<MouseUI>().DrawPossibleMoves();
 	}
 
 	public void Execute()
 	{
 		_player.Move();
-		_player.moveSuggestion.GetComponent<MouseMovement>().DrawPossibleMoves();
+		_player.mouseUI.GetComponent<MouseUI>().DrawSuggestionOverMouse();
 	}
 
 	public void Exit()
