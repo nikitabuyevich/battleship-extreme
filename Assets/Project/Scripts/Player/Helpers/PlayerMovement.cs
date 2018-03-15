@@ -7,27 +7,16 @@ public class PlayerMovement : IPlayerMovement
 {
   readonly private IFogOfWar _fogOfWar;
   readonly private IPlayerFogOfWar _playerFogOfWar;
-  readonly private IBounds _bounds;
+  readonly private IMouse _mouse;
 
-  public PlayerMovement(IFogOfWar fogOfWar, IPlayerFogOfWar playerFogOfWar, IBounds bounds)
+  public PlayerMovement(
+    IFogOfWar fogOfWar,
+    IPlayerFogOfWar playerFogOfWar,
+    IMouse mouse)
   {
     _fogOfWar = fogOfWar;
     _playerFogOfWar = playerFogOfWar;
-    _bounds = bounds;
-  }
-
-  public bool ClickIsValid(Player player)
-  {
-    if (Input.GetMouseButtonDown(0))
-    {
-      var mousePos = GetMousePos(player);
-      if (_bounds.ClickIsValid(mousePos))
-      {
-        return true;
-      }
-    }
-
-    return false;
+    _mouse = mouse;
   }
 
   public Vector3 GetMousePos(Player player)
@@ -88,7 +77,7 @@ public class PlayerMovement : IPlayerMovement
 
   public IEnumerator Move(Player player)
   {
-    player.mouseUI.GetComponent<MouseUI>().Clear();
+    _mouse.Clear(player.mouseUI.GetComponent<MouseUI>());
     _playerFogOfWar.ChangeFogOfWar(player, player.visitedAlphaLevel);
 
     player._isMoving = true;

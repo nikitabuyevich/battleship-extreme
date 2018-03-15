@@ -6,17 +6,20 @@ public class Player : MonoBehaviour
 {
 	private IPlayerMovement _playerMovement;
 	private IPlayerSpriteRenderer _spriteRenderer;
-	private IPlayerCollisions _playerCollisions;
+	private IBounds _bounds;
+	private IMouse _mouse;
 
 	[Inject]
 	public void Construct(
 		IPlayerMovement playerMovement,
 		IPlayerSpriteRenderer spriteRenderer,
-		IPlayerCollisions playerCollisions)
+		IBounds bounds,
+		IMouse mouse)
 	{
 		_playerMovement = playerMovement;
 		_spriteRenderer = spriteRenderer;
-		_playerCollisions = playerCollisions;
+		_bounds = bounds;
+		_mouse = mouse;
 	}
 
 	// Events
@@ -71,14 +74,19 @@ public class Player : MonoBehaviour
 	{
 		if (!_isMoving)
 		{
-			if (_playerMovement.ClickIsValid(this) && !_playerCollisions.SpaceIsBlocked(this))
+			if (Input.GetMouseButtonDown(0))
 			{
-				_spriteRenderer.RenderDirection(this);
-				StartCoroutine(_playerMovement.Move(this));
-				if (OnPlayerMovement != null)
+				var mousePos = _mouse.GetMousePos(this);
+				if (_bounds.MoveIsValid(this, mousePos))
 				{
-					OnPlayerMovement();
+					_spriteRenderer.RenderDirection(this);
+					StartCoroutine(_playerMovement.Move(this));
+					if (OnPlayerMovement != null)
+					{
+						OnPlayerMovement();
+					}
 				}
+
 			}
 		}
 	}

@@ -2,17 +2,9 @@
 
 public class PlayerCollisions : IPlayerCollisions
 {
-	readonly private IPlayerMovement _playerMovement;
-
-	public PlayerCollisions(IPlayerMovement playerMovement)
+	public bool SpaceIsBlocked(Vector3 pos)
 	{
-		_playerMovement = playerMovement;
-	}
-
-	public bool SpaceIsBlocked(Player player)
-	{
-		var mousePos = _playerMovement.GetMousePos(player);
-		var colliders = Physics2D.OverlapCircleAll(new Vector2(mousePos.x, mousePos.y), 0.1f);
+		var colliders = Physics2D.OverlapCircleAll(new Vector2(pos.x, pos.y), 0.1f);
 
 		return IsBlocked(colliders);
 	}

@@ -4,16 +4,16 @@ using UnityEngine.Tilemaps;
 
 public class Bounds : IBounds
 {
-  private readonly ITurn _turn;
   private readonly BoundsInt _bounds;
+  private readonly IPlayerCollisions _playerCollisions;
 
-  public Bounds(ITurn turn)
+  public Bounds(IPlayerCollisions playerCollisions)
   {
-    _turn = turn;
+    _playerCollisions = playerCollisions;
     _bounds = Get();
   }
 
-  public bool ClickIsValid(Vector3 pos)
+  public bool MoveIsValid(Player player, Vector3 pos)
   {
     // clicking outside map
     if (pos.x < 0f || pos.x > (_bounds.size.x - 3) || pos.y < 0f || pos.y > (_bounds.size.y - 3))
@@ -21,10 +21,10 @@ public class Bounds : IBounds
       return false;
     }
 
-    var validPositions = GetValidPositions();
-    foreach (var validPosition in validPositions)
+    var possiblePositions = GetPossiblePositions(player);
+    foreach (var possiblePosition in possiblePositions)
     {
-      if (validPosition == pos)
+      if (possiblePosition == pos && !_playerCollisions.SpaceIsBlocked(pos))
       {
         return true;
       }
@@ -47,75 +47,91 @@ public class Bounds : IBounds
     return new BoundsInt();
   }
 
-  public List<Vector3> GetValidPositions()
+  public List<Vector3> GetValidPositions(Player player)
   {
     var validPositions = new List<Vector3>();
-    for (int i = 1; i < _turn.CurrentPlayer().numberOfSpacesPerTurn + 1; i++)
+
+    var possiblePositions = GetPossiblePositions(player);
+    foreach (var possiblePosition in possiblePositions)
+    {
+      if (!_playerCollisions.SpaceIsBlocked(possiblePosition))
+      {
+        validPositions.Add(possiblePosition);
+      }
+    }
+
+    return validPositions;
+  }
+
+  private List<Vector3> GetPossiblePositions(Player player)
+  {
+    var validPositions = new List<Vector3>();
+    for (int i = 1; i < player.numberOfSpacesPerTurn + 1; i++)
     {
       // North
       validPositions.Add(
         new Vector3(
-          _turn.CurrentPlayer().transform.position.x,
-          _turn.CurrentPlayer().transform.position.y + i,
-          _turn.CurrentPlayer().transform.position.z
+          player.transform.position.x,
+          player.transform.position.y + i,
+          player.transform.position.z
         ));
 
       // South
       validPositions.Add(
         new Vector3(
-          _turn.CurrentPlayer().transform.position.x,
-          _turn.CurrentPlayer().transform.position.y - i,
-          _turn.CurrentPlayer().transform.position.z
+          player.transform.position.x,
+          player.transform.position.y - i,
+          player.transform.position.z
         ));
 
       // West
       validPositions.Add(
         new Vector3(
-          _turn.CurrentPlayer().transform.position.x - i,
-          _turn.CurrentPlayer().transform.position.y,
-          _turn.CurrentPlayer().transform.position.z
+          player.transform.position.x - i,
+          player.transform.position.y,
+          player.transform.position.z
         ));
 
       // East
       validPositions.Add(
         new Vector3(
-          _turn.CurrentPlayer().transform.position.x + i,
-          _turn.CurrentPlayer().transform.position.y,
-          _turn.CurrentPlayer().transform.position.z
+          player.transform.position.x + i,
+          player.transform.position.y,
+          player.transform.position.z
         ));
 
-      if (_turn.CurrentPlayer().canMoveAcross)
+      if (player.canMoveAcross)
       {
         // North West
         validPositions.Add(
           new Vector3(
-            _turn.CurrentPlayer().transform.position.x - i,
-            _turn.CurrentPlayer().transform.position.y + i,
-            _turn.CurrentPlayer().transform.position.z
+            player.transform.position.x - i,
+            player.transform.position.y + i,
+            player.transform.position.z
           ));
 
         // North East
         validPositions.Add(
           new Vector3(
-            _turn.CurrentPlayer().transform.position.x + i,
-            _turn.CurrentPlayer().transform.position.y + i,
-            _turn.CurrentPlayer().transform.position.z
+            player.transform.position.x + i,
+            player.transform.position.y + i,
+            player.transform.position.z
           ));
 
         // South West
         validPositions.Add(
           new Vector3(
-            _turn.CurrentPlayer().transform.position.x - i,
-            _turn.CurrentPlayer().transform.position.y - i,
-            _turn.CurrentPlayer().transform.position.z
+            player.transform.position.x - i,
+            player.transform.position.y - i,
+            player.transform.position.z
           ));
 
         // South East
         validPositions.Add(
           new Vector3(
-            _turn.CurrentPlayer().transform.position.x + i,
-            _turn.CurrentPlayer().transform.position.y - i,
-            _turn.CurrentPlayer().transform.position.z
+            player.transform.position.x + i,
+            player.transform.position.y - i,
+            player.transform.position.z
           ));
       }
     }

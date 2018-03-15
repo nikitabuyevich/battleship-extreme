@@ -57,6 +57,7 @@ public class GameSceneManager : MonoBehaviour
 		_reposition.SetLevel();
 		_fogOfWar.SetFogOfWar();
 		_turn.ResetAll();
+		//
 	}
 
 	public void EndTurnBtn()

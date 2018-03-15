@@ -1,4 +1,6 @@
+using UnityEngine;
+
 public interface IPlayerCollisions
 {
-  bool SpaceIsBlocked(Player player);
+  bool SpaceIsBlocked(Vector3 pos);
 }

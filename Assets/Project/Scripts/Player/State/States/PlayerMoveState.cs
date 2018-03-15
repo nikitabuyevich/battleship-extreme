@@ -4,30 +4,31 @@ public class PlayerMoveState : IPlayerMoveState
 {
 	private readonly IPlayerFogOfWar _playerFogOfWar;
 	private readonly IFogOfWar _fogOfWar;
+	private readonly IMouse _mouse;
 
-	public PlayerMoveState(IFogOfWar fogOfWar, IPlayerFogOfWar playerFogOfWar)
+	public PlayerMoveState(
+		IFogOfWar fogOfWar,
+		IPlayerFogOfWar playerFogOfWar,
+		IMouse mouse)
 	{
 		_fogOfWar = fogOfWar;
 		_playerFogOfWar = playerFogOfWar;
+		_mouse = mouse;
 	}
 
 	public void Enter(Player player)
 	{
-		Debug.Log(player.name + " entering move state");
 		LoadPlayersFogOfWar(player);
-		player.mouseUI.GetComponent<MouseUI>().DrawPossibleMoves();
+		_mouse.DrawPossibleMoves(player);
 	}
 
 	public void Execute(Player player)
 	{
 		player.Move();
-		player.mouseUI.GetComponent<MouseUI>().DrawSuggestionOverMouse();
+		_mouse.DrawSuggestionOverMouse(player);
 	}
 
-	public void Exit(Player player)
-	{
-		Debug.Log(player.name + " exiting state");
-	}
+	public void Exit(Player player) { }
 
 	private void LoadPlayersFogOfWar(Player player)
 	{

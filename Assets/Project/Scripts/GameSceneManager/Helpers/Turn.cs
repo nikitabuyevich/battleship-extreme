@@ -7,19 +7,13 @@ public class Turn : ITurn
   [Inject]
   private readonly GameSceneManager _gameSceneManager;
 
-  readonly private IFogOfWar _fogOfWar;
-  readonly private IPlayerFogOfWar _playerFogOfWar;
   readonly private IPlayerMoveState _playerMoveState;
   readonly private IPlayerWaitingTurnState _playerWaitingTurnState;
 
   public Turn(
-    IFogOfWar fogOfWar,
-    IPlayerFogOfWar playerFogOfWar,
     IPlayerMoveState playerMoveState,
     IPlayerWaitingTurnState playerWaitingTurnState)
   {
-    _fogOfWar = fogOfWar;
-    _playerFogOfWar = playerFogOfWar;
     _playerMoveState = playerMoveState;
     _playerWaitingTurnState = playerWaitingTurnState;
   }

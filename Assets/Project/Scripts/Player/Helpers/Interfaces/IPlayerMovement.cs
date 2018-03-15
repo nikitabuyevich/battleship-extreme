@@ -7,5 +7,4 @@ public interface IPlayerMovement
 	Direction GetMoveDirection(Vector3 mousePos, Player player);
 	Direction GetDirection(Player player);
 	IEnumerator Move(Player player);
-	bool ClickIsValid(Player player);
 }
