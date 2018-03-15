@@ -6,15 +6,13 @@ using Zenject;
 public class GameSceneManager : MonoBehaviour
 {
 	private IFogOfWar _fogOfWar;
-	private IPlayerFogOfWar _playerFogOfWar;
 	private IReposition _reposition;
 	private ITurn _turn;
 
 	[Inject]
-	public void Construct(IFogOfWar fogOfWar, IPlayerFogOfWar playerFogOfWar, IReposition reposition, ITurn turn)
+	public void Construct(IFogOfWar fogOfWar, IReposition reposition, ITurn turn)
 	{
 		_fogOfWar = fogOfWar;
-		_playerFogOfWar = playerFogOfWar;
 		_reposition = reposition;
 		_turn = turn;
 
@@ -59,13 +57,10 @@ public class GameSceneManager : MonoBehaviour
 		_reposition.SetLevel();
 		_fogOfWar.SetFogOfWar();
 		_turn.ResetAll();
-		_playerFogOfWar.ChangeFogOfWar(_turn.CurrentPlayer(), _turn.CurrentPlayer().revealAlphaLevel);
-
 	}
 
 	public void EndTurnBtn()
 	{
-		_playerFogOfWar.ChangeFogOfWar(_turn.CurrentPlayer(), _turn.CurrentPlayer().revealAlphaLevel);
 		if (numberOfMoves == 0)
 		{
 			_turn.NextPlayer();

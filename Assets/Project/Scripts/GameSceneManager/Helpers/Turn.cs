@@ -9,11 +9,19 @@ public class Turn : ITurn
 
   readonly private IFogOfWar _fogOfWar;
   readonly private IPlayerFogOfWar _playerFogOfWar;
+  readonly private IPlayerMoveState _playerMoveState;
+  readonly private IPlayerWaitingTurnState _playerWaitingTurnState;
 
-  public Turn(IFogOfWar fogOfWar, IPlayerFogOfWar playerFogOfWar)
+  public Turn(
+    IFogOfWar fogOfWar,
+    IPlayerFogOfWar playerFogOfWar,
+    IPlayerMoveState playerMoveState,
+    IPlayerWaitingTurnState playerWaitingTurnState)
   {
     _fogOfWar = fogOfWar;
     _playerFogOfWar = playerFogOfWar;
+    _playerMoveState = playerMoveState;
+    _playerWaitingTurnState = playerWaitingTurnState;
   }
 
   public void ResetAll()
@@ -26,12 +34,12 @@ public class Turn : ITurn
       if (i == 0)
       {
         player.OnPlayerMovement += OnPlayerMovement;
-        player.GetComponent<PlayerStateMachine>().ChangeState(new PlayerMoveState(player));
+        player.ChangeState(_playerMoveState);
       }
       else
       {
         player.OnPlayerMovement -= OnPlayerMovement;
-        player.GetComponent<PlayerStateMachine>().ChangeState(new PlayerWaitingTurnState(player));
+        player.ChangeState(_playerWaitingTurnState);
       }
     }
 
@@ -41,7 +49,7 @@ public class Turn : ITurn
   public void NextPlayer()
   {
     CurrentPlayer().OnPlayerMovement -= OnPlayerMovement;
-    CurrentPlayer().GetComponent<PlayerStateMachine>().ChangeState(new PlayerWaitingTurnState(CurrentPlayer()));
+    CurrentPlayer().ChangeState(_playerWaitingTurnState);
 
     if ((_gameSceneManager.currentPlayersTurn + 1) != _gameSceneManager.players.Length)
     {
@@ -52,24 +60,9 @@ public class Turn : ITurn
       _gameSceneManager.currentPlayersTurn = 0;
     }
 
-    CurrentPlayer().GetComponent<PlayerStateMachine>().ChangeState(new PlayerMoveState(CurrentPlayer()));
+    CurrentPlayer().ChangeState(_playerMoveState);
     CurrentPlayer().OnPlayerMovement += OnPlayerMovement;
     _gameSceneManager.numberOfMoves = CurrentPlayer().numberOfMovesPerTurn;
-
-    LoadPlayersFogOfWar();
-  }
-
-  private void LoadPlayersFogOfWar()
-  {
-    if (CurrentPlayer().fogOfWar.Count == 0)
-    {
-      _fogOfWar.SetFogOfWar();
-      _playerFogOfWar.ChangeFogOfWar(CurrentPlayer(), CurrentPlayer().revealAlphaLevel);
-    }
-    else
-    {
-      _fogOfWar.SetPlayersFogOfWar(CurrentPlayer());
-    }
   }
 
   public Player CurrentPlayer()
@@ -82,7 +75,7 @@ public class Turn : ITurn
     _gameSceneManager.numberOfMoves -= 1;
     if (_gameSceneManager.numberOfMoves == 0)
     {
-      CurrentPlayer().GetComponent<PlayerStateMachine>().ChangeState(new PlayerWaitingTurnState(CurrentPlayer()));
+      CurrentPlayer().ChangeState(_playerWaitingTurnState);
     }
   }
 }

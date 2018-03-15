@@ -1,28 +1,44 @@
 ﻿using UnityEngine;
 
-public class PlayerMoveState : IState
+public class PlayerMoveState : IPlayerMoveState
 {
-	private readonly Player _player;
+	private readonly IPlayerFogOfWar _playerFogOfWar;
+	private readonly IFogOfWar _fogOfWar;
 
-	public PlayerMoveState(Player player)
+	public PlayerMoveState(IFogOfWar fogOfWar, IPlayerFogOfWar playerFogOfWar)
 	{
-		_player = player;
+		_fogOfWar = fogOfWar;
+		_playerFogOfWar = playerFogOfWar;
 	}
 
-	public void Enter()
+	public void Enter(Player player)
 	{
-		Debug.Log(_player.name + " entering move state");
-		_player.mouseUI.GetComponent<MouseUI>().DrawPossibleMoves();
+		Debug.Log(player.name + " entering move state");
+		LoadPlayersFogOfWar(player);
+		player.mouseUI.GetComponent<MouseUI>().DrawPossibleMoves();
 	}
 
-	public void Execute()
+	public void Execute(Player player)
 	{
-		_player.Move();
-		_player.mouseUI.GetComponent<MouseUI>().DrawSuggestionOverMouse();
+		player.Move();
+		player.mouseUI.GetComponent<MouseUI>().DrawSuggestionOverMouse();
 	}
 
-	public void Exit()
+	public void Exit(Player player)
 	{
-		Debug.Log(_player.name + " exiting state");
+		Debug.Log(player.name + " exiting state");
+	}
+
+	private void LoadPlayersFogOfWar(Player player)
+	{
+		if (player.fogOfWar.Count == 0)
+		{
+			_fogOfWar.SetFogOfWar();
+			_playerFogOfWar.ChangeFogOfWar(player, player.revealAlphaLevel);
+		}
+		else
+		{
+			_fogOfWar.SetPlayersFogOfWar(player);
+		}
 	}
 }

@@ -1,25 +1,19 @@
 ﻿using UnityEngine;
 
-public class PlayerWaitingTurnState : IState
+public class PlayerWaitingTurnState : IPlayerWaitingTurnState
 {
-	private readonly Player _player;
-
-	public PlayerWaitingTurnState(Player player)
+	public void Enter(Player player)
 	{
-		_player = player;
-	}
-	public void Enter()
-	{
-		Debug.Log(_player.name + " entering waiting turn state");
+		Debug.Log(player.name + " entering waiting turn state");
 	}
 
-	public void Execute()
+	public void Execute(Player player)
 	{
-		// Debug.Log(_player.name + " execute waiting state");
+		// Debug.Log(player.name + " execute waiting state");
 	}
 
-	public void Exit()
+	public void Exit(Player player)
 	{
-		Debug.Log(_player.name + " exiting waiting turn state");
+		Debug.Log(player.name + " exiting waiting turn state");
 	}
 }

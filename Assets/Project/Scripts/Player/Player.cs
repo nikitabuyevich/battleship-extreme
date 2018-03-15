@@ -19,6 +19,11 @@ public class Player : MonoBehaviour
 		_playerCollisions = playerCollisions;
 	}
 
+	// Events
+	public delegate void MovementHandler();
+
+	public event MovementHandler OnPlayerMovement;
+
 	[Header("Upgrades")]
 	public int health = 3;
 	public bool canMoveAcross = false;
@@ -54,14 +59,12 @@ public class Player : MonoBehaviour
 	internal Vector2 _input;
 	internal Dictionary<string, Color> fogOfWar = new Dictionary<string, Color>();
 
-	// Events
-	public delegate void MovementHandler();
-
-	public event MovementHandler OnPlayerMovement;
+	private IState currentlyRunningState;
+	private IState previouslyRunningState;
 
 	void Update()
 	{
-		GetComponent<PlayerStateMachine>().ExecuteStateUpdate();
+		ExecuteStateUpdate();
 	}
 
 	public void Move()
@@ -78,5 +81,31 @@ public class Player : MonoBehaviour
 				}
 			}
 		}
+	}
+
+	public void ChangeState(IState newState)
+	{
+		if (this.currentlyRunningState != null)
+		{
+			this.currentlyRunningState.Exit(this);
+		}
+		this.previouslyRunningState = this.currentlyRunningState;
+		this.currentlyRunningState = newState;
+		this.currentlyRunningState.Enter(this);
+	}
+
+	public void ExecuteStateUpdate()
+	{
+		if (this.currentlyRunningState != null)
+		{
+			this.currentlyRunningState.Execute(this);
+		}
+	}
+
+	public void SwitchToPreviouslyRunningState()
+	{
+		this.currentlyRunningState.Exit(this);
+		this.currentlyRunningState = this.previouslyRunningState;
+		this.currentlyRunningState.Enter(this);
 	}
 }

@@ -19,7 +19,8 @@ public class GameInstaller : MonoInstaller
         Container.Bind<IReposition>().To<Reposition>().AsSingle();
         Container.Bind<IBounds>().To<Bounds>().AsSingle();
 
-        Container.Bind<IState>().To<PlayerMoveState>().AsSingle();
+        Container.Bind<IPlayerMoveState>().To<PlayerMoveState>().AsSingle();
+        Container.Bind<IPlayerWaitingTurnState>().To<PlayerWaitingTurnState>().AsSingle();
 
         Container.Bind<Reposition>().AsSingle();
         Container.Bind<FogOfWar>().AsSingle();

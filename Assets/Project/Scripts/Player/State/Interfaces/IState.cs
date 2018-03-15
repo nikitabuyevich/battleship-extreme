@@ -1,6 +1,6 @@
 ﻿public interface IState
 {
-	void Enter();
-	void Execute();
-	void Exit();
+	void Enter(Player player);
+	void Execute(Player player);
+	void Exit(Player player);
 }

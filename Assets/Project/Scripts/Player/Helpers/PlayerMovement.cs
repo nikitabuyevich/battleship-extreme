@@ -20,7 +20,6 @@ public class PlayerMovement : IPlayerMovement
   {
     if (Input.GetMouseButtonDown(0))
     {
-      player.mouseUI.GetComponent<MouseUI>().Clear();
       var mousePos = GetMousePos(player);
       if (_bounds.ClickIsValid(mousePos))
       {
@@ -89,6 +88,7 @@ public class PlayerMovement : IPlayerMovement
 
   public IEnumerator Move(Player player)
   {
+    player.mouseUI.GetComponent<MouseUI>().Clear();
     _playerFogOfWar.ChangeFogOfWar(player, player.visitedAlphaLevel);
 
     player._isMoving = true;

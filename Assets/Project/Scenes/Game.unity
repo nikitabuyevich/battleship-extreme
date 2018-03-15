@@ -1092,11 +1092,6 @@ Prefab:
       objectReference: {fileID: 1059947600}
     - target: {fileID: 114968814741079056, guid: c01ec807514984da0954ee4339e6de2b,
         type: 2}
-      propertyPath: moveSuggestion
-      value: 
-      objectReference: {fileID: 845354861}
-    - target: {fileID: 114968814741079056, guid: c01ec807514984da0954ee4339e6de2b,
-        type: 2}
       propertyPath: mouseUI
       value: 
       objectReference: {fileID: 845354861}
