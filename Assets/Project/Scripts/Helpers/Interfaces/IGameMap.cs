@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public interface IBounds
+public interface IGameMap
 {
   BoundsInt Get();
   bool MoveIsValid(Player player, Vector3 pos);

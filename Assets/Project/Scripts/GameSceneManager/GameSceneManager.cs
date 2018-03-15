@@ -42,7 +42,7 @@ public class GameSceneManager : MonoBehaviour
 		set
 		{
 			_numberOfMoves = value;
-			numberOfMovesText.text = "Number of Moves Left: " + _numberOfMoves;
+			numberOfMovesText.text = "Moves \nLeft: " + _numberOfMoves;
 		}
 		get
 		{

@@ -6,19 +6,19 @@ public class Player : MonoBehaviour
 {
 	private IPlayerMovement _playerMovement;
 	private IPlayerSpriteRenderer _spriteRenderer;
-	private IBounds _bounds;
+	private IGameMap _gameMap;
 	private IMouse _mouse;
 
 	[Inject]
 	public void Construct(
 		IPlayerMovement playerMovement,
 		IPlayerSpriteRenderer spriteRenderer,
-		IBounds bounds,
+		IGameMap gameMap,
 		IMouse mouse)
 	{
 		_playerMovement = playerMovement;
 		_spriteRenderer = spriteRenderer;
-		_bounds = bounds;
+		_gameMap = gameMap;
 		_mouse = mouse;
 	}
 
@@ -77,7 +77,7 @@ public class Player : MonoBehaviour
 			if (Input.GetMouseButtonDown(0))
 			{
 				var mousePos = _mouse.GetMousePos(this);
-				if (_bounds.MoveIsValid(this, mousePos))
+				if (_gameMap.MoveIsValid(this, mousePos))
 				{
 					_spriteRenderer.RenderDirection(this);
 					StartCoroutine(_playerMovement.Move(this));

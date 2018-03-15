@@ -3,14 +3,14 @@ using UnityEngine.Tilemaps;
 
 public class Mouse : IMouse
 {
-  private readonly IBounds _bounds;
+  private readonly IGameMap _gameMap;
   private readonly IReposition _reposition;
 
   public Mouse(
-    IBounds bounds,
+    IGameMap gameMap,
     IReposition reposition)
   {
-    _bounds = bounds;
+    _gameMap = gameMap;
     _reposition = reposition;
   }
 
@@ -26,7 +26,7 @@ public class Mouse : IMouse
   public void DrawPossibleMoves(Player player)
   {
     var mouseUI = player.mouseUI.GetComponent<MouseUI>();
-    var validPositions = _bounds.GetValidPositions(player);
+    var validPositions = _gameMap.GetValidPositions(player);
     foreach (var validPosition in validPositions)
     {
       PlaceTile(player, validPosition, mouseUI.canMoveHere, "Move Suggestions");
@@ -45,7 +45,7 @@ public class Mouse : IMouse
 
     if (mouseUI.lastMousePos != mousePos)
     {
-      var validPositions = _bounds.GetValidPositions(player);
+      var validPositions = _gameMap.GetValidPositions(player);
       if (validPositions.Contains(mousePos))
       {
         ClearMouseUI(mouseUI);

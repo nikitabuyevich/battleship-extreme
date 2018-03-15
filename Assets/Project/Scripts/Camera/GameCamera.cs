@@ -7,20 +7,20 @@ using Zenject;
 public class GameCamera : MonoBehaviour
 {
 	private ITurn _turn;
-	private IBounds _bounds;
+	private IGameMap _gameMap;
 
 	[Inject]
-	public void Construct(ITurn turn, IBounds bounds)
+	public void Construct(ITurn turn, IGameMap gameMap)
 	{
 		_turn = turn;
-		_bounds = bounds;
+		_gameMap = gameMap;
 	}
 
 	void LateUpdate()
 	{
 		transform.position = new Vector3(
-			Mathf.Clamp(_turn.CurrentPlayer().transform.position.x + 0.5f, 7.5f, _bounds.Get().xMax - 1.5f),
-			Mathf.Clamp(_turn.CurrentPlayer().transform.position.y + 0.5f, 3.5f, _bounds.Get().yMax - 1.5f),
+			Mathf.Clamp(_turn.CurrentPlayer().transform.position.x + 0.5f, 7.5f, _gameMap.Get().xMax - 1.5f),
+			Mathf.Clamp(_turn.CurrentPlayer().transform.position.y + 0.5f, 3.5f, _gameMap.Get().yMax - 1.5f),
 			transform.position.z);
 	}
 }

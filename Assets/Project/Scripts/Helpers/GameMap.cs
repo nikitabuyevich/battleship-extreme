@@ -2,12 +2,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-public class Bounds : IBounds
+public class GameMap : IGameMap
 {
   private readonly BoundsInt _bounds;
   private readonly IPlayerCollisions _playerCollisions;
 
-  public Bounds(IPlayerCollisions playerCollisions)
+  public GameMap(IPlayerCollisions playerCollisions)
   {
     _playerCollisions = playerCollisions;
     _bounds = Get();
