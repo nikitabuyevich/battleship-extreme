@@ -284,7 +284,7 @@ MonoBehaviour:
   screenWidth: 640
   screenHeight: 360
   gameIsFullscreen: 1
-  fogOfWarAlphaLevel: 0.5
+  fogOfWarAlphaLevel: 0
   blackTile: {fileID: 11400000, guid: 0d819682e1a4a414a9f11f440d1c1248, type: 2}
 --- !u!1 &380947118 stripped
 GameObject:
