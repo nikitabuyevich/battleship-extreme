@@ -16,29 +16,53 @@ public class Ability : IAbility
     _onPlayer = onPlayer;
   }
 
-  public void Rotate(Player player)
+  public void Rotate(Player player, bool reverse)
   {
     var playersCurrentDir = _playerSpriteRenderer.GetDirection(player);
 
-    // Render new direction
-    if (playersCurrentDir == Direction.West)
+    if (reverse)
     {
-      _playerSpriteRenderer.RenderDirection(player, Direction.North);
-    }
-    else if (playersCurrentDir == Direction.North)
-    {
-      _playerSpriteRenderer.RenderDirection(player, Direction.East);
-    }
-    else if (playersCurrentDir == Direction.East)
-    {
-      _playerSpriteRenderer.RenderDirection(player, Direction.South);
+      if (playersCurrentDir == Direction.West)
+      {
+        _playerSpriteRenderer.RenderDirection(player, Direction.South);
+      }
+      else if (playersCurrentDir == Direction.North)
+      {
+        _playerSpriteRenderer.RenderDirection(player, Direction.West);
+      }
+      else if (playersCurrentDir == Direction.East)
+      {
+        _playerSpriteRenderer.RenderDirection(player, Direction.North);
+      }
+      else
+      {
+        _playerSpriteRenderer.RenderDirection(player, Direction.East);
+      }
     }
     else
     {
-      _playerSpriteRenderer.RenderDirection(player, Direction.West);
+      if (playersCurrentDir == Direction.West)
+      {
+        _playerSpriteRenderer.RenderDirection(player, Direction.North);
+      }
+      else if (playersCurrentDir == Direction.North)
+      {
+        _playerSpriteRenderer.RenderDirection(player, Direction.East);
+      }
+      else if (playersCurrentDir == Direction.East)
+      {
+        _playerSpriteRenderer.RenderDirection(player, Direction.South);
+      }
+      else
+      {
+        _playerSpriteRenderer.RenderDirection(player, Direction.West);
+      }
     }
 
-    _onPlayer.Movement(player);
+    if (!player.rotationsAreFree)
+    {
+      _onPlayer.Movement(player);
+    }
   }
 
   public void Attack(Player player)

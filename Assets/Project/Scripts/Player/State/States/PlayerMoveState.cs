@@ -36,7 +36,7 @@ public class PlayerMoveState : IPlayerMoveState
 
 	public void AbilityRotate(Player player)
 	{
-		_ability.Rotate(player);
+		_ability.Rotate(player, false);
 	}
 
 	public void AbilityAttack(Player player) { }

@@ -43,6 +43,7 @@ public class Player : MonoBehaviour
 	[Header("Upgrades")]
 	public int health = 3;
 	public bool canMoveAcross = false;
+	public bool rotationsAreFree = false;
 	public int numberOfSpacesPerTurn = 1;
 	public int numberOfMovesPerTurn = 1;
 	public int numberOfAttacksPerTurn = 1;
