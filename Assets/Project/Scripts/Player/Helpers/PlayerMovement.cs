@@ -5,6 +5,9 @@ using Zenject;
 
 public class PlayerMovement : IPlayerMovement
 {
+  [Inject]
+  private readonly GameSceneManager _gameSceneManager;
+
   readonly private IFogOfWar _fogOfWar;
   readonly private IPlayerFogOfWar _playerFogOfWar;
   readonly private IMouse _mouse;
@@ -77,7 +80,8 @@ public class PlayerMovement : IPlayerMovement
 
   public IEnumerator Move(Player player)
   {
-    _mouse.Clear(player.mouseUI.GetComponent<MouseUI>());
+    var mouseUI = player.mouseUI.GetComponent<MouseUI>();
+    _mouse.Clear(mouseUI);
     _playerFogOfWar.ChangeFogOfWar(player, player.visitedAlphaLevel);
 
     player._isMoving = true;
@@ -96,6 +100,13 @@ public class PlayerMovement : IPlayerMovement
     _playerFogOfWar.ChangeFogOfWar(player, player.revealAlphaLevel);
     player._isMoving = false;
     AddAllTilesOf(player);
+
+    // check if more moves are available
+    if (_gameSceneManager.numberOfMoves > 0)
+    {
+      _mouse.DrawPossibleMoves(player);
+    }
+
     yield return 0;
   }
 

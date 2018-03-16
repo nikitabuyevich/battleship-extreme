@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 using Zenject;
@@ -7,19 +8,15 @@ public class Turn : ITurn
   [Inject]
   private readonly GameSceneManager _gameSceneManager;
 
-  readonly private IPlayerMoveState _playerMoveState;
-  readonly private IPlayerWaitingTurnState _playerWaitingTurnState;
-  readonly private IMouse _mouse;
+  private readonly IMouse _mouse;
+  private readonly IOnPlayer _onPlayer;
 
   public Turn(
-    IPlayerMoveState playerMoveState,
-    IPlayerWaitingTurnState playerWaitingTurnState,
-    IMouse mouse)
+    IMouse mouse,
+    IOnPlayer onPlayer)
   {
     _mouse = mouse;
-
-    _playerMoveState = playerMoveState;
-    _playerWaitingTurnState = playerWaitingTurnState;
+    _onPlayer = onPlayer;
   }
 
   public void ResetAll()
@@ -32,22 +29,26 @@ public class Turn : ITurn
       if (i == 0)
       {
         player.OnPlayerMovement += OnPlayerMovement;
-        player.ChangeState(_playerMoveState);
+        player.ChangeState(typeof(IPlayerMoveState));
       }
       else
       {
         player.OnPlayerMovement -= OnPlayerMovement;
-        player.ChangeState(_playerWaitingTurnState);
+        player.ChangeState(typeof(IPlayerWaitingTurnState));
       }
     }
 
     _gameSceneManager.numberOfMoves = CurrentPlayer().numberOfMovesPerTurn;
+    _gameSceneManager.numberOfAttacks = CurrentPlayer().numberOfAttacksPerTurn;
   }
 
   public void NextPlayer()
   {
+    var mouseUI = CurrentPlayer().mouseUI.GetComponent<MouseUI>();
+    _mouse.Clear(mouseUI);
+
     CurrentPlayer().OnPlayerMovement -= OnPlayerMovement;
-    CurrentPlayer().ChangeState(_playerWaitingTurnState);
+    CurrentPlayer().ChangeState(typeof(IPlayerWaitingTurnState));
 
     if ((_gameSceneManager.currentPlayersTurn + 1) != _gameSceneManager.players.Length)
     {
@@ -58,9 +59,10 @@ public class Turn : ITurn
       _gameSceneManager.currentPlayersTurn = 0;
     }
 
-    CurrentPlayer().ChangeState(_playerMoveState);
+    CurrentPlayer().ChangeState(typeof(IPlayerMoveState));
     CurrentPlayer().OnPlayerMovement += OnPlayerMovement;
     _gameSceneManager.numberOfMoves = CurrentPlayer().numberOfMovesPerTurn;
+    _gameSceneManager.numberOfAttacks = CurrentPlayer().numberOfAttacksPerTurn;
   }
 
   public Player CurrentPlayer()
@@ -70,11 +72,6 @@ public class Turn : ITurn
 
   private void OnPlayerMovement()
   {
-    _gameSceneManager.numberOfMoves -= 1;
-    if (_gameSceneManager.numberOfMoves == 0)
-    {
-      _mouse.Clear(CurrentPlayer().mouseUI.GetComponent<MouseUI>());
-      CurrentPlayer().ChangeState(_playerWaitingTurnState);
-    }
+    _onPlayer.Movement(CurrentPlayer());
   }
 }

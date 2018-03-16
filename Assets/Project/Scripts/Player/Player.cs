@@ -1,9 +1,14 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 using Zenject;
 
 public class Player : MonoBehaviour
 {
+	// Player states
+	private IPlayerWaitingTurnState _playerWaitingTurnState;
+	private IPlayerMoveState _playerMoveState;
+
 	private IPlayerMovement _playerMovement;
 	private IPlayerSpriteRenderer _spriteRenderer;
 	private IGameMap _gameMap;
@@ -11,11 +16,16 @@ public class Player : MonoBehaviour
 
 	[Inject]
 	public void Construct(
+		IPlayerWaitingTurnState playerWaitingTurnState,
+		IPlayerMoveState playerMoveState,
 		IPlayerMovement playerMovement,
 		IPlayerSpriteRenderer spriteRenderer,
 		IGameMap gameMap,
 		IMouse mouse)
 	{
+		_playerWaitingTurnState = playerWaitingTurnState;
+		_playerMoveState = playerMoveState;
+
 		_playerMovement = playerMovement;
 		_spriteRenderer = spriteRenderer;
 		_gameMap = gameMap;
@@ -32,6 +42,7 @@ public class Player : MonoBehaviour
 	public bool canMoveAcross = false;
 	public int numberOfSpacesPerTurn = 1;
 	public int numberOfMovesPerTurn = 1;
+	public int numberOfAttacksPerTurn = 1;
 	public int visionRadius = 1;
 
 	[Header("Gameplay")]
@@ -84,7 +95,6 @@ public class Player : MonoBehaviour
 					StartCoroutine(_playerMovement.Move(this));
 					UseMoveTurn();
 				}
-
 			}
 		}
 	}
@@ -102,7 +112,19 @@ public class Player : MonoBehaviour
 		return currentlyRunningState;
 	}
 
-	public void ChangeState(IState newState)
+	public void ChangeState(Type type)
+	{
+		if (type == typeof(IPlayerMoveState))
+		{
+			ChangeState(_playerMoveState);
+		}
+		else if (type == typeof(IPlayerWaitingTurnState))
+		{
+			ChangeState(_playerWaitingTurnState);
+		}
+	}
+
+	private void ChangeState(IState newState)
 	{
 		if (currentlyRunningState != null)
 		{

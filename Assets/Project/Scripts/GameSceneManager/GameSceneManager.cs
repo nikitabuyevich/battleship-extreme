@@ -20,7 +20,8 @@ public class GameSceneManager : MonoBehaviour
 	}
 
 	[Header("UI")]
-	public Text numberOfMovesText;
+	public Text movesLeft;
+	public Text attacksLeft;
 
 	[Header("Setup")]
 	public GameObject floor;
@@ -36,13 +37,27 @@ public class GameSceneManager : MonoBehaviour
 	internal Player[] players;
 	internal int currentPlayersTurn = 0;
 
+	private int _numberOfAttacks;
+	internal int numberOfAttacks
+	{
+		set
+		{
+			_numberOfAttacks = value;
+			attacksLeft.text = "Attacks \nLeft: " + _numberOfAttacks;
+		}
+		get
+		{
+			return _numberOfAttacks;
+		}
+	}
+
 	private int _numberOfMoves;
 	internal int numberOfMoves
 	{
 		set
 		{
 			_numberOfMoves = value;
-			numberOfMovesText.text = "Moves \nLeft: " + _numberOfMoves;
+			movesLeft.text = "Moves \nLeft: " + _numberOfMoves;
 		}
 		get
 		{
@@ -62,10 +77,7 @@ public class GameSceneManager : MonoBehaviour
 
 	public void EndTurnBtn()
 	{
-		if (numberOfMoves == 0)
-		{
-			_turn.NextPlayer();
-		}
+		_turn.NextPlayer();
 	}
 
 	public void AbilityAttackBtn()

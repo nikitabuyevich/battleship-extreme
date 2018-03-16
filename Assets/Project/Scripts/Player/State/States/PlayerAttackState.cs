@@ -12,7 +12,8 @@ public class PlayerAttackState : IPlayerAttackState
 
 	public void Enter(Player player)
 	{
-		_mouse.SetAttackCursor(player.mouseUI.GetComponent<MouseUI>());
+		var mouseUI = player.mouseUI.GetComponent<MouseUI>();
+		_mouse.SetAttackCursor(mouseUI);
 	}
 
 	public void Execute(Player player)
@@ -23,8 +24,6 @@ public class PlayerAttackState : IPlayerAttackState
 
 	public void Exit(Player player) { }
 
-	public void AbilityRotate(Player player)
-	{
-		
-	}
+	public void AbilityRotate(Player player) { }
+	public void AbilityAttack(Player player) { }
 }

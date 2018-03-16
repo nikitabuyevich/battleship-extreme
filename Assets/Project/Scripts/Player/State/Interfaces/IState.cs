@@ -4,4 +4,5 @@
 	void Execute(Player player);
 	void Exit(Player player);
 	void AbilityRotate(Player player);
+	void AbilityAttack(Player player);
 }
