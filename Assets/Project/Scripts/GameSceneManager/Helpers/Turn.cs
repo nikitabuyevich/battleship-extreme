@@ -9,11 +9,15 @@ public class Turn : ITurn
 
   readonly private IPlayerMoveState _playerMoveState;
   readonly private IPlayerWaitingTurnState _playerWaitingTurnState;
+  readonly private IMouse _mouse;
 
   public Turn(
     IPlayerMoveState playerMoveState,
-    IPlayerWaitingTurnState playerWaitingTurnState)
+    IPlayerWaitingTurnState playerWaitingTurnState,
+    IMouse mouse)
   {
+    _mouse = mouse;
+
     _playerMoveState = playerMoveState;
     _playerWaitingTurnState = playerWaitingTurnState;
   }
@@ -69,6 +73,7 @@ public class Turn : ITurn
     _gameSceneManager.numberOfMoves -= 1;
     if (_gameSceneManager.numberOfMoves == 0)
     {
+      _mouse.Clear(CurrentPlayer().mouseUI.GetComponent<MouseUI>());
       CurrentPlayer().ChangeState(_playerWaitingTurnState);
     }
   }

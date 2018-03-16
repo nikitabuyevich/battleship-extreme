@@ -95,11 +95,11 @@ public class PlayerMovement : IPlayerMovement
 
     _playerFogOfWar.ChangeFogOfWar(player, player.revealAlphaLevel);
     player._isMoving = false;
-    GetAllTiles(player);
+    AddAllTilesOf(player);
     yield return 0;
   }
 
-  private void GetAllTiles(Player player)
+  private void AddAllTilesOf(Player player)
   {
     // Empty list every time you move
     player.fogOfWar.Clear();

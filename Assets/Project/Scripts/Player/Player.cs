@@ -79,41 +79,52 @@ public class Player : MonoBehaviour
 				var mousePos = _mouse.GetMousePos(this);
 				if (_gameMap.MoveIsValid(this, mousePos))
 				{
-					_spriteRenderer.RenderDirection(this);
+					var currentDir = _playerMovement.GetDirection(this);
+					_spriteRenderer.RenderDirection(this, currentDir);
 					StartCoroutine(_playerMovement.Move(this));
-					if (OnPlayerMovement != null)
-					{
-						OnPlayerMovement();
-					}
+					UseMoveTurn();
 				}
 
 			}
 		}
 	}
 
+	public void UseMoveTurn()
+	{
+		if (OnPlayerMovement != null)
+		{
+			OnPlayerMovement();
+		}
+	}
+
+	public IState CurrentState()
+	{
+		return currentlyRunningState;
+	}
+
 	public void ChangeState(IState newState)
 	{
-		if (this.currentlyRunningState != null)
+		if (currentlyRunningState != null)
 		{
-			this.currentlyRunningState.Exit(this);
+			currentlyRunningState.Exit(this);
 		}
-		this.previouslyRunningState = this.currentlyRunningState;
-		this.currentlyRunningState = newState;
-		this.currentlyRunningState.Enter(this);
+		previouslyRunningState = currentlyRunningState;
+		currentlyRunningState = newState;
+		currentlyRunningState.Enter(this);
 	}
 
 	public void ExecuteStateUpdate()
 	{
-		if (this.currentlyRunningState != null)
+		if (currentlyRunningState != null)
 		{
-			this.currentlyRunningState.Execute(this);
+			currentlyRunningState.Execute(this);
 		}
 	}
 
 	public void SwitchToPreviouslyRunningState()
 	{
-		this.currentlyRunningState.Exit(this);
-		this.currentlyRunningState = this.previouslyRunningState;
-		this.currentlyRunningState.Enter(this);
+		currentlyRunningState.Exit(this);
+		currentlyRunningState = previouslyRunningState;
+		currentlyRunningState.Enter(this);
 	}
 }

@@ -1,4 +1,5 @@
 ﻿public interface IPlayerSpriteRenderer
 {
-	void RenderDirection(Player player);
+	Direction GetDirection(Player player);
+	void RenderDirection(Player player, Direction direction);
 }

@@ -2,20 +2,32 @@
 
 public class PlayerSpriteRenderer : IPlayerSpriteRenderer
 {
-
-	readonly private IPlayerMovement _playerMovement;
-
-	public PlayerSpriteRenderer(IPlayerMovement playerMovement)
+	public Direction GetDirection(Player player)
 	{
-		_playerMovement = playerMovement;
+		var playerRenderer = player.GetComponentInChildren<SpriteRenderer>();
+		var directionSprite = playerRenderer.sprite;
+
+		if (directionSprite == player.northSprite)
+		{
+			return Direction.North;
+		}
+		else if (directionSprite == player.southSprite)
+		{
+			return Direction.South;
+		}
+		else if (directionSprite == player.westSprite)
+		{
+			return Direction.West;
+		}
+
+		return Direction.East;
 	}
 
-	public void RenderDirection(Player player)
+	public void RenderDirection(Player player, Direction direction)
 	{
-		var currentDir = _playerMovement.GetDirection(player);
 		SpriteRenderer playerComponent;
 
-		switch (currentDir)
+		switch (direction)
 		{
 			case Direction.North:
 				playerComponent = player.GetComponentInChildren<SpriteRenderer>();

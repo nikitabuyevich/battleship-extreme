@@ -67,4 +67,14 @@ public class GameSceneManager : MonoBehaviour
 			_turn.NextPlayer();
 		}
 	}
+
+	public void AbilityAttackBtn()
+	{
+
+	}
+
+	public void AbilityRotateBtn()
+	{
+		_turn.CurrentPlayer().CurrentState().AbilityRotate(_turn.CurrentPlayer());
+	}
 }

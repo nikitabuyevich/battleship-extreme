@@ -23,6 +23,16 @@ public class Mouse : IMouse
       (int) player.transform.position.z);
   }
 
+  public void SetAttackCursor(MouseUI mouseUI)
+  {
+    Cursor.SetCursor(mouseUI.attackCursor, mouseUI.attackCursorHotSpot, mouseUI.cursorMode);
+  }
+
+  public void DrawAttackSuggestions(MouseUI mouseUI)
+  {
+
+  }
+
   public void DrawPossibleMoves(Player player)
   {
     var mouseUI = player.mouseUI.GetComponent<MouseUI>();
