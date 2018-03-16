@@ -80,13 +80,22 @@ public class GameSceneManager : MonoBehaviour
 		_turn.NextPlayer();
 	}
 
+	public void AbilityCancelBtn()
+	{
+		var player = _turn.CurrentPlayer();
+		player.SetInitialState();
+	}
+
 	public void AbilityAttackBtn()
 	{
-
+		var player = _turn.CurrentPlayer();
+		player.ChangeState(typeof(IPlayerAttackState));
+		player.CurrentState().AbilityAttack(player);
 	}
 
 	public void AbilityRotateBtn()
 	{
-		_turn.CurrentPlayer().CurrentState().AbilityRotate(_turn.CurrentPlayer());
+		var player = _turn.CurrentPlayer();
+		player.CurrentState().AbilityRotate(player);
 	}
 }

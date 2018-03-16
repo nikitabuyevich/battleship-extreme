@@ -12,15 +12,13 @@ public class PlayerAttackState : IPlayerAttackState
 
 	public void Enter(Player player)
 	{
+		Debug.Log(player.name + " entered attack state!");
 		var mouseUI = player.mouseUI.GetComponent<MouseUI>();
 		_mouse.SetAttackCursor(mouseUI);
 	}
 
 	public void Execute(Player player)
-	{
-		player.Move();
-		_mouse.DrawSuggestionOverMouse(player);
-	}
+	{ }
 
 	public void Exit(Player player) { }
 

@@ -8,6 +8,7 @@ public class Player : MonoBehaviour
 	// Player states
 	private IPlayerWaitingTurnState _playerWaitingTurnState;
 	private IPlayerMoveState _playerMoveState;
+	private IPlayerAttackState _playerAttackState;
 
 	private IPlayerMovement _playerMovement;
 	private IPlayerSpriteRenderer _spriteRenderer;
@@ -18,6 +19,7 @@ public class Player : MonoBehaviour
 	public void Construct(
 		IPlayerWaitingTurnState playerWaitingTurnState,
 		IPlayerMoveState playerMoveState,
+		IPlayerAttackState playerAttackState,
 		IPlayerMovement playerMovement,
 		IPlayerSpriteRenderer spriteRenderer,
 		IGameMap gameMap,
@@ -25,6 +27,7 @@ public class Player : MonoBehaviour
 	{
 		_playerWaitingTurnState = playerWaitingTurnState;
 		_playerMoveState = playerMoveState;
+		_playerAttackState = playerAttackState;
 
 		_playerMovement = playerMovement;
 		_spriteRenderer = spriteRenderer;
@@ -79,6 +82,11 @@ public class Player : MonoBehaviour
 	void Update()
 	{
 		ExecuteStateUpdate();
+
+		if (Input.GetMouseButtonDown(1))
+		{
+			SetInitialState();
+		}
 	}
 
 	public void Move()
@@ -122,6 +130,14 @@ public class Player : MonoBehaviour
 		{
 			ChangeState(_playerWaitingTurnState);
 		}
+		else if (type == typeof(IPlayerAttackState))
+		{
+			ChangeState(_playerAttackState);
+		}
+		else
+		{
+			Debug.Log(type.ToString() + " state not found");
+		}
 	}
 
 	private void ChangeState(IState newState)
@@ -148,5 +164,15 @@ public class Player : MonoBehaviour
 		currentlyRunningState.Exit(this);
 		currentlyRunningState = previouslyRunningState;
 		currentlyRunningState.Enter(this);
+	}
+
+	public void SetInitialState()
+	{
+		if (currentlyRunningState != _playerWaitingTurnState &&
+			previouslyRunningState != null &&
+			previouslyRunningState != _playerWaitingTurnState)
+		{
+			SwitchToPreviouslyRunningState();
+		}
 	}
 }
