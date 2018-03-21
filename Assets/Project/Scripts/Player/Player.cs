@@ -44,8 +44,9 @@ public class Player : MonoBehaviour
 	public int health = 3;
 	public bool canMoveAcross = false;
 	public bool rotationsAreFree = false;
-	public int numberOfSpacesPerTurn = 1;
+	public int numberOfMoveSpacesPerTurn = 1;
 	public int numberOfMovesPerTurn = 1;
+	public int numberOfAttackSpacesPerTurn = 2;
 	public int numberOfAttacksPerTurn = 1;
 	public int visionRadius = 1;
 

@@ -9,7 +9,8 @@ public class MouseUI : MonoBehaviour
 	[Header("Icon Suggestions")]
 	public TileBase canMoveHere;
 	public TileBase thinkingAboutMovingHere;
-	public TileBase attackSuggestion;
+	public TileBase canAttackHere;
+	public TileBase thinkingAboutAttackingHere;
 
 	public Texture2D moveCursor;
 	public Texture2D attackCursor;

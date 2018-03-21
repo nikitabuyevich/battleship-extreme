@@ -17,24 +17,33 @@ public class PlayerAttackState : IPlayerAttackState
 	{
 		Debug.Log(player.name + " entered attack state!");
 		var mouseUI = player.mouseUI.GetComponent<MouseUI>();
+		_mouse.DrawAttackSuggestions(player);
 		_mouse.SetAttackCursor(mouseUI);
 	}
 
 	public void Execute(Player player)
 	{
-
-		if (Input.GetAxis("Mouse ScrollWheel") > 0)
-		{
-			_ability.Rotate(player, false);
-		}
-		else if (Input.GetAxis("Mouse ScrollWheel") < 0)
-		{
-			_ability.Rotate(player, true);
-		}
+		RotateOnMouseWheel(player);
 	}
 
 	public void Exit(Player player) { }
 
 	public void AbilityRotate(Player player) { }
 	public void AbilityAttack(Player player) { }
+
+	private void RotateOnMouseWheel(Player player)
+	{
+		if (Input.GetAxis("Mouse ScrollWheel") > 0)
+		{
+			_ability.Rotate(player, false);
+			var mouseUI = player.mouseUI.GetComponent<MouseUI>();
+			_mouse.DrawAttackSuggestions(player);
+		}
+		else if (Input.GetAxis("Mouse ScrollWheel") < 0)
+		{
+			_ability.Rotate(player, true);
+			var mouseUI = player.mouseUI.GetComponent<MouseUI>();
+			_mouse.DrawAttackSuggestions(player);
+		}
+	}
 }

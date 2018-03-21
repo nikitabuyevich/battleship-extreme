@@ -24,7 +24,7 @@ GameObject:
   - component: {fileID: 50373786309433070}
   m_Layer: 0
   m_Name: Player 1
-  m_TagString: Player
+  m_TagString: Can Damage
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -149,8 +149,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 3
   canMoveAcross: 0
-  numberOfSpacesPerTurn: 1
+  rotationsAreFree: 0
+  numberOfMoveSpacesPerTurn: 1
   numberOfMovesPerTurn: 1
+  numberOfAttackSpacesPerTurn: 2
+  numberOfAttacksPerTurn: 1
   visionRadius: 1
   moveSpeed: 2
   revealAlphaLevel: 1

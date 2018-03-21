@@ -5,5 +5,6 @@ public interface IGameMap
 {
   BoundsInt Get();
   bool MoveIsValid(Player player, Vector3 pos);
-  List<Vector3> GetValidPositions(Player player);
+  List<Vector3> GetValidAttackPositions(Player player);
+  List<Vector3> GetValidMovePositions(Player player);
 }

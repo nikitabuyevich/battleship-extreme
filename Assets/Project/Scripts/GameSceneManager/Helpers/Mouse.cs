@@ -28,18 +28,25 @@ public class Mouse : IMouse
     Cursor.SetCursor(mouseUI.attackCursor, mouseUI.attackCursorHotSpot, mouseUI.cursorMode);
   }
 
-  public void DrawAttackSuggestions(MouseUI mouseUI)
+  public void DrawAttackSuggestions(Player player)
   {
-
+    var mouseUI = player.mouseUI.GetComponent<MouseUI>();
+    Clear(mouseUI);
+    var validPositions = _gameMap.GetValidAttackPositions(player);
+    foreach (var validPosition in validPositions)
+    {
+      PlaceTile(player, validPosition, mouseUI.canAttackHere, "Suggestions");
+    }
   }
 
   public void DrawPossibleMoves(Player player)
   {
     var mouseUI = player.mouseUI.GetComponent<MouseUI>();
-    var validPositions = _gameMap.GetValidPositions(player);
+    Clear(mouseUI);
+    var validPositions = _gameMap.GetValidMovePositions(player);
     foreach (var validPosition in validPositions)
     {
-      PlaceTile(player, validPosition, mouseUI.canMoveHere, "Move Suggestions");
+      PlaceTile(player, validPosition, mouseUI.canMoveHere, "Suggestions");
     }
   }
 
@@ -55,7 +62,7 @@ public class Mouse : IMouse
 
     if (mouseUI.lastMousePos != mousePos)
     {
-      var validPositions = _gameMap.GetValidPositions(player);
+      var validPositions = _gameMap.GetValidMovePositions(player);
       if (validPositions.Contains(mousePos))
       {
         ClearMouseUI(mouseUI);
@@ -74,7 +81,7 @@ public class Mouse : IMouse
   public void Clear(MouseUI mouseUI)
   {
     ClearMouseUI(mouseUI);
-    GameObject.Find("Move Suggestions").GetComponent<Tilemap>().ClearAllTiles();
+    GameObject.Find("Suggestions").GetComponent<Tilemap>().ClearAllTiles();
   }
 
   public void ClearMouseUI(MouseUI mouseUI)

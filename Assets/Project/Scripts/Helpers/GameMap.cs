@@ -6,10 +6,12 @@ public class GameMap : IGameMap
 {
   private readonly BoundsInt _bounds;
   private readonly IPlayerCollisions _playerCollisions;
+  private readonly IPlayerSpriteRenderer _playerSpriteRenderer;
 
-  public GameMap(IPlayerCollisions playerCollisions)
+  public GameMap(IPlayerCollisions playerCollisions, IPlayerSpriteRenderer playerSpriteRenderer)
   {
     _playerCollisions = playerCollisions;
+    _playerSpriteRenderer = playerSpriteRenderer;
     _bounds = Get();
   }
 
@@ -21,7 +23,7 @@ public class GameMap : IGameMap
       return false;
     }
 
-    var possiblePositions = GetPossiblePositions(player);
+    var possiblePositions = GetPossibleMovePositions(player);
     foreach (var possiblePosition in possiblePositions)
     {
       if (possiblePosition == pos && !_playerCollisions.SpaceIsBlocked(pos))
@@ -47,11 +49,11 @@ public class GameMap : IGameMap
     return new BoundsInt();
   }
 
-  public List<Vector3> GetValidPositions(Player player)
+  public List<Vector3> GetValidMovePositions(Player player)
   {
     var validPositions = new List<Vector3>();
 
-    var possiblePositions = GetPossiblePositions(player);
+    var possiblePositions = GetPossibleMovePositions(player);
     foreach (var possiblePosition in possiblePositions)
     {
       if (!_playerCollisions.SpaceIsBlocked(possiblePosition))
@@ -63,10 +65,75 @@ public class GameMap : IGameMap
     return validPositions;
   }
 
-  private List<Vector3> GetPossiblePositions(Player player)
+  public List<Vector3> GetValidAttackPositions(Player player)
   {
     var validPositions = new List<Vector3>();
-    for (int i = 1; i < player.numberOfSpacesPerTurn + 1; i++)
+    var direction = _playerSpriteRenderer.GetDirection(player);
+    var westFound = false;
+    var eastFound = false;
+    var northFound = false;
+    var southFound = false;
+
+    for (int i = 1; i < player.numberOfAttackSpacesPerTurn + 1; i++)
+    {
+      var west = new Vector3(
+        player.transform.position.x - i,
+        player.transform.position.y,
+        player.transform.position.z
+      );
+      var east = new Vector3(
+        player.transform.position.x + i,
+        player.transform.position.y,
+        player.transform.position.z
+      );
+      var north = new Vector3(
+        player.transform.position.x,
+        player.transform.position.y - i,
+        player.transform.position.z
+      );
+      var south = new Vector3(
+        player.transform.position.x,
+        player.transform.position.y + i,
+        player.transform.position.z
+      );
+
+      if (direction == Direction.North || direction == Direction.South)
+      {
+
+        if (_playerCollisions.CanDamage(west) && !westFound)
+        {
+          validPositions.Add(west);
+          westFound = true;
+        }
+        if (_playerCollisions.CanDamage(east) && !eastFound)
+        {
+          validPositions.Add(east);
+          eastFound = true;
+        }
+      }
+
+      if (direction == Direction.West || direction == Direction.East)
+      {
+
+        if (_playerCollisions.CanDamage(north) && !northFound)
+        {
+          validPositions.Add(north);
+          northFound = true;
+        }
+        if (_playerCollisions.CanDamage(south) && !southFound)
+        {
+          validPositions.Add(south);
+          southFound = true;
+        }
+      }
+    }
+    return validPositions;
+  }
+
+  private List<Vector3> GetPossibleMovePositions(Player player)
+  {
+    var validPositions = new List<Vector3>();
+    for (int i = 1; i < player.numberOfMoveSpacesPerTurn + 1; i++)
     {
       // North
       validPositions.Add(
