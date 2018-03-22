@@ -20,7 +20,7 @@ public class OnPlayer : IOnPlayer
     if (_gameSceneManager.numberOfMoves == 0)
     {
       _mouse.Clear(mouseUI);
-      player.ChangeState(typeof(IPlayerWaitingTurnState));
+      player.isAbleToMove = false;
     }
   }
 }

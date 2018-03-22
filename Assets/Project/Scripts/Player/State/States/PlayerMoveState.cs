@@ -1,11 +1,17 @@
 ﻿using UnityEngine;
+using Zenject;
 
 public class PlayerMoveState : IPlayerMoveState
 {
+	[Inject]
+	private readonly GameSceneManager _gameSceneManager;
+
 	private readonly IPlayerFogOfWar _playerFogOfWar;
 	private readonly IFogOfWar _fogOfWar;
 	private readonly IMouse _mouse;
 	private readonly IAbility _ability;
+
+	private bool drewMouseSuggestions = false;
 
 	public PlayerMoveState(
 		IFogOfWar fogOfWar,
@@ -23,13 +29,29 @@ public class PlayerMoveState : IPlayerMoveState
 	{
 		Debug.Log(player.name + " entering move state");
 		LoadPlayersFogOfWar(player);
-		_mouse.DrawMoveSuggestions(player);
+		var mouseUI = player.mouseUI.GetComponent<MouseUI>();
+		_mouse.Clear(mouseUI);
+		drewMouseSuggestions = false;
 	}
 
 	public void Execute(Player player)
 	{
-		player.Move();
-		_mouse.DrawMoveSuggestionsHover(player);
+		if (!drewMouseSuggestions && _gameSceneManager.numberOfMoves > 0)
+		{
+			_mouse.DrawMoveSuggestions(player);
+			drewMouseSuggestions = true;
+		}
+
+		if (_gameSceneManager.numberOfMoves > 0)
+		{
+			player.isAbleToMove = true;
+		}
+
+		if (player.isAbleToMove)
+		{
+			player.Move();
+			_mouse.DrawMoveSuggestionsHover(player);
+		}
 	}
 
 	public void Exit(Player player) { }

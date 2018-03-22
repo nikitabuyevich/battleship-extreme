@@ -38,6 +38,8 @@ public class Mouse : IMouse
     {
       PlaceTile(player, validPosition, mouseUI.canAttackHere, "Suggestions");
     }
+
+    SetAttackCursor(mouseUI);
   }
 
   public void DrawMoveSuggestions(Player player)

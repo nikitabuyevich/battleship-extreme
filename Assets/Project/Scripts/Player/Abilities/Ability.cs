@@ -2,6 +2,9 @@ using Zenject;
 
 public class Ability : IAbility
 {
+  [Inject]
+  private readonly GameSceneManager _gameSceneManager;
+
   private readonly IPlayerSpriteRenderer _playerSpriteRenderer;
   private readonly IMouse _mouse;
   private readonly IOnPlayer _onPlayer;
@@ -18,50 +21,54 @@ public class Ability : IAbility
 
   public void Rotate(Player player, bool reverse)
   {
-    var playersCurrentDir = _playerSpriteRenderer.GetDirection(player);
-
-    if (reverse)
+    if (player.rotationsAreFree || _gameSceneManager.numberOfMoves > 0)
     {
-      if (playersCurrentDir == Direction.West)
+      if (!player.rotationsAreFree)
       {
-        _playerSpriteRenderer.RenderDirection(player, Direction.South);
+        _onPlayer.Movement(player);
       }
-      else if (playersCurrentDir == Direction.North)
+
+      var playersCurrentDir = _playerSpriteRenderer.GetDirection(player);
+
+      if (reverse)
       {
-        _playerSpriteRenderer.RenderDirection(player, Direction.West);
-      }
-      else if (playersCurrentDir == Direction.East)
-      {
-        _playerSpriteRenderer.RenderDirection(player, Direction.North);
+        if (playersCurrentDir == Direction.West)
+        {
+          _playerSpriteRenderer.RenderDirection(player, Direction.South);
+        }
+        else if (playersCurrentDir == Direction.North)
+        {
+          _playerSpriteRenderer.RenderDirection(player, Direction.West);
+        }
+        else if (playersCurrentDir == Direction.East)
+        {
+          _playerSpriteRenderer.RenderDirection(player, Direction.North);
+        }
+        else
+        {
+          _playerSpriteRenderer.RenderDirection(player, Direction.East);
+        }
       }
       else
       {
-        _playerSpriteRenderer.RenderDirection(player, Direction.East);
+        if (playersCurrentDir == Direction.West)
+        {
+          _playerSpriteRenderer.RenderDirection(player, Direction.North);
+        }
+        else if (playersCurrentDir == Direction.North)
+        {
+          _playerSpriteRenderer.RenderDirection(player, Direction.East);
+        }
+        else if (playersCurrentDir == Direction.East)
+        {
+          _playerSpriteRenderer.RenderDirection(player, Direction.South);
+        }
+        else
+        {
+          _playerSpriteRenderer.RenderDirection(player, Direction.West);
+        }
       }
-    }
-    else
-    {
-      if (playersCurrentDir == Direction.West)
-      {
-        _playerSpriteRenderer.RenderDirection(player, Direction.North);
-      }
-      else if (playersCurrentDir == Direction.North)
-      {
-        _playerSpriteRenderer.RenderDirection(player, Direction.East);
-      }
-      else if (playersCurrentDir == Direction.East)
-      {
-        _playerSpriteRenderer.RenderDirection(player, Direction.South);
-      }
-      else
-      {
-        _playerSpriteRenderer.RenderDirection(player, Direction.West);
-      }
-    }
 
-    if (!player.rotationsAreFree)
-    {
-      _onPlayer.Movement(player);
     }
   }
 

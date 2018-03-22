@@ -23,7 +23,7 @@ public class Turn : ITurn
   {
     _gameSceneManager.currentPlayersTurn = 0;
 
-    for (int i = 0; i < _gameSceneManager.players.Length; i++)
+    for (int i = _gameSceneManager.players.Length - 1; i >= 0; i--)
     {
       var player = _gameSceneManager.players[i];
       if (i == 0)

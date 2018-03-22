@@ -77,6 +77,7 @@ public class Player : MonoBehaviour
 	internal bool _isMoving = false;
 	internal Vector2 _input;
 	internal Dictionary<string, Color> fogOfWar = new Dictionary<string, Color>();
+	internal bool isAbleToMove = false;
 
 	private IState currentlyRunningState;
 	private IState previouslyRunningState;
@@ -171,8 +172,9 @@ public class Player : MonoBehaviour
 	public void SetInitialState()
 	{
 		if (currentlyRunningState != _playerWaitingTurnState &&
+			previouslyRunningState != _playerWaitingTurnState &&
 			previouslyRunningState != null &&
-			previouslyRunningState != _playerWaitingTurnState)
+			currentlyRunningState != previouslyRunningState)
 		{
 			SwitchToPreviouslyRunningState();
 		}
