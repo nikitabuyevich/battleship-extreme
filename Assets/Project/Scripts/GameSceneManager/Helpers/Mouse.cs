@@ -115,13 +115,7 @@ public class Mouse : IMouse
     var sideAttackPositions = _gameMap.GetValidSideAttackPositions(player, mousePos);
     foreach (var sideAttackPosition in sideAttackPositions)
     {
-      var tileDiscovered = GetColorOfTile(player, sideAttackPosition).a > 0;
-      Debug.Log(GetColorOfTile(player, sideAttackPosition));
-
-      if (tileDiscovered)
-      {
-        PlaceTile(player, sideAttackPosition, mouseUI.thinkingAboutAttackingHereSideAttacks, "Mouse UI");
-      }
+      PlaceTile(player, sideAttackPosition, mouseUI.thinkingAboutAttackingHereSideAttacks, "Mouse UI");
     }
   }
 

@@ -44,10 +44,11 @@ public class Player : GameEntity
 	public event MovementHandler OnPlayerMovement;
 
 	[Header("Upgrades")]
-	public int attackPower = 2;
-	public int sideHitAttackPower = 1;
 	public bool canMoveAcross = false;
 	public bool rotationsAreFree = false;
+	public int attackPower = 2;
+	public int sideHitAttackPower = 1;
+	public int sideHitRange = 1;
 	public int numberOfMoveSpacesPerTurn = 1;
 	public int numberOfMovesPerTurn = 1;
 	public int numberOfAttackSpacesPerTurn = 2;

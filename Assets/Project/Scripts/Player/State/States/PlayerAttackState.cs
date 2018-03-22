@@ -51,7 +51,11 @@ public class PlayerAttackState : IPlayerAttackState
 
 	public void Exit(Player player) { }
 
-	public void AbilityRotate(Player player) { }
+	public void AbilityRotate(Player player)
+	{
+		_ability.Rotate(player, false);
+		_mouse.DrawAttackSuggestions(player);
+	}
 	public void AbilityAttack(Player player) { }
 
 	private void RotateOnMouseWheel(Player player)

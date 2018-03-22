@@ -52,101 +52,71 @@ public class GameMap : IGameMap
   public List<Vector3> GetValidSideAttackPositions(Player player, Vector3 mousePos)
   {
     var sidePositions = new List<Vector3>();
+    Vector3 sideLeft;
+    Vector3 sideRight;
 
-    // West
-    if (player.transform.position.x - mousePos.x > 0)
+    for (int i = 1; i < player.sideHitRange + 1; i++)
     {
-      var sideLeft = new Vector3(
-        mousePos.x - 1,
-        mousePos.y - 1,
-        mousePos.z
-      );
-      var sideRight = new Vector3(
-        mousePos.x - 1,
-        mousePos.y + 1,
-        mousePos.z
-      );
+      // West
+      if (player.transform.position.x - mousePos.x > 0)
+      {
+        sideLeft = new Vector3(
+          mousePos.x - i,
+          mousePos.y - i,
+          mousePos.z
+        );
+        sideRight = new Vector3(
+          mousePos.x - i,
+          mousePos.y + i,
+          mousePos.z
+        );
 
-      if (!_playerCollisions.SpaceIsBlocked(sideLeft))
-      {
-        sidePositions.Add(sideLeft);
       }
-      if (!_playerCollisions.SpaceIsBlocked(sideRight))
+      // East
+      else if (player.transform.position.x - mousePos.x < 0)
       {
-        sidePositions.Add(sideRight);
+        sideLeft = new Vector3(
+          mousePos.x + i,
+          mousePos.y - i,
+          mousePos.z
+        );
+        sideRight = new Vector3(
+          mousePos.x + i,
+          mousePos.y + i,
+          mousePos.z
+        );
       }
-    }
-    // East
-    else if (player.transform.position.x - mousePos.x < 0)
-    {
-      var sideLeft = new Vector3(
-        mousePos.x + 1,
-        mousePos.y - 1,
-        mousePos.z
-      );
-      var sideRight = new Vector3(
-        mousePos.x + 1,
-        mousePos.y + 1,
-        mousePos.z
-      );
-
-      if (!_playerCollisions.SpaceIsBlocked(sideLeft))
+      // North
+      else if (player.transform.position.y - mousePos.y > 0)
       {
-        sidePositions.Add(sideLeft);
+        sideLeft = new Vector3(
+          mousePos.x + i,
+          mousePos.y - i,
+          mousePos.z
+        );
+        sideRight = new Vector3(
+          mousePos.x - i,
+          mousePos.y - i,
+          mousePos.z
+        );
       }
-
-      if (!_playerCollisions.SpaceIsBlocked(sideRight))
+      // South
+      else
       {
-        sidePositions.Add(sideRight);
-      }
-    }
-    // North
-    else if (player.transform.position.y - mousePos.y > 0)
-    {
-      var sideLeft = new Vector3(
-        mousePos.x + 1,
-        mousePos.y - 1,
-        mousePos.z
-      );
-      var sideRight = new Vector3(
-        mousePos.x - 1,
-        mousePos.y - 1,
-        mousePos.z
-      );
-
-      if (!_playerCollisions.SpaceIsBlocked(sideLeft))
-      {
-        sidePositions.Add(sideLeft);
+        sideLeft = new Vector3(
+          mousePos.x + i,
+          mousePos.y + i,
+          mousePos.z
+        );
+        sideRight = new Vector3(
+          mousePos.x - i,
+          mousePos.y + i,
+          mousePos.z
+        );
       }
 
-      if (!_playerCollisions.SpaceIsBlocked(sideRight))
-      {
-        sidePositions.Add(sideRight);
-      }
-    }
-    // South
-    else
-    {
-      var sideLeft = new Vector3(
-        mousePos.x + 1,
-        mousePos.y + 1,
-        mousePos.z
-      );
-      var sideRight = new Vector3(
-        mousePos.x - 1,
-        mousePos.y + 1,
-        mousePos.z
-      );
-
-      if (!_playerCollisions.SpaceIsBlocked(sideLeft))
-      {
-        sidePositions.Add(sideLeft);
-      }
-
-      if (!_playerCollisions.SpaceIsBlocked(sideRight))
-      {
-        sidePositions.Add(sideRight);
-      }
+      sidePositions.Add(sideLeft);
+      sidePositions.Add(sideRight);
     }
 
     return sidePositions;
