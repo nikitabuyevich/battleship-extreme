@@ -23,4 +23,16 @@ public class OnPlayer : IOnPlayer
       player.isAbleToMove = false;
     }
   }
+
+  public void Attack(Player player)
+  {
+    var mouseUI = player.mouseUI.GetComponent<MouseUI>();
+
+    _gameSceneManager.numberOfAttacks -= 1;
+    if (_gameSceneManager.numberOfAttacks == 0)
+    {
+      _mouse.Clear(mouseUI);
+      player.isAbleToAttack = false;
+    }
+  }
 }

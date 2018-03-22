@@ -19,10 +19,32 @@ public class PlayerCollisions : IPlayerCollisions
 	{
 		var colliders = Physics2D.OverlapCircleAll(new Vector2(pos.x, pos.y), 0.1f);
 
-		return IsBlocked(colliders);
+		return SpaceIsBlocked(colliders);
 	}
 
-	private bool IsBlocked(Collider2D[] colliders)
+	public bool CanMoveToSpace(Vector3 pos)
+	{
+		var colliders = Physics2D.OverlapCircleAll(new Vector2(pos.x, pos.y), 0.1f);
+
+		return CanMove(colliders);
+	}
+
+	private bool SpaceIsBlocked(Collider2D[] colliders)
+	{
+		foreach (var collider in colliders)
+		{
+			var parentTransform = collider.transform.parent;
+
+			if (parentTransform.tag == "Block")
+			{
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	private bool CanMove(Collider2D[] colliders)
 	{
 		foreach (var collider in colliders)
 		{
@@ -30,11 +52,11 @@ public class PlayerCollisions : IPlayerCollisions
 
 			if (parentTransform.tag == "Game" || parentTransform.tag == "Block")
 			{
-				return true;
+				return false;
 			}
 		}
 
-		return false;
+		return true;
 	}
 
 	private Collider2D GetHit(Collider2D[] colliders)

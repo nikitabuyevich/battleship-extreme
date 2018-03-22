@@ -53,6 +53,17 @@ public class Turn : ITurn
     if ((_gameSceneManager.currentPlayersTurn + 1) != _gameSceneManager.players.Length)
     {
       _gameSceneManager.currentPlayersTurn += 1;
+      if (_gameSceneManager.players[_gameSceneManager.currentPlayersTurn] == null)
+      {
+        if ((_gameSceneManager.currentPlayersTurn + 1) != _gameSceneManager.players.Length)
+        {
+          _gameSceneManager.currentPlayersTurn += 1;
+        }
+        else
+        {
+          _gameSceneManager.currentPlayersTurn = 0;
+        }
+      }
     }
     else
     {

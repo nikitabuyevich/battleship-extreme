@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -8,8 +9,7 @@ public class Mouse : IMouse
 
   public Mouse(
     IGameMap gameMap,
-    IReposition reposition
-  )
+    IReposition reposition)
   {
     _gameMap = gameMap;
     _reposition = reposition;
@@ -112,71 +112,17 @@ public class Mouse : IMouse
 
   private void DrawSideAttackSuggestionsHover(Player player, Vector3 mousePos, MouseUI mouseUI)
   {
-    // West
-    if (player.transform.position.x - mousePos.x > 0)
+    var sideAttackPositions = _gameMap.GetValidSideAttackPositions(player, mousePos);
+    foreach (var sideAttackPosition in sideAttackPositions)
     {
-      var sideLeft = new Vector3(
-        mousePos.x - 1,
-        mousePos.y - 1,
-        mousePos.z
-      );
-      var sideRight = new Vector3(
-        mousePos.x - 1,
-        mousePos.y + 1,
-        mousePos.z
-      );
-      PlaceTile(player, sideLeft, mouseUI.thinkingAboutAttackingHereSideAttacks, "Mouse UI");
-      PlaceTile(player, sideRight, mouseUI.thinkingAboutAttackingHereSideAttacks, "Mouse UI");
-    }
-    // East
-    else if (player.transform.position.x - mousePos.x < 0)
-    {
-      var sideLeft = new Vector3(
-        mousePos.x + 1,
-        mousePos.y - 1,
-        mousePos.z
-      );
-      var sideRight = new Vector3(
-        mousePos.x + 1,
-        mousePos.y + 1,
-        mousePos.z
-      );
-      PlaceTile(player, sideLeft, mouseUI.thinkingAboutAttackingHereSideAttacks, "Mouse UI");
-      PlaceTile(player, sideRight, mouseUI.thinkingAboutAttackingHereSideAttacks, "Mouse UI");
-    }
-    // North
-    else if (player.transform.position.y - mousePos.y > 0)
-    {
-      var sideLeft = new Vector3(
-        mousePos.x + 1,
-        mousePos.y - 1,
-        mousePos.z
-      );
-      var sideRight = new Vector3(
-        mousePos.x - 1,
-        mousePos.y - 1,
-        mousePos.z
-      );
-      PlaceTile(player, sideLeft, mouseUI.thinkingAboutAttackingHereSideAttacks, "Mouse UI");
-      PlaceTile(player, sideRight, mouseUI.thinkingAboutAttackingHereSideAttacks, "Mouse UI");
-    }
-    // South
-    else
-    {
-      var sideLeft = new Vector3(
-        mousePos.x + 1,
-        mousePos.y + 1,
-        mousePos.z
-      );
-      var sideRight = new Vector3(
-        mousePos.x - 1,
-        mousePos.y + 1,
-        mousePos.z
-      );
-      PlaceTile(player, sideLeft, mouseUI.thinkingAboutAttackingHereSideAttacks, "Mouse UI");
-      PlaceTile(player, sideRight, mouseUI.thinkingAboutAttackingHereSideAttacks, "Mouse UI");
-    }
+      var tileDiscovered = GetColorOfTile(player, sideAttackPosition).a > 0;
+      Debug.Log(GetColorOfTile(player, sideAttackPosition));
 
+      if (tileDiscovered)
+      {
+        PlaceTile(player, sideAttackPosition, mouseUI.thinkingAboutAttackingHereSideAttacks, "Mouse UI");
+      }
+    }
   }
 
   public void Clear(MouseUI mouseUI)
@@ -214,6 +160,28 @@ public class Mouse : IMouse
     }
 
     return null;
+  }
+
+  private Color GetColorOfTile(Player player, Vector3 pos)
+  {
+    var startingTileLocation = _reposition.GetStartingTileLocation();
+
+    var location = new Vector3Int(
+      startingTileLocation.x + (int) pos.x,
+      startingTileLocation.y + (int) pos.y,
+      startingTileLocation.z);
+
+    var overallParent = player.transform.parent.gameObject.transform.parent.gameObject;
+    var tilemaps = overallParent.GetComponentsInChildren<Tilemap>();
+    foreach (var tilemap in tilemaps)
+    {
+      if (tilemap.transform.parent.name == "Block" || tilemap.transform.parent.name == "Free")
+      {
+        return tilemap.GetColor(location);
+      }
+    }
+
+    return new Color();
   }
 
   private void ColorTile(Player player, Vector3 pos, Color color)

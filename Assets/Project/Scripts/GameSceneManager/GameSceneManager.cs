@@ -72,7 +72,6 @@ public class GameSceneManager : MonoBehaviour
 		_reposition.SetLevel();
 		_fogOfWar.SetFogOfWar();
 		_turn.ResetAll();
-		//
 	}
 
 	public void EndTurnBtn()
@@ -86,11 +85,22 @@ public class GameSceneManager : MonoBehaviour
 		player.SetInitialState();
 	}
 
+	public void AbilityMoveBtn()
+	{
+		if (numberOfMoves > 0)
+		{
+			var player = _turn.CurrentPlayer();
+			player.ChangeState(typeof(IPlayerMoveState));
+		}
+	}
+
 	public void AbilityAttackBtn()
 	{
-		var player = _turn.CurrentPlayer();
-		player.ChangeState(typeof(IPlayerAttackState));
-		player.CurrentState().AbilityAttack(player);
+		if (numberOfAttacks > 0)
+		{
+			var player = _turn.CurrentPlayer();
+			player.ChangeState(typeof(IPlayerAttackState));
+		}
 	}
 
 	public void AbilityRotateBtn()

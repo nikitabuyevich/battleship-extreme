@@ -1,3 +1,4 @@
+using UnityEngine;
 using Zenject;
 
 public class Ability : IAbility
@@ -6,16 +7,16 @@ public class Ability : IAbility
   private readonly GameSceneManager _gameSceneManager;
 
   private readonly IPlayerSpriteRenderer _playerSpriteRenderer;
-  private readonly IMouse _mouse;
+  private readonly IMouseAttack _mouseAttack;
   private readonly IOnPlayer _onPlayer;
 
   public Ability(
     IPlayerSpriteRenderer playerSpriteRenderer,
-    IMouse mouse,
-    IOnPlayer onPlayer)
+    IOnPlayer onPlayer,
+    IMouseAttack mouseAttack)
   {
     _playerSpriteRenderer = playerSpriteRenderer;
-    _mouse = mouse;
+    _mouseAttack = mouseAttack;
     _onPlayer = onPlayer;
   }
 
@@ -74,7 +75,9 @@ public class Ability : IAbility
 
   public void Attack(Player player)
   {
-    var mouseUI = player.mouseUI.GetComponent<MouseUI>();
-    _mouse.SetAttackCursor(mouseUI);
+    if (Input.GetMouseButtonDown(0))
+    {
+      _mouseAttack.AttackPosition(player);
+    }
   }
 }

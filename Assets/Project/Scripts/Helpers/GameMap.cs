@@ -26,7 +26,7 @@ public class GameMap : IGameMap
     var possiblePositions = GetPossibleMovePositions(player);
     foreach (var possiblePosition in possiblePositions)
     {
-      if (possiblePosition == pos && !_playerCollisions.SpaceIsBlocked(pos))
+      if (possiblePosition == pos && _playerCollisions.CanMoveToSpace(pos))
       {
         return true;
       }
@@ -49,6 +49,108 @@ public class GameMap : IGameMap
     return new BoundsInt();
   }
 
+  public List<Vector3> GetValidSideAttackPositions(Player player, Vector3 mousePos)
+  {
+    var sidePositions = new List<Vector3>();
+
+    // West
+    if (player.transform.position.x - mousePos.x > 0)
+    {
+      var sideLeft = new Vector3(
+        mousePos.x - 1,
+        mousePos.y - 1,
+        mousePos.z
+      );
+      var sideRight = new Vector3(
+        mousePos.x - 1,
+        mousePos.y + 1,
+        mousePos.z
+      );
+
+      if (!_playerCollisions.SpaceIsBlocked(sideLeft))
+      {
+        sidePositions.Add(sideLeft);
+      }
+      if (!_playerCollisions.SpaceIsBlocked(sideRight))
+      {
+        sidePositions.Add(sideRight);
+      }
+    }
+    // East
+    else if (player.transform.position.x - mousePos.x < 0)
+    {
+      var sideLeft = new Vector3(
+        mousePos.x + 1,
+        mousePos.y - 1,
+        mousePos.z
+      );
+      var sideRight = new Vector3(
+        mousePos.x + 1,
+        mousePos.y + 1,
+        mousePos.z
+      );
+
+      if (!_playerCollisions.SpaceIsBlocked(sideLeft))
+      {
+        sidePositions.Add(sideLeft);
+      }
+
+      if (!_playerCollisions.SpaceIsBlocked(sideRight))
+      {
+        sidePositions.Add(sideRight);
+      }
+    }
+    // North
+    else if (player.transform.position.y - mousePos.y > 0)
+    {
+      var sideLeft = new Vector3(
+        mousePos.x + 1,
+        mousePos.y - 1,
+        mousePos.z
+      );
+      var sideRight = new Vector3(
+        mousePos.x - 1,
+        mousePos.y - 1,
+        mousePos.z
+      );
+
+      if (!_playerCollisions.SpaceIsBlocked(sideLeft))
+      {
+        sidePositions.Add(sideLeft);
+      }
+
+      if (!_playerCollisions.SpaceIsBlocked(sideRight))
+      {
+        sidePositions.Add(sideRight);
+      }
+    }
+    // South
+    else
+    {
+      var sideLeft = new Vector3(
+        mousePos.x + 1,
+        mousePos.y + 1,
+        mousePos.z
+      );
+      var sideRight = new Vector3(
+        mousePos.x - 1,
+        mousePos.y + 1,
+        mousePos.z
+      );
+
+      if (!_playerCollisions.SpaceIsBlocked(sideLeft))
+      {
+        sidePositions.Add(sideLeft);
+      }
+
+      if (!_playerCollisions.SpaceIsBlocked(sideRight))
+      {
+        sidePositions.Add(sideRight);
+      }
+    }
+
+    return sidePositions;
+  }
   public List<Vector3> GetValidMovePositions(Player player)
   {
     var validPositions = new List<Vector3>();
@@ -56,7 +158,7 @@ public class GameMap : IGameMap
     var possiblePositions = GetPossibleMovePositions(player);
     foreach (var possiblePosition in possiblePositions)
     {
-      if (!_playerCollisions.SpaceIsBlocked(possiblePosition))
+      if (_playerCollisions.CanMoveToSpace(possiblePosition))
       {
         validPositions.Add(possiblePosition);
       }

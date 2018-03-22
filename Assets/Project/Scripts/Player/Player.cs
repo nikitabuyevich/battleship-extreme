@@ -3,8 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using Zenject;
 
-public class Player : MonoBehaviour
+public class Player : GameEntity
 {
+	[Inject]
+	private readonly GameSceneManager _gameSceneManager;
+
 	// Player states
 	private IPlayerWaitingTurnState _playerWaitingTurnState;
 	private IPlayerMoveState _playerMoveState;
@@ -41,15 +44,14 @@ public class Player : MonoBehaviour
 	public event MovementHandler OnPlayerMovement;
 
 	[Header("Upgrades")]
-	public int health = 3;
-	public int attackPower = 1;
+	public int attackPower = 2;
+	public int sideHitAttackPower = 1;
 	public bool canMoveAcross = false;
 	public bool rotationsAreFree = false;
 	public int numberOfMoveSpacesPerTurn = 1;
 	public int numberOfMovesPerTurn = 1;
 	public int numberOfAttackSpacesPerTurn = 2;
 	public int numberOfAttacksPerTurn = 1;
-	public int visionRadius = 1;
 
 	[Header("Gameplay")]
 	public float moveSpeed = 2f;
@@ -79,6 +81,7 @@ public class Player : MonoBehaviour
 	internal Vector2 _input;
 	internal Dictionary<string, Color> fogOfWar = new Dictionary<string, Color>();
 	internal bool isAbleToMove = false;
+	internal bool isAbleToAttack = false;
 
 	private IState currentlyRunningState;
 	private IState previouslyRunningState;
@@ -90,6 +93,17 @@ public class Player : MonoBehaviour
 		if (Input.GetMouseButtonDown(1))
 		{
 			SetInitialState();
+		}
+
+		CheckHealth();
+	}
+
+	private void CheckHealth()
+	{
+		if (health <= 0)
+		{
+			Destroy(this.gameObject);
+			Debug.Log(this.name + " has been destroyed!");
 		}
 	}
 
