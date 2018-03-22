@@ -11,6 +11,7 @@ public class MouseUI : MonoBehaviour
 	public TileBase thinkingAboutMovingHere;
 	public TileBase canAttackHere;
 	public TileBase thinkingAboutAttackingHere;
+	public TileBase thinkingAboutAttackingHereSideAttacks;
 
 	public Texture2D moveCursor;
 	public Texture2D attackCursor;

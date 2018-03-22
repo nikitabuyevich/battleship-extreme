@@ -8,7 +8,8 @@ public class Mouse : IMouse
 
   public Mouse(
     IGameMap gameMap,
-    IReposition reposition)
+    IReposition reposition
+  )
   {
     _gameMap = gameMap;
     _reposition = reposition;
@@ -39,7 +40,7 @@ public class Mouse : IMouse
     }
   }
 
-  public void DrawPossibleMoves(Player player)
+  public void DrawMoveSuggestions(Player player)
   {
     var mouseUI = player.mouseUI.GetComponent<MouseUI>();
     Clear(mouseUI);
@@ -50,7 +51,7 @@ public class Mouse : IMouse
     }
   }
 
-  public void DrawSuggestionOverMouse(Player player)
+  public void DrawMoveSuggestionsHover(Player player)
   {
     var mouseUI = player.mouseUI.GetComponent<MouseUI>();
     var returnedCameraPos = player.gameCamera.GetComponent<Camera>().ScreenToWorldPoint(Input.mousePosition);
@@ -65,28 +66,130 @@ public class Mouse : IMouse
       var validPositions = _gameMap.GetValidMovePositions(player);
       if (validPositions.Contains(mousePos))
       {
-        ClearMouseUI(mouseUI);
+        ClearMouseUI(mouseUI, true);
         Cursor.SetCursor(mouseUI.moveCursor, mouseUI.moveCursorHotSpot, mouseUI.cursorMode);
         PlaceTile(player, mousePos, mouseUI.thinkingAboutMovingHere, "Mouse UI");
       }
       else
       {
-        ClearMouseUI(mouseUI);
+        ClearMouseUI(mouseUI, true);
       }
 
       mouseUI.lastMousePos = mousePos;
     }
   }
 
+  public void DrawAttackSuggestionsHover(Player player)
+  {
+    var mouseUI = player.mouseUI.GetComponent<MouseUI>();
+    var returnedCameraPos = player.gameCamera.GetComponent<Camera>().ScreenToWorldPoint(Input.mousePosition);
+    var mousePos = new Vector3Int(
+      Mathf.FloorToInt(returnedCameraPos.x - 0.5f) + 1,
+      Mathf.FloorToInt(returnedCameraPos.y - 0.5f) + 1,
+      (int) player.transform.position.z
+    );
+
+    if (mouseUI.lastMousePos != mousePos)
+    {
+      var validPositions = _gameMap.GetValidAttackPositions(player);
+      if (validPositions.Contains(mousePos))
+      {
+        ClearMouseUI(mouseUI, false);
+        Cursor.SetCursor(mouseUI.attackCursor, mouseUI.attackCursorHotSpot, mouseUI.cursorMode);
+        PlaceTile(player, mousePos, mouseUI.thinkingAboutAttackingHere, "Mouse UI");
+        DrawSideAttackSuggestionsHover(player, mousePos, mouseUI);
+      }
+      else
+      {
+        ClearMouseUI(mouseUI, false);
+      }
+
+      mouseUI.lastMousePos = mousePos;
+    }
+  }
+
+  private void DrawSideAttackSuggestionsHover(Player player, Vector3 mousePos, MouseUI mouseUI)
+  {
+    // West
+    if (player.transform.position.x - mousePos.x > 0)
+    {
+      var sideLeft = new Vector3(
+        mousePos.x - 1,
+        mousePos.y - 1,
+        mousePos.z
+      );
+      var sideRight = new Vector3(
+        mousePos.x - 1,
+        mousePos.y + 1,
+        mousePos.z
+      );
+      PlaceTile(player, sideLeft, mouseUI.thinkingAboutAttackingHereSideAttacks, "Mouse UI");
+      PlaceTile(player, sideRight, mouseUI.thinkingAboutAttackingHereSideAttacks, "Mouse UI");
+    }
+    // East
+    else if (player.transform.position.x - mousePos.x < 0)
+    {
+      var sideLeft = new Vector3(
+        mousePos.x + 1,
+        mousePos.y - 1,
+        mousePos.z
+      );
+      var sideRight = new Vector3(
+        mousePos.x + 1,
+        mousePos.y + 1,
+        mousePos.z
+      );
+      PlaceTile(player, sideLeft, mouseUI.thinkingAboutAttackingHereSideAttacks, "Mouse UI");
+      PlaceTile(player, sideRight, mouseUI.thinkingAboutAttackingHereSideAttacks, "Mouse UI");
+    }
+    // North
+    else if (player.transform.position.y - mousePos.y > 0)
+    {
+      var sideLeft = new Vector3(
+        mousePos.x + 1,
+        mousePos.y - 1,
+        mousePos.z
+      );
+      var sideRight = new Vector3(
+        mousePos.x - 1,
+        mousePos.y - 1,
+        mousePos.z
+      );
+      PlaceTile(player, sideLeft, mouseUI.thinkingAboutAttackingHereSideAttacks, "Mouse UI");
+      PlaceTile(player, sideRight, mouseUI.thinkingAboutAttackingHereSideAttacks, "Mouse UI");
+    }
+    // South
+    else
+    {
+      var sideLeft = new Vector3(
+        mousePos.x + 1,
+        mousePos.y + 1,
+        mousePos.z
+      );
+      var sideRight = new Vector3(
+        mousePos.x - 1,
+        mousePos.y + 1,
+        mousePos.z
+      );
+      PlaceTile(player, sideLeft, mouseUI.thinkingAboutAttackingHereSideAttacks, "Mouse UI");
+      PlaceTile(player, sideRight, mouseUI.thinkingAboutAttackingHereSideAttacks, "Mouse UI");
+    }
+
+  }
+
   public void Clear(MouseUI mouseUI)
   {
-    ClearMouseUI(mouseUI);
+    ClearMouseUI(mouseUI, true);
     GameObject.Find("Suggestions").GetComponent<Tilemap>().ClearAllTiles();
   }
 
-  public void ClearMouseUI(MouseUI mouseUI)
+  public void ClearMouseUI(MouseUI mouseUI, bool resetCursor)
   {
-    Cursor.SetCursor(null, Vector2.zero, mouseUI.cursorMode);
+    if (resetCursor)
+    {
+      Cursor.SetCursor(null, Vector2.zero, mouseUI.cursorMode);
+    }
+
     GameObject.Find("Mouse UI").GetComponent<Tilemap>().ClearAllTiles();
   }
 

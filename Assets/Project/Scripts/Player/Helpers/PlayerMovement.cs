@@ -104,7 +104,7 @@ public class PlayerMovement : IPlayerMovement
     // check if more moves are available
     if (_gameSceneManager.numberOfMoves > 0)
     {
-      _mouse.DrawPossibleMoves(player);
+      _mouse.DrawMoveSuggestions(player);
     }
 
     yield return 0;

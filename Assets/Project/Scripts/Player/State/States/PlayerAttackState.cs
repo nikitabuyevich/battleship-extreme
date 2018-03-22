@@ -24,6 +24,7 @@ public class PlayerAttackState : IPlayerAttackState
 	public void Execute(Player player)
 	{
 		RotateOnMouseWheel(player);
+		_mouse.DrawAttackSuggestionsHover(player);
 	}
 
 	public void Exit(Player player) { }
@@ -36,13 +37,11 @@ public class PlayerAttackState : IPlayerAttackState
 		if (Input.GetAxis("Mouse ScrollWheel") > 0)
 		{
 			_ability.Rotate(player, false);
-			var mouseUI = player.mouseUI.GetComponent<MouseUI>();
 			_mouse.DrawAttackSuggestions(player);
 		}
 		else if (Input.GetAxis("Mouse ScrollWheel") < 0)
 		{
 			_ability.Rotate(player, true);
-			var mouseUI = player.mouseUI.GetComponent<MouseUI>();
 			_mouse.DrawAttackSuggestions(player);
 		}
 	}

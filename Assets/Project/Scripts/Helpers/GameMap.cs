@@ -100,10 +100,18 @@ public class GameMap : IGameMap
       if (direction == Direction.North || direction == Direction.South)
       {
 
+        if (!westFound)
+        {
+          validPositions.Add(west);
+        }
         if (_playerCollisions.CanDamage(west) && !westFound)
         {
           validPositions.Add(west);
           westFound = true;
+        }
+        if (!eastFound)
+        {
+          validPositions.Add(east);
         }
         if (_playerCollisions.CanDamage(east) && !eastFound)
         {
@@ -115,10 +123,18 @@ public class GameMap : IGameMap
       if (direction == Direction.West || direction == Direction.East)
       {
 
+        if (!northFound)
+        {
+          validPositions.Add(north);
+        }
         if (_playerCollisions.CanDamage(north) && !northFound)
         {
           validPositions.Add(north);
           northFound = true;
+        }
+        if (!southFound)
+        {
+          validPositions.Add(south);
         }
         if (_playerCollisions.CanDamage(south) && !southFound)
         {

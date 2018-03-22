@@ -23,13 +23,13 @@ public class PlayerMoveState : IPlayerMoveState
 	{
 		Debug.Log(player.name + " entering move state");
 		LoadPlayersFogOfWar(player);
-		_mouse.DrawPossibleMoves(player);
+		_mouse.DrawMoveSuggestions(player);
 	}
 
 	public void Execute(Player player)
 	{
 		player.Move();
-		_mouse.DrawSuggestionOverMouse(player);
+		_mouse.DrawMoveSuggestionsHover(player);
 	}
 
 	public void Exit(Player player) { }
