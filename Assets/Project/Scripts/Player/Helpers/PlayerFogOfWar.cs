@@ -5,67 +5,24 @@ public class PlayerFogOfWar : IPlayerFogOfWar
 {
 
   private readonly IReposition _reposition;
+  private readonly IGameMap _gameMap;
 
-  public PlayerFogOfWar(IReposition reposition)
+  public PlayerFogOfWar(IReposition reposition, IGameMap gameMap)
   {
     _reposition = reposition;
+    _gameMap = gameMap;
   }
 
   public void ChangeFogOfWar(Player player, float alphaLevel)
   {
+    var visionPositions = _gameMap.GetVisionPositions(player);
     var overallParent = player.transform.parent.gameObject.transform.parent.gameObject;
     var tilemaps = overallParent.GetComponentsInChildren<Tilemap>();
     foreach (var tilemap in tilemaps)
     {
-
-      // Reveal cross vision
-      for (int i = 1; i < player.visionRadius + 2; i++)
+      foreach (var visionPosition in visionPositions)
       {
-        // North
-        ChangeAlphaLevelOfTile(tilemap, GetTileLocationOfPlayer(
-          new Vector3(
-            player.transform.position.x,
-            player.transform.position.y + i,
-            player.transform.position.z
-          )), alphaLevel);
-
-        // South
-        ChangeAlphaLevelOfTile(tilemap, GetTileLocationOfPlayer(
-          new Vector3(
-            player.transform.position.x,
-            player.transform.position.y - i,
-            player.transform.position.z
-          )), alphaLevel);
-
-        // West
-        ChangeAlphaLevelOfTile(tilemap, GetTileLocationOfPlayer(
-          new Vector3(
-            player.transform.position.x - i,
-            player.transform.position.y,
-            player.transform.position.z
-          )), alphaLevel);
-
-        // East
-        ChangeAlphaLevelOfTile(tilemap, GetTileLocationOfPlayer(
-          new Vector3(
-            player.transform.position.x + i,
-            player.transform.position.y,
-            player.transform.position.z
-          )), alphaLevel);
-      }
-
-      // Reveal square vision
-      for (int i = -(player.visionRadius * 2 - player.visionRadius); i < (player.visionRadius + 1); i++)
-      {
-        for (int j = -(player.visionRadius * 2 - player.visionRadius); j < (player.visionRadius + 1); j++)
-        {
-          ChangeAlphaLevelOfTile(tilemap, GetTileLocationOfPlayer(
-            new Vector3(
-              player.transform.position.x + j,
-              player.transform.position.y + i,
-              player.transform.position.z
-            )), alphaLevel);
-        }
+        ChangeAlphaLevelOfTile(tilemap, GetTileLocationOfPlayer(visionPosition), alphaLevel);
       }
     }
   }

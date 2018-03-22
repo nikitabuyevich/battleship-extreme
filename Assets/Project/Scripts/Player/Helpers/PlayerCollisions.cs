@@ -2,17 +2,23 @@
 
 public class PlayerCollisions : IPlayerCollisions
 {
-	public bool CanDamage(Vector3 pos)
+	public bool IsGameEntity(Vector3 pos)
 	{
 		var colliders = Physics2D.OverlapCircleAll(new Vector2(pos.x, pos.y), 0.1f);
 
-		return CanDamage(colliders);
+		return IsGameEntity(colliders);
 	}
 
-	public Collider2D GetHit(Vector3 pos)
+	public GameEntity GetGameEntity(Vector3 pos)
 	{
 		var colliders = Physics2D.OverlapCircleAll(new Vector2(pos.x, pos.y), 0.1f);
-		return GetHit(colliders);
+		var collider = GetGameEntityCollider(colliders);
+		if (collider != null)
+		{
+			return collider.GetComponent<GameEntity>();
+		}
+
+		return null;
 	}
 
 	public bool SpaceIsBlocked(Vector3 pos)
@@ -59,11 +65,12 @@ public class PlayerCollisions : IPlayerCollisions
 		return true;
 	}
 
-	private Collider2D GetHit(Collider2D[] colliders)
+	private Collider2D GetGameEntityCollider(Collider2D[] colliders)
 	{
 		foreach (var collider in colliders)
 		{
-			if (collider.tag == "Can Damage")
+			var gameEntity = collider.GetComponent<GameEntity>();
+			if (gameEntity != null)
 			{
 				return collider;
 			}
@@ -71,11 +78,12 @@ public class PlayerCollisions : IPlayerCollisions
 
 		return null;
 	}
-	private bool CanDamage(Collider2D[] colliders)
+	private bool IsGameEntity(Collider2D[] colliders)
 	{
 		foreach (var collider in colliders)
 		{
-			if (collider.tag == "Can Damage")
+			var gameEntity = collider.GetComponent<GameEntity>();
+			if (gameEntity != null)
 			{
 				return true;
 			}

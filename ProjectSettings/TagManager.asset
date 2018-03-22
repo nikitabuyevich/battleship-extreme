@@ -9,7 +9,6 @@ TagManager:
   - Fog of War
   - Rocks
   - Overall Parent
-  - Can Damage
   layers:
   - Default
   - TransparentFX

@@ -49,6 +49,79 @@ public class GameMap : IGameMap
     return new BoundsInt();
   }
 
+  public void CheckAndHideGameEntities(Player player)
+  {
+    var game = GameObject.Find("Game");
+    var children = game.GetComponentsInChildren<GameEntity>();
+    var visionPositions = GetVisionPositions(player);
+
+    foreach (var child in children)
+    {
+      child.GetComponentInChildren<Renderer>().enabled = false;
+    }
+
+    foreach (var visionPosition in visionPositions)
+    {
+      if (_playerCollisions.IsGameEntity(visionPosition))
+      {
+        var gameEntity = _playerCollisions.GetGameEntity(visionPosition);
+        gameEntity.GetComponentInChildren<Renderer>().enabled = true;
+      }
+    }
+  }
+
+  public List<Vector3> GetVisionPositions(Player player)
+  {
+    var visionPositions = new List<Vector3>();
+
+    // Reveal cross vision
+    for (int i = 1; i < player.visionRadius + 2; i++)
+    {
+      // North
+      visionPositions.Add(new Vector3(
+        player.transform.position.x,
+        player.transform.position.y + i,
+        player.transform.position.z
+      ));
+
+      // South
+      visionPositions.Add(new Vector3(
+        player.transform.position.x,
+        player.transform.position.y - i,
+        player.transform.position.z
+      ));
+
+      // West
+      visionPositions.Add(new Vector3(
+        player.transform.position.x - i,
+        player.transform.position.y,
+        player.transform.position.z
+      ));
+
+      // East
+      visionPositions.Add(new Vector3(
+        player.transform.position.x + i,
+        player.transform.position.y,
+        player.transform.position.z
+      ));
+    }
+
+    // Reveal square vision
+    for (int i = -(player.visionRadius * 2 - player.visionRadius); i < (player.visionRadius + 1); i++)
+    {
+      for (int j = -(player.visionRadius * 2 - player.visionRadius); j < (player.visionRadius + 1); j++)
+      {
+        visionPositions.Add(new Vector3(
+          player.transform.position.x + j,
+          player.transform.position.y + i,
+          player.transform.position.z
+        ));
+      }
+    }
+
+    return visionPositions;
+  }
+
   public List<Vector3> GetValidSideAttackPositions(Player player, Vector3 mousePos)
   {
     var sidePositions = new List<Vector3>();
@@ -176,7 +249,7 @@ public class GameMap : IGameMap
         {
           validPositions.Add(west);
         }
-        if (_playerCollisions.CanDamage(west) && !westFound)
+        if (_playerCollisions.IsGameEntity(west) && !westFound)
         {
           validPositions.Add(west);
           westFound = true;
@@ -185,7 +258,7 @@ public class GameMap : IGameMap
         {
           validPositions.Add(east);
         }
-        if (_playerCollisions.CanDamage(east) && !eastFound)
+        if (_playerCollisions.IsGameEntity(east) && !eastFound)
         {
           validPositions.Add(east);
           eastFound = true;
@@ -199,7 +272,7 @@ public class GameMap : IGameMap
         {
           validPositions.Add(north);
         }
-        if (_playerCollisions.CanDamage(north) && !northFound)
+        if (_playerCollisions.IsGameEntity(north) && !northFound)
         {
           validPositions.Add(north);
           northFound = true;
@@ -208,7 +281,7 @@ public class GameMap : IGameMap
         {
           validPositions.Add(south);
         }
-        if (_playerCollisions.CanDamage(south) && !southFound)
+        if (_playerCollisions.IsGameEntity(south) && !southFound)
         {
           validPositions.Add(south);
           southFound = true;

@@ -8,18 +8,21 @@ public class PlayerMovement : IPlayerMovement
   [Inject]
   private readonly GameSceneManager _gameSceneManager;
 
-  readonly private IFogOfWar _fogOfWar;
-  readonly private IPlayerFogOfWar _playerFogOfWar;
-  readonly private IMouse _mouse;
+  private readonly IFogOfWar _fogOfWar;
+  private readonly IPlayerFogOfWar _playerFogOfWar;
+  private readonly IMouse _mouse;
+  private readonly IGameMap _gameMap;
 
   public PlayerMovement(
     IFogOfWar fogOfWar,
     IPlayerFogOfWar playerFogOfWar,
-    IMouse mouse)
+    IMouse mouse,
+    IGameMap gameMap)
   {
     _fogOfWar = fogOfWar;
     _playerFogOfWar = playerFogOfWar;
     _mouse = mouse;
+    _gameMap = gameMap;
   }
 
   public Vector3 GetMousePos(Player player)
@@ -100,6 +103,7 @@ public class PlayerMovement : IPlayerMovement
     _playerFogOfWar.ChangeFogOfWar(player, player.revealAlphaLevel);
     player._isMoving = false;
     AddAllTilesOf(player);
+    _gameMap.CheckAndHideGameEntities(player);
 
     // check if more moves are available
     if (_gameSceneManager.numberOfMoves > 0)

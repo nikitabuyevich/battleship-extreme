@@ -23,22 +23,19 @@ public class MouseAttack : IMouseAttack
     var validAttackPositions = _gameMap.GetValidAttackPositions(player);
     if (validAttackPositions.Contains(mousePos))
     {
-      var hit = _playerCollisions.GetHit(mousePos);
-      if (hit != null)
+      var gameEntity = _playerCollisions.GetGameEntity(mousePos);
+      if (gameEntity != null)
       {
-        var gameEntity = hit.gameObject.GetComponent<GameEntity>();
         gameEntity.health -= player.attackPower;
-
       }
 
       var sideAttackPositions = _gameMap.GetValidSideAttackPositions(player, mousePos);
       foreach (var sideAttackPosition in sideAttackPositions)
       {
-        var sideHit = _playerCollisions.GetHit(sideAttackPosition);
-        if (sideHit != null)
+        var sideHitGameEntity = _playerCollisions.GetGameEntity(sideAttackPosition);
+        if (sideHitGameEntity != null)
         {
-          var sideEntity = sideHit.gameObject.GetComponent<GameEntity>();
-          sideEntity.health -= player.sideHitAttackPower;
+          sideHitGameEntity.health -= player.sideHitAttackPower;
         }
       }
 

@@ -10,6 +10,7 @@ public class PlayerMoveState : IPlayerMoveState
 	private readonly IFogOfWar _fogOfWar;
 	private readonly IMouse _mouse;
 	private readonly IAbility _ability;
+	private readonly IGameMap _gameMap;
 
 	private bool drewMouseSuggestions = false;
 
@@ -17,12 +18,14 @@ public class PlayerMoveState : IPlayerMoveState
 		IFogOfWar fogOfWar,
 		IPlayerFogOfWar playerFogOfWar,
 		IMouse mouse,
-		IAbility ability)
+		IAbility ability,
+		IGameMap gameMap)
 	{
 		_fogOfWar = fogOfWar;
 		_playerFogOfWar = playerFogOfWar;
 		_mouse = mouse;
 		_ability = ability;
+		_gameMap = gameMap;
 	}
 
 	public void Enter(Player player)
@@ -69,6 +72,7 @@ public class PlayerMoveState : IPlayerMoveState
 		{
 			_fogOfWar.SetFogOfWar();
 			_playerFogOfWar.ChangeFogOfWar(player, player.revealAlphaLevel);
+			_gameMap.CheckAndHideGameEntities(player);
 		}
 		else
 		{
