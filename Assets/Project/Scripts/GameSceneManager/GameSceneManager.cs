@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 using UnityEngine.Tilemaps;
 using UnityEngine.UI;
 using Zenject;
@@ -22,6 +23,9 @@ public class GameSceneManager : MonoBehaviour
 	[Header("UI")]
 	public Text movesLeft;
 	public Text attacksLeft;
+	public GameObject transition;
+	public GameObject transitionUI;
+	public GameObject transitionBackground;
 
 	[Header("Setup")]
 	public GameObject floor;
@@ -76,6 +80,16 @@ public class GameSceneManager : MonoBehaviour
 
 	public void EndTurnBtn()
 	{
+		transition.SetActive(true);
+		transitionUI.SetActive(true);
+		transitionBackground.GetComponent<Image>().color = new Color(0, 0, 0, 0);
+		StartCoroutine(BackgroundFadeIn());
+	}
+
+	public void NextPlayer()
+	{
+		var transitionBackground = GameObject.FindGameObjectWithTag("Transition Background");
+		StartCoroutine(BackgroundFadeOut());
 		_turn.NextPlayer();
 	}
 
@@ -107,5 +121,35 @@ public class GameSceneManager : MonoBehaviour
 	{
 		var player = _turn.CurrentPlayer();
 		player.CurrentState().AbilityRotate(player);
+	}
+
+	private IEnumerator BackgroundFadeIn()
+	{
+		var t = 0f;
+
+		while (t < 1f)
+		{
+			t += Time.deltaTime * 1.5f;
+			transitionBackground.GetComponent<Image>().color = new Color(0, 0, 0, t);
+			yield return null;
+		}
+
+		yield return 0;
+	}
+
+	private IEnumerator BackgroundFadeOut()
+	{
+		var t = 1f;
+		transitionUI.SetActive(false);
+
+		while (t > 0f)
+		{
+			t -= Time.deltaTime * 1.5f;
+			transitionBackground.GetComponent<Image>().color = new Color(0, 0, 0, t);
+			yield return null;
+		}
+
+		transition.SetActive(false);
+		yield return 0;
 	}
 }

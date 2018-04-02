@@ -35,6 +35,7 @@ public class PlayerMoveState : IPlayerMoveState
 		var mouseUI = player.mouseUI.GetComponent<MouseUI>();
 		_mouse.Clear(mouseUI);
 		drewMouseSuggestions = false;
+		_gameMap.CheckAndHideGameEntities(player);
 	}
 
 	public void Execute(Player player)
@@ -72,7 +73,6 @@ public class PlayerMoveState : IPlayerMoveState
 		{
 			_fogOfWar.SetFogOfWar();
 			_playerFogOfWar.ChangeFogOfWar(player, player.revealAlphaLevel);
-			_gameMap.CheckAndHideGameEntities(player);
 		}
 		else
 		{

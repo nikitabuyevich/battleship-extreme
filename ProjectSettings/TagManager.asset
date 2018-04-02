@@ -9,6 +9,8 @@ TagManager:
   - Fog of War
   - Rocks
   - Overall Parent
+  - Transition Background
+  - Transition UI
   layers:
   - Default
   - TransparentFX
@@ -54,4 +56,7 @@ TagManager:
     locked: 0
   - name: Game
     uniqueID: 3491629821
+    locked: 0
+  - name: Transition
+    uniqueID: 505045235
     locked: 0
