@@ -54,6 +54,10 @@ public class Player : GameEntity
 	public int numberOfAttackSpacesPerTurn = 2;
 	public int numberOfAttacksPerTurn = 1;
 
+	[Header("Income")]
+	public int money;
+	public float income;
+
 	[Header("Gameplay")]
 	public float moveSpeed = 2f;
 	[Range(0, 1)]
@@ -115,7 +119,8 @@ public class Player : GameEntity
 			if (Input.GetMouseButtonDown(0))
 			{
 				var mousePos = _mouse.GetMousePos(this);
-				if (_gameMap.MoveIsValid(this, mousePos))
+				var validPositions = _gameMap.GetValidMovePositions(this);
+				if (validPositions.Contains(mousePos))
 				{
 					var currentDir = _playerMovement.GetDirection(this);
 					_spriteRenderer.RenderDirection(this, currentDir);

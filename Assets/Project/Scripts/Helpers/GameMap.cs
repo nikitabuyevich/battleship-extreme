@@ -194,16 +194,163 @@ public class GameMap : IGameMap
 
     return sidePositions;
   }
+
   public List<Vector3> GetValidMovePositions(Player player)
   {
     var validPositions = new List<Vector3>();
+    var westBlocked = false;
+    var eastBlocked = false;
+    var northBlocked = false;
+    var southBlocked = false;
+    var northWestBlocked = false;
+    var northEastBlocked = false;
+    var southWestBlocked = false;
+    var southEastBlocked = false;
 
-    var possiblePositions = GetPossibleMovePositions(player);
-    foreach (var possiblePosition in possiblePositions)
+    for (int i = 1; i < player.numberOfMoveSpacesPerTurn + 1; i++)
     {
-      if (_playerCollisions.CanMoveToSpace(possiblePosition))
+      var west = new Vector3(
+        player.transform.position.x - i,
+        player.transform.position.y,
+        player.transform.position.z
+      );
+      var east = new Vector3(
+        player.transform.position.x + i,
+        player.transform.position.y,
+        player.transform.position.z
+      );
+      var north = new Vector3(
+        player.transform.position.x,
+        player.transform.position.y - i,
+        player.transform.position.z
+      );
+      var south = new Vector3(
+        player.transform.position.x,
+        player.transform.position.y + i,
+        player.transform.position.z
+      );
+
+      if (!westBlocked)
       {
-        validPositions.Add(possiblePosition);
+        if (_playerCollisions.CanMoveToSpace(west))
+        {
+          validPositions.Add(west);
+        }
+        else
+        {
+          westBlocked = true;
+        }
+      }
+
+      if (!eastBlocked)
+      {
+        if (_playerCollisions.CanMoveToSpace(east))
+        {
+          validPositions.Add(east);
+        }
+        else
+        {
+          eastBlocked = true;
+        }
+      }
+
+      if (!northBlocked)
+      {
+        if (_playerCollisions.CanMoveToSpace(north))
+        {
+          validPositions.Add(north);
+        }
+        else
+        {
+          northBlocked = true;
+        }
+      }
+
+      if (!southBlocked)
+      {
+        if (_playerCollisions.CanMoveToSpace(south))
+        {
+          validPositions.Add(south);
+        }
+        else
+        {
+          southBlocked = true;
+        }
+      }
+
+      if (player.canMoveAcross)
+      {
+        var northWest = new Vector3(
+          player.transform.position.x - i,
+          player.transform.position.y + i,
+          player.transform.position.z
+        );
+
+        var northEast = new Vector3(
+          player.transform.position.x + i,
+          player.transform.position.y + i,
+          player.transform.position.z
+        );
+
+        var southWest = new Vector3(
+          player.transform.position.x - i,
+          player.transform.position.y - i,
+          player.transform.position.z
+        );
+
+        var southEast = new Vector3(
+          player.transform.position.x + i,
+          player.transform.position.y - i,
+          player.transform.position.z
+        );
+
+        if (!northWestBlocked)
+        {
+          if (_playerCollisions.CanMoveToSpace(northWest))
+          {
+            validPositions.Add(northWest);
+          }
+          else
+          {
+            northWestBlocked = true;
+          }
+        }
+
+        if (!northEastBlocked)
+        {
+          if (_playerCollisions.CanMoveToSpace(northEast))
+          {
+            validPositions.Add(northEast);
+          }
+          else
+          {
+            northEastBlocked = true;
+          }
+        }
+
+        if (!southWestBlocked)
+        {
+          if (_playerCollisions.CanMoveToSpace(southWest))
+          {
+            validPositions.Add(southWest);
+          }
+          else
+          {
+            southWestBlocked = true;
+          }
+        }
+
+        if (!southEastBlocked)
+        {
+          if (_playerCollisions.CanMoveToSpace(southEast))
+          {
+            validPositions.Add(southEast);
+          }
+          else
+          {
+            southEastBlocked = true;
+          }
+        }
       }
     }
 

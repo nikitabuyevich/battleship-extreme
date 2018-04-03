@@ -88,7 +88,6 @@ public class GameSceneManager : MonoBehaviour
 
 	public void NextPlayer()
 	{
-		var transitionBackground = GameObject.FindGameObjectWithTag("Transition Background");
 		StartCoroutine(BackgroundFadeOut());
 		_turn.NextPlayer();
 	}
