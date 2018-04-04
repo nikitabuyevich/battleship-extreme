@@ -26,17 +26,28 @@ public class GameSceneManager : MonoBehaviour
 		players = GameObject.FindObjectsOfType(typeof(Player)) as Player[];
 		if (StaticVariables.numberOfPlayers == 2)
 		{
+			Destroy(players[2].gameObject);
+			Destroy(players[3].gameObject);
+			players = new Player[]
+			{
+				players[0],
+					players[1]
+			};
 			players[0].name = StaticVariables.player1Name;
 			players[1].name = StaticVariables.player2Name;
-			Destroy(players[2]);
-			Destroy(players[3]);
 		}
 		else if (StaticVariables.numberOfPlayers == 3)
 		{
+			Destroy(players[3].gameObject);
+			players = new Player[]
+			{
+				players[0],
+					players[1],
+					players[2]
+			};
 			players[0].name = StaticVariables.player1Name;
 			players[1].name = StaticVariables.player2Name;
 			players[2].name = StaticVariables.player3Name;
-			Destroy(players[3]);
 		}
 		else if (StaticVariables.numberOfPlayers == 4)
 		{
