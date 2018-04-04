@@ -76,6 +76,32 @@ public class Turn : ITurn
     _gameSceneManager.numberOfAttacks = CurrentPlayer().numberOfAttacksPerTurn;
   }
 
+  public Player GetNextPlayer()
+  {
+    var currentPlayersTurn = _gameSceneManager.currentPlayersTurn;
+    if ((currentPlayersTurn + 1) != _gameSceneManager.players.Length)
+    {
+      currentPlayersTurn += 1;
+      if (_gameSceneManager.players[currentPlayersTurn] == null)
+      {
+        if ((currentPlayersTurn + 1) != _gameSceneManager.players.Length)
+        {
+          currentPlayersTurn += 1;
+        }
+        else
+        {
+          currentPlayersTurn = 0;
+        }
+      }
+    }
+    else
+    {
+      currentPlayersTurn = 0;
+    }
+
+    return _gameSceneManager.players[currentPlayersTurn];
+  }
+
   public Player CurrentPlayer()
   {
     return _gameSceneManager.players[_gameSceneManager.currentPlayersTurn];
