@@ -21,6 +21,7 @@ public class GameInstaller : MonoInstaller
         Container.Bind<IMouse>().To<Mouse>().AsSingle();
         Container.Bind<IAbility>().To<Ability>().AsSingle();
         Container.Bind<IMouseAttack>().To<MouseAttack>().AsSingle();
+        Container.Bind<ISceneTransition>().To<SceneTransition>().AsSingle();
 
         Container.Bind<IOnPlayer>().To<OnPlayer>().AsSingle();
 

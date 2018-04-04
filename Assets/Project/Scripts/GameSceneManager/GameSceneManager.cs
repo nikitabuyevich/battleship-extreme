@@ -9,13 +9,19 @@ public class GameSceneManager : MonoBehaviour
 	private IFogOfWar _fogOfWar;
 	private IReposition _reposition;
 	private ITurn _turn;
+	private ISceneTransition _sceneTransition;
 
 	[Inject]
-	public void Construct(IFogOfWar fogOfWar, IReposition reposition, ITurn turn)
+	public void Construct(
+		IFogOfWar fogOfWar,
+		IReposition reposition,
+		ITurn turn,
+		ISceneTransition sceneTransition)
 	{
 		_fogOfWar = fogOfWar;
 		_reposition = reposition;
 		_turn = turn;
+		_sceneTransition = sceneTransition;
 
 		players = GameObject.FindObjectsOfType(typeof(Player)) as Player[];
 		if (StaticVariables.numberOfPlayers == 2)
@@ -107,12 +113,12 @@ public class GameSceneManager : MonoBehaviour
 		transitionUI.SetActive(true);
 		playersName.text = _turn.GetNextPlayer().name + "'s Turn";
 		transitionBackground.GetComponent<Image>().color = new Color(0, 0, 0, 0);
-		StartCoroutine(BackgroundFadeIn(true));
+		StartCoroutine(_sceneTransition.BackgroundFadeIn(transitionBackground, true));
 	}
 
 	public void NextPlayer()
 	{
-		StartCoroutine(BackgroundFadeOut());
+		StartCoroutine(_sceneTransition.BackgroundFadeOut(transitionBackground, transition, transitionUI));
 	}
 
 	public void AbilityCancelBtn()
@@ -143,40 +149,6 @@ public class GameSceneManager : MonoBehaviour
 	{
 		var player = _turn.CurrentPlayer();
 		player.CurrentState().AbilityRotate(player);
-	}
-
-	private IEnumerator BackgroundFadeIn(bool goToNextPlayer)
-	{
-		var t = 0f;
-
-		while (t < 1f)
-		{
-			t += Time.deltaTime * 1.5f;
-			transitionBackground.GetComponent<Image>().color = new Color(0, 0, 0, t);
-			yield return null;
-		}
-
-		if (goToNextPlayer)
-		{
-			_turn.NextPlayer();
-		}
-		yield return 0;
-	}
-
-	private IEnumerator BackgroundFadeOut()
-	{
-		var t = 1f;
-		transitionUI.SetActive(false);
-
-		while (t > 0f)
-		{
-			t -= Time.deltaTime * 1.5f;
-			transitionBackground.GetComponent<Image>().color = new Color(0, 0, 0, t);
-			yield return null;
-		}
-
-		transition.SetActive(false);
-		yield return 0;
 	}
 
 	private void SetNewGame()

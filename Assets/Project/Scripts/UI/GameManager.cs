@@ -3,18 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using Zenject;
 
 public class GameManager : MonoBehaviour
 {
-
-	public Text player1Name;
-	public Text player2Name;
-	public Text player3Name;
-	public Text player4Name;
+	public GameObject transition;
+	public GameObject transitionBackground;
 
 	public void PlayGame()
 	{
-		SceneManager.LoadScene("Game");
+		transition.SetActive(true);
+		StartCoroutine(BackgroundFadeIn());
 	}
 
 	public void SetPlayer1Name(string name)
@@ -50,6 +49,21 @@ public class GameManager : MonoBehaviour
 	public void BackToMainMenu()
 	{
 		SceneManager.LoadScene("Main Menu");
+	}
+
+	private IEnumerator BackgroundFadeIn()
+	{
+		var t = 0f;
+
+		while (t < 1f)
+		{
+			t += Time.deltaTime * 2f;
+			transitionBackground.GetComponent<Image>().color = new Color(0, 0, 0, t);
+			yield return null;
+		}
+
+		SceneManager.LoadScene("Game");
+		yield return 0;
 	}
 
 }
