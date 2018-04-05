@@ -176,7 +176,7 @@ MonoBehaviour:
   level: {fileID: 0}
   gameCamera: {fileID: 0}
   mouseUI: {fileID: 0}
-  refinery: {fileID: 0}
+  refinery: {fileID: 1010351797605144, guid: 5a351f99e68ed43488716db9e54c9582, type: 2}
 --- !u!212 &212656545944526582
 SpriteRenderer:
   m_ObjectHideFlags: 1

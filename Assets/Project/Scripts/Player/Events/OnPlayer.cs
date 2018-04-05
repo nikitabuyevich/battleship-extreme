@@ -33,6 +33,7 @@ public class OnPlayer : IOnPlayer
     {
       _mouse.Clear(mouseUI);
       player.isAbleToAttack = false;
+      player.SetInitialState();
     }
   }
 
@@ -40,5 +41,6 @@ public class OnPlayer : IOnPlayer
   {
     player.numberOfRefineries -= 1;
     player.SetInitialState();
+    _gameSceneManager.SetPlayerStats();
   }
 }

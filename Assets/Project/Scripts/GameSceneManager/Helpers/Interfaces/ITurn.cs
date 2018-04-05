@@ -6,4 +6,5 @@ public interface ITurn
   void NextPlayer();
   Player CurrentPlayer();
   Player GetNextPlayer();
+  void UpdatePlayerUI();
 }

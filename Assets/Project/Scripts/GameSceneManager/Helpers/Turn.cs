@@ -42,8 +42,14 @@ public class Turn : ITurn
     _gameSceneManager.numberOfAttacks = CurrentPlayer().numberOfAttacksPerTurn;
   }
 
+  public void UpdatePlayerUI()
+  {
+    _gameSceneManager.SetPlayerStats();
+  }
+
   public void NextPlayer()
   {
+    CurrentPlayer().money += CurrentPlayer().income;
     var mouseUI = CurrentPlayer().mouseUI.GetComponent<MouseUI>();
     _mouse.Clear(mouseUI);
 

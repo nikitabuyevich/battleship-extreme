@@ -5,9 +5,6 @@ using Zenject;
 
 public class Player : GameEntity
 {
-	[Inject]
-	private readonly GameSceneManager _gameSceneManager;
-
 	// Player states
 	private IPlayerWaitingTurnState _playerWaitingTurnState;
 	private IPlayerMoveState _playerMoveState;
@@ -86,6 +83,7 @@ public class Player : GameEntity
 	public GameObject level;
 	public GameObject gameCamera;
 	public GameObject mouseUI;
+	public GameObject gameSceneManager;
 	public GameObject refinery;
 
 	internal bool _isMoving = false;
@@ -137,7 +135,7 @@ public class Player : GameEntity
 		}
 	}
 
-	public void CreateRefinery(Vector3 pos)
+	public void CreateRefinery(Vector3 pos, float amount)
 	{
 		var newRefinery = Instantiate(refinery, pos, transform.rotation, transform.parent);
 		newRefinery.GetComponentInChildren<SpriteRenderer>().color = new Color(
@@ -148,7 +146,8 @@ public class Player : GameEntity
 		);
 
 		newRefinery.GetComponent<Refinery>().ownedBy = this.gameObject;
-		newRefinery.GetComponent<Refinery>().income = 100;
+		newRefinery.GetComponent<Refinery>().income = amount;
+		income += amount;
 	}
 
 	public void UseMoveTurn()
