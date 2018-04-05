@@ -12,6 +12,7 @@ public class Player : GameEntity
 	private IPlayerWaitingTurnState _playerWaitingTurnState;
 	private IPlayerMoveState _playerMoveState;
 	private IPlayerAttackState _playerAttackState;
+	private IPlayerBuildState _playerBuildState;
 
 	private IPlayerMovement _playerMovement;
 	private IPlayerSpriteRenderer _spriteRenderer;
@@ -23,6 +24,7 @@ public class Player : GameEntity
 		IPlayerWaitingTurnState playerWaitingTurnState,
 		IPlayerMoveState playerMoveState,
 		IPlayerAttackState playerAttackState,
+		IPlayerBuildState playerBuildState,
 		IPlayerMovement playerMovement,
 		IPlayerSpriteRenderer spriteRenderer,
 		IGameMap gameMap,
@@ -31,6 +33,7 @@ public class Player : GameEntity
 		_playerWaitingTurnState = playerWaitingTurnState;
 		_playerMoveState = playerMoveState;
 		_playerAttackState = playerAttackState;
+		_playerBuildState = playerBuildState;
 
 		_playerMovement = playerMovement;
 		_spriteRenderer = spriteRenderer;
@@ -49,14 +52,16 @@ public class Player : GameEntity
 	public int attackPower = 2;
 	public int sideHitAttackPower = 1;
 	public int sideHitRange = 1;
+	public int buildRange = 1;
 	public int numberOfMoveSpacesPerTurn = 1;
 	public int numberOfMovesPerTurn = 1;
 	public int numberOfAttackSpacesPerTurn = 2;
 	public int numberOfAttacksPerTurn = 1;
+	public int numberOfRefineries = 1;
 
 	[Header("Income")]
-	public int money;
-	public float income;
+	public float money;
+	public float income = 100f;
 
 	[Header("Gameplay")]
 	public float moveSpeed = 2f;
@@ -81,6 +86,7 @@ public class Player : GameEntity
 	public GameObject level;
 	public GameObject gameCamera;
 	public GameObject mouseUI;
+	public GameObject refinery;
 
 	internal bool _isMoving = false;
 	internal Vector2 _input;
@@ -131,6 +137,20 @@ public class Player : GameEntity
 		}
 	}
 
+	public void CreateRefinery(Vector3 pos)
+	{
+		var newRefinery = Instantiate(refinery, pos, transform.rotation, transform.parent);
+		newRefinery.GetComponentInChildren<SpriteRenderer>().color = new Color(
+			this.GetComponentInChildren<SpriteRenderer>().color.r,
+			this.GetComponentInChildren<SpriteRenderer>().color.g,
+			this.GetComponentInChildren<SpriteRenderer>().color.b,
+			this.GetComponentInChildren<SpriteRenderer>().color.a
+		);
+
+		newRefinery.GetComponent<Refinery>().ownedBy = this.gameObject;
+		newRefinery.GetComponent<Refinery>().income = 100;
+	}
+
 	public void UseMoveTurn()
 	{
 		if (OnPlayerMovement != null)
@@ -157,6 +177,10 @@ public class Player : GameEntity
 		else if (type == typeof(IPlayerAttackState))
 		{
 			ChangeState(_playerAttackState);
+		}
+		else if (type == typeof(IPlayerBuildState))
+		{
+			ChangeState(_playerBuildState);
 		}
 		else
 		{

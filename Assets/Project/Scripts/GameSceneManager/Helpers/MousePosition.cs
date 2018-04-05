@@ -1,11 +1,11 @@
-public class MouseAttack : IMouseAttack
+public class MousePosition : IMousePosition
 {
   private readonly IMouse _mouse;
   private readonly IGameMap _gameMap;
   private readonly IPlayerCollisions _playerCollisions;
   private readonly IOnPlayer _onPlayer;
 
-  public MouseAttack(
+  public MousePosition(
     IMouse mouse,
     IGameMap gameMap,
     IPlayerCollisions playerCollisions,
@@ -17,7 +17,7 @@ public class MouseAttack : IMouseAttack
     _onPlayer = onPlayer;
   }
 
-  public void AttackPosition(Player player)
+  public void Attack(Player player)
   {
     var mousePos = _mouse.GetMousePos(player);
     var validAttackPositions = _gameMap.GetValidAttackPositions(player);
@@ -43,4 +43,15 @@ public class MouseAttack : IMouseAttack
     }
   }
 
+  public void Build(Player player)
+  {
+    var mousePos = _mouse.GetMousePos(player);
+    var buildPositions = _gameMap.GetBuildPositions(player);
+    if (buildPositions.Contains(mousePos))
+    {
+      player.CreateRefinery(mousePos);
+
+      _onPlayer.Build(player);
+    }
+  }
 }

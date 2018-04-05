@@ -1,6 +1,5 @@
-public interface IOnPlayer
+public interface IMousePosition
 {
-  void Movement(Player player);
   void Attack(Player player);
   void Build(Player player);
 }

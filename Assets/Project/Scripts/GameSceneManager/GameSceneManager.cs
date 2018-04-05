@@ -62,6 +62,9 @@ public class GameSceneManager : MonoBehaviour
 	public Text movesLeft;
 	public Text attacksLeft;
 	public Text playersName;
+	public Text money;
+	public Text income;
+	public Text refineriesLeft;
 	public GameObject transition;
 	public GameObject transitionUI;
 	public GameObject transitionBackground;
@@ -91,6 +94,20 @@ public class GameSceneManager : MonoBehaviour
 		get
 		{
 			return _numberOfAttacks;
+		}
+	}
+
+	private int _numberOfRefineries;
+	internal int numberOfRefineries
+	{
+		set
+		{
+			_numberOfRefineries = value;
+			refineriesLeft.text = "Refineries \nLeft: " + _numberOfRefineries;
+		}
+		get
+		{
+			return _numberOfRefineries;
 		}
 	}
 
@@ -147,6 +164,15 @@ public class GameSceneManager : MonoBehaviour
 		}
 	}
 
+	public void AbilityBuildBtn()
+	{
+		if (numberOfRefineries > 0)
+		{
+			var player = _turn.CurrentPlayer();
+			player.ChangeState(typeof(IPlayerBuildState));
+		}
+	}
+
 	public void AbilityAttackBtn()
 	{
 		if (numberOfAttacks > 0)
@@ -162,8 +188,16 @@ public class GameSceneManager : MonoBehaviour
 		player.CurrentState().AbilityRotate(player);
 	}
 
+	public void SetPlayerStats()
+	{
+		money.text = "$" + _turn.CurrentPlayer().money;
+		income.text = "+" + _turn.CurrentPlayer().income;
+		numberOfRefineries = _turn.CurrentPlayer().numberOfRefineries;
+	}
+
 	private void SetNewGame()
 	{
+		SetPlayerStats();
 		transition.SetActive(true);
 		transitionUI.SetActive(true);
 		playersName.text = _turn.CurrentPlayer().name + "'s Turn";

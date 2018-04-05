@@ -7,16 +7,16 @@ public class Ability : IAbility
   private readonly GameSceneManager _gameSceneManager;
 
   private readonly IPlayerSpriteRenderer _playerSpriteRenderer;
-  private readonly IMouseAttack _mouseAttack;
+  private readonly IMousePosition _mousePosition;
   private readonly IOnPlayer _onPlayer;
 
   public Ability(
     IPlayerSpriteRenderer playerSpriteRenderer,
     IOnPlayer onPlayer,
-    IMouseAttack mouseAttack)
+    IMousePosition mousePosition)
   {
     _playerSpriteRenderer = playerSpriteRenderer;
-    _mouseAttack = mouseAttack;
+    _mousePosition = mousePosition;
     _onPlayer = onPlayer;
   }
 
@@ -77,7 +77,15 @@ public class Ability : IAbility
   {
     if (Input.GetMouseButtonDown(0))
     {
-      _mouseAttack.AttackPosition(player);
+      _mousePosition.Attack(player);
+    }
+  }
+
+  public void Build(Player player)
+  {
+    if (Input.GetMouseButtonDown(0))
+    {
+      _mousePosition.Build(player);
     }
   }
 }

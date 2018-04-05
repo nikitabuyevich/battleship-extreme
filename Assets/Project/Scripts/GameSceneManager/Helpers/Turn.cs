@@ -74,6 +74,7 @@ public class Turn : ITurn
     CurrentPlayer().OnPlayerMovement += OnPlayerMovement;
     _gameSceneManager.numberOfMoves = CurrentPlayer().numberOfMovesPerTurn;
     _gameSceneManager.numberOfAttacks = CurrentPlayer().numberOfAttacksPerTurn;
+    _gameSceneManager.SetPlayerStats();
   }
 
   public Player GetNextPlayer()

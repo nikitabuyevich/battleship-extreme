@@ -20,7 +20,7 @@ public class GameInstaller : MonoInstaller
         Container.Bind<IGameMap>().To<GameMap>().AsSingle();
         Container.Bind<IMouse>().To<Mouse>().AsSingle();
         Container.Bind<IAbility>().To<Ability>().AsSingle();
-        Container.Bind<IMouseAttack>().To<MouseAttack>().AsSingle();
+        Container.Bind<IMousePosition>().To<MousePosition>().AsSingle();
         Container.Bind<ISceneTransition>().To<SceneTransition>().AsSingle();
 
         Container.Bind<IOnPlayer>().To<OnPlayer>().AsSingle();
@@ -28,6 +28,7 @@ public class GameInstaller : MonoInstaller
         Container.Bind<IPlayerMoveState>().To<PlayerMoveState>().AsSingle();
         Container.Bind<IPlayerWaitingTurnState>().To<PlayerWaitingTurnState>().AsSingle();
         Container.Bind<IPlayerAttackState>().To<PlayerAttackState>().AsSingle();
+        Container.Bind<IPlayerBuildState>().To<PlayerBuildState>().AsSingle();
 
         Container.Bind<Reposition>().AsSingle();
         Container.Bind<FogOfWar>().AsSingle();

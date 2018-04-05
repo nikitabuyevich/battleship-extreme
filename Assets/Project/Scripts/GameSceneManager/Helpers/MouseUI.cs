@@ -10,6 +10,8 @@ public class MouseUI : MonoBehaviour
 	public TileBase canMoveHere;
 	public TileBase thinkingAboutMovingHere;
 	public TileBase canAttackHere;
+	public TileBase canBuildRefineryHere;
+	public TileBase thinkingAboutBuildingRefineryHere;
 	public TileBase thinkingAboutAttackingHere;
 	public TileBase thinkingAboutAttackingHereSideAttacks;
 

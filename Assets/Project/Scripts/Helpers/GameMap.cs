@@ -70,6 +70,31 @@ public class GameMap : IGameMap
     }
   }
 
+  public List<Vector3> GetBuildPositions(Player player)
+  {
+    var buildPositions = new List<Vector3>();
+
+    // Reveal square vision
+    for (int i = -(player.buildRange * 2 - player.buildRange); i < (player.buildRange + 1); i++)
+    {
+      for (int j = -(player.buildRange * 2 - player.buildRange); j < (player.buildRange + 1); j++)
+      {
+        var buildPosition = new Vector3(
+          player.transform.position.x + j,
+          player.transform.position.y + i,
+          player.transform.position.z
+        );
+
+        if (_playerCollisions.CanMoveToSpace(buildPosition) && player.transform.position != buildPosition)
+        {
+          buildPositions.Add(buildPosition);
+        }
+      }
+    }
+
+    return buildPositions;
+  }
+
   public List<Vector3> GetVisionPositions(Player player)
   {
     var visionPositions = new List<Vector3>();

@@ -35,4 +35,10 @@ public class OnPlayer : IOnPlayer
       player.isAbleToAttack = false;
     }
   }
+
+  public void Build(Player player)
+  {
+    player.numberOfRefineries -= 1;
+    player.SetInitialState();
+  }
 }

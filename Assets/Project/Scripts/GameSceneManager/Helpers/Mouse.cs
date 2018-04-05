@@ -42,6 +42,44 @@ public class Mouse : IMouse
     SetAttackCursor(mouseUI);
   }
 
+  public void DrawBuildRefinerySuggestions(Player player)
+  {
+    var mouseUI = player.mouseUI.GetComponent<MouseUI>();
+    Clear(mouseUI);
+    var buildPositions = _gameMap.GetBuildPositions(player);
+    foreach (var buildPosition in buildPositions)
+    {
+      PlaceTile(player, buildPosition, mouseUI.canBuildRefineryHere, "Suggestions");
+    }
+  }
+
+  public void DrawBuildRefinerySuggestionHover(Player player)
+  {
+    var mouseUI = player.mouseUI.GetComponent<MouseUI>();
+    var returnedCameraPos = player.gameCamera.GetComponent<Camera>().ScreenToWorldPoint(Input.mousePosition);
+    var mousePos = new Vector3Int(
+      Mathf.FloorToInt(returnedCameraPos.x - 0.5f) + 1,
+      Mathf.FloorToInt(returnedCameraPos.y - 0.5f) + 1,
+      (int) player.transform.position.z
+    );
+
+    if (mouseUI.lastMousePos != mousePos)
+    {
+      var buildPositions = _gameMap.GetBuildPositions(player);
+      if (buildPositions.Contains(mousePos))
+      {
+        ClearMouseUI(mouseUI, true);
+        PlaceTile(player, mousePos, mouseUI.thinkingAboutBuildingRefineryHere, "Mouse UI");
+      }
+      else
+      {
+        ClearMouseUI(mouseUI, true);
+      }
+
+      mouseUI.lastMousePos = mousePos;
+    }
+  }
+
   public void DrawMoveSuggestions(Player player)
   {
     var mouseUI = player.mouseUI.GetComponent<MouseUI>();
