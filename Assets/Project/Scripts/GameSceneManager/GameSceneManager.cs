@@ -75,6 +75,7 @@ public class GameSceneManager : MonoBehaviour
 
 	[Header("Setup")]
 	public GameObject floor;
+	public ShopUI shopUI;
 	public int screenWidth = 640;
 	public int screenHeight = 360;
 	public bool gameIsFullscreen = true;
@@ -220,5 +221,43 @@ public class GameSceneManager : MonoBehaviour
 		transitionUI.SetActive(true);
 		playersName.text = _turn.CurrentPlayer().name + "'s Turn";
 		transitionBackground.GetComponent<Image>().color = new Color(0, 0, 0, 1);
+	}
+
+	public void OpenShop()
+	{
+		shopUI.mainShop.SetActive(true);
+	}
+
+	public void OpenShipShop()
+	{
+		var player = _turn.CurrentPlayer();
+		shopUI.shipShop.SetActive(true);
+		var healthCostMultiplier = (2 * player.boughtAmount.health) > 0 ? (2 * player.boughtAmount.health) : 1;
+		shopUI.healthCost = ShopCost.health * healthCostMultiplier;
+		// shopUI.
+	}
+
+	public void OpenAbilitiesShop()
+	{
+		shopUI.abilitiesShop.SetActive(true);
+	}
+
+	public void OpenRefineriesShop()
+	{
+		shopUI.refineriesShop.SetActive(true);
+	}
+
+	public void ShopBackButton()
+	{
+		if (shopUI.shipShop.activeSelf || shopUI.abilitiesShop.activeSelf || shopUI.refineriesShop.activeSelf)
+		{
+			shopUI.shipShop.SetActive(false);
+			shopUI.abilitiesShop.SetActive(false);
+			shopUI.refineriesShop.SetActive(false);
+		}
+		else
+		{
+			shopUI.mainShop.SetActive(false);
+		}
 	}
 }
