@@ -86,6 +86,7 @@ public class PlayerMovement : IPlayerMovement
     var mouseUI = player.mouseUI.GetComponent<MouseUI>();
     _mouse.Clear(mouseUI);
     _playerFogOfWar.ChangeFogOfWar(player, player.visitedAlphaLevel);
+    _playerFogOfWar.RevealPlayersRefineries(player);
 
     player._isMoving = true;
     var startPos = player.transform.position;

@@ -54,10 +54,15 @@ public class GameMap : IGameMap
     var game = GameObject.Find("Game");
     var children = game.GetComponentsInChildren<GameEntity>();
     var visionPositions = GetVisionPositions(player);
+    var refineryVisions = GetAllRefineryVisionPositions(player);
 
     foreach (var child in children)
     {
-      child.GetComponentInChildren<Renderer>().enabled = false;
+      var refinery = child.GetComponent<Refinery>();
+      if (refinery == null || refinery.ownedBy != player.gameObject)
+      {
+        child.GetComponentInChildren<Renderer>().enabled = false;
+      }
     }
 
     foreach (var visionPosition in visionPositions)
@@ -65,6 +70,15 @@ public class GameMap : IGameMap
       if (_playerCollisions.IsGameEntity(visionPosition))
       {
         var gameEntity = _playerCollisions.GetGameEntity(visionPosition);
+        gameEntity.GetComponentInChildren<Renderer>().enabled = true;
+      }
+    }
+
+    foreach (var refineryVision in refineryVisions)
+    {
+      if (_playerCollisions.IsGameEntity(refineryVision))
+      {
+        var gameEntity = _playerCollisions.GetGameEntity(refineryVision);
         gameEntity.GetComponentInChildren<Renderer>().enabled = true;
       }
     }
@@ -93,6 +107,29 @@ public class GameMap : IGameMap
     }
 
     return buildPositions;
+  }
+
+  public List<Vector3> GetAllRefineryVisionPositions(Player player)
+  {
+    var visionPositions = new List<Vector3>();
+    foreach (var refinery in player.refineries)
+    {
+      var refineryComp = refinery.GetComponent<Refinery>();
+      // Reveal square vision
+      for (int i = -(refineryComp.visionRadius * 2 - refineryComp.visionRadius); i < (refineryComp.visionRadius + 1); i++)
+      {
+        for (int j = -(refineryComp.visionRadius * 2 - refineryComp.visionRadius); j < (refineryComp.visionRadius + 1); j++)
+        {
+          visionPositions.Add(new Vector3(
+            refineryComp.transform.position.x + j,
+            refineryComp.transform.position.y + i,
+            refineryComp.transform.position.z
+          ));
+        }
+      }
+    }
+
+    return visionPositions;
   }
 
   public List<Vector3> GetVisionPositions(Player player)

@@ -89,6 +89,7 @@ public class Player : GameEntity
 	internal bool _isMoving = false;
 	internal Vector2 _input;
 	internal Dictionary<string, Color> fogOfWar = new Dictionary<string, Color>();
+	internal List<GameObject> refineries = new List<GameObject>();
 	internal bool isAbleToMove = false;
 	internal bool isAbleToAttack = false;
 
@@ -145,6 +146,7 @@ public class Player : GameEntity
 			this.GetComponentInChildren<SpriteRenderer>().color.a
 		);
 
+		this.refineries.Add(newRefinery);
 		newRefinery.GetComponent<Refinery>().ownedBy = this.gameObject;
 		newRefinery.GetComponent<Refinery>().income = amount;
 		income += amount;

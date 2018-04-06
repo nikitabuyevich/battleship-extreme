@@ -13,6 +13,23 @@ public class PlayerFogOfWar : IPlayerFogOfWar
     _gameMap = gameMap;
   }
 
+  public void RevealPlayersRefineries(Player player)
+  {
+    foreach (var refinery in player.refineries)
+    {
+      var visionPositions = _gameMap.GetAllRefineryVisionPositions(player);
+      var overallParent = refinery.transform.parent.gameObject.transform.parent.gameObject;
+      var tilemaps = overallParent.GetComponentsInChildren<Tilemap>();
+      foreach (var tilemap in tilemaps)
+      {
+        foreach (var visionPosition in visionPositions)
+        {
+          ChangeAlphaLevelOfTile(tilemap, GetTileLocationOfPlayer(visionPosition), player.revealAlphaLevel);
+        }
+      }
+    }
+  }
+
   public void ChangeFogOfWar(Player player, float alphaLevel)
   {
     var visionPositions = _gameMap.GetVisionPositions(player);

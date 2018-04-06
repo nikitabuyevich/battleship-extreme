@@ -6,10 +6,12 @@ public class OnPlayer : IOnPlayer
   private readonly GameSceneManager _gameSceneManager;
 
   private readonly IMouse _mouse;
+  private readonly IPlayerFogOfWar _playerFogOfWar;
 
-  public OnPlayer(IMouse mouse)
+  public OnPlayer(IMouse mouse, IPlayerFogOfWar playerFogOfWar)
   {
     _mouse = mouse;
+    _playerFogOfWar = playerFogOfWar;
   }
 
   public void Movement(Player player)
@@ -42,5 +44,6 @@ public class OnPlayer : IOnPlayer
     player.numberOfRefineries -= 1;
     player.SetInitialState();
     _gameSceneManager.SetPlayerStats();
+    _playerFogOfWar.RevealPlayersRefineries(player);
   }
 }
