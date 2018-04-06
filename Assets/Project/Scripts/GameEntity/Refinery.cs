@@ -13,6 +13,7 @@ public class Refinery : GameEntity
 		if (health <= 0)
 		{
 			var player = ownedBy.GetComponent<Player>();
+			player.numberOfRefineries -= 1;
 			player.income -= income;
 			player.gameSceneManager.GetComponent<GameSceneManager>().SetPlayerStats();
 			Destroy(this.gameObject);

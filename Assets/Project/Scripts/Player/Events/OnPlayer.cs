@@ -41,7 +41,7 @@ public class OnPlayer : IOnPlayer
 
   public void Build(Player player)
   {
-    player.numberOfRefineries -= 1;
+    player.numberOfRefineries += 1;
     player.SetInitialState();
     _gameSceneManager.SetPlayerStats();
     _playerFogOfWar.RevealPlayersRefineries(player);

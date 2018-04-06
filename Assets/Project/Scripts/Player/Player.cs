@@ -54,7 +54,7 @@ public class Player : GameEntity
 	public int numberOfMovesPerTurn = 1;
 	public int numberOfAttackSpacesPerTurn = 2;
 	public int numberOfAttacksPerTurn = 1;
-	public int numberOfRefineries = 1;
+	public int numberOfRefineries = 0;
 
 	[Header("Income")]
 	public float money;
@@ -90,6 +90,7 @@ public class Player : GameEntity
 	internal Vector2 _input;
 	internal Dictionary<string, Color> fogOfWar = new Dictionary<string, Color>();
 	internal List<GameObject> refineries = new List<GameObject>();
+	internal BoughtAmount boughtAmount;
 	internal bool isAbleToMove = false;
 	internal bool isAbleToAttack = false;
 
@@ -112,6 +113,7 @@ public class Player : GameEntity
 	{
 		if (health <= 0)
 		{
+			gameSceneManager.GetComponent<GameSceneManager>().numberOfPlayers -= 1;
 			Destroy(this.gameObject);
 			Debug.Log(this.name + " has been destroyed!");
 		}

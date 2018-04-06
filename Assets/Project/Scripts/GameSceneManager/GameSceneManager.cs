@@ -28,6 +28,7 @@ public class GameSceneManager : MonoBehaviour
 		{
 			Destroy(players[2].gameObject);
 			Destroy(players[3].gameObject);
+			numberOfPlayers = 2;
 			players = new Player[]
 			{
 				players[0],
@@ -39,6 +40,7 @@ public class GameSceneManager : MonoBehaviour
 		else if (StaticVariables.numberOfPlayers == 3)
 		{
 			Destroy(players[3].gameObject);
+			numberOfPlayers = 3;
 			players = new Player[]
 			{
 				players[0],
@@ -51,6 +53,7 @@ public class GameSceneManager : MonoBehaviour
 		}
 		else if (StaticVariables.numberOfPlayers == 4)
 		{
+			numberOfPlayers = 4;
 			players[0].name = StaticVariables.player1Name;
 			players[1].name = StaticVariables.player2Name;
 			players[2].name = StaticVariables.player3Name;
@@ -62,6 +65,7 @@ public class GameSceneManager : MonoBehaviour
 	public Text movesLeft;
 	public Text attacksLeft;
 	public Text playersName;
+	public Text playersLeft;
 	public Text money;
 	public Text income;
 	public Text refineriesLeft;
@@ -83,6 +87,20 @@ public class GameSceneManager : MonoBehaviour
 	internal Player[] players;
 	internal int currentPlayersTurn = 0;
 
+	private int _numberOfPlayers;
+	internal int numberOfPlayers
+	{
+		set
+		{
+			_numberOfPlayers = value;
+			playersLeft.text = "Players \nLeft: " + _numberOfPlayers;
+		}
+		get
+		{
+			return _numberOfPlayers;
+		}
+	}
+
 	private int _numberOfAttacks;
 	internal int numberOfAttacks
 	{
@@ -103,7 +121,7 @@ public class GameSceneManager : MonoBehaviour
 		set
 		{
 			_numberOfRefineries = value;
-			refineriesLeft.text = "Refineries \nLeft: " + _numberOfRefineries;
+			refineriesLeft.text = "Refineries \nOwned: " + _numberOfRefineries;
 		}
 		get
 		{
