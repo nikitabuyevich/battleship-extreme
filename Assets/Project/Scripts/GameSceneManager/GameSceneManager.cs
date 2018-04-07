@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.Tilemaps;
 using UnityEngine.UI;
 using Zenject;
@@ -66,16 +67,27 @@ public class GameSceneManager : MonoBehaviour
 	public Text attacksLeft;
 	public Text playersName;
 	public Text playersLeft;
+	public Text currentPlayerText;
+	public Text winnerText;
 	public Text money;
 	public Text income;
 	public Text refineriesLeft;
+
+	// Player health stats
+	[Header("Health UI")]
+	public Text healthCurrentText;
+	public Text healthMaxText;
+
+	public GameObject endGameTransition;
+	public GameObject endGameUI;
+	public GameObject endGameBackground;
+
 	public GameObject transition;
 	public GameObject transitionUI;
 	public GameObject transitionBackground;
 
 	[Header("Setup")]
 	public GameObject floor;
-	public ShopUI shopUI;
 	public int screenWidth = 640;
 	public int screenHeight = 360;
 	public bool gameIsFullscreen = true;
@@ -88,12 +100,30 @@ public class GameSceneManager : MonoBehaviour
 	internal Player[] players;
 	internal int currentPlayersTurn = 0;
 
+	private string _currentPlayer;
+	internal string currentPlayer
+	{
+		set
+		{
+			_currentPlayer = value;
+			currentPlayerText.text = _currentPlayer + "'s\n Turn";
+		}
+		get
+		{
+			return _currentPlayer;
+		}
+	}
+
 	private int _numberOfPlayers;
 	internal int numberOfPlayers
 	{
 		set
 		{
 			_numberOfPlayers = value;
+			if (_numberOfPlayers == 1)
+			{
+				DeclareWinner();
+			}
 			playersLeft.text = "Players \nLeft: " + _numberOfPlayers;
 		}
 		get
@@ -154,6 +184,20 @@ public class GameSceneManager : MonoBehaviour
 		SetNewGame();
 	}
 
+	private void DeclareWinner()
+	{
+		endGameTransition.SetActive(true);
+		endGameUI.SetActive(true);
+		winnerText.text = currentPlayer + " WON!";
+		endGameBackground.GetComponent<Image>().color = new Color(0, 0, 0, 0);
+		StartCoroutine(_sceneTransition.BackgroundFadeIn(endGameBackground, true));
+	}
+
+	public void GoToMainMenu()
+	{
+		SceneManager.LoadScene("Main Menu");
+	}
+
 	public void EndTurnBtn()
 	{
 		transition.SetActive(true);
@@ -209,9 +253,16 @@ public class GameSceneManager : MonoBehaviour
 
 	public void SetPlayerStats()
 	{
-		money.text = "$" + _turn.CurrentPlayer().money;
-		income.text = "+" + _turn.CurrentPlayer().income;
-		numberOfRefineries = _turn.CurrentPlayer().numberOfRefineries;
+		var player = _turn.CurrentPlayer();
+
+		currentPlayer = player.name;
+		money.text = "$" + player.money;
+		income.text = "+" + player.income;
+		numberOfRefineries = player.numberOfRefineries;
+
+		// set player health information
+		healthCurrentText.text = player.health.ToString();
+		healthMaxText.text = player.maxHealth.ToString();
 	}
 
 	private void SetNewGame()
@@ -221,43 +272,5 @@ public class GameSceneManager : MonoBehaviour
 		transitionUI.SetActive(true);
 		playersName.text = _turn.CurrentPlayer().name + "'s Turn";
 		transitionBackground.GetComponent<Image>().color = new Color(0, 0, 0, 1);
-	}
-
-	public void OpenShop()
-	{
-		shopUI.mainShop.SetActive(true);
-	}
-
-	public void OpenShipShop()
-	{
-		var player = _turn.CurrentPlayer();
-		shopUI.shipShop.SetActive(true);
-		var healthCostMultiplier = (2 * player.boughtAmount.health) > 0 ? (2 * player.boughtAmount.health) : 1;
-		shopUI.healthCost = ShopCost.health * healthCostMultiplier;
-		// shopUI.
-	}
-
-	public void OpenAbilitiesShop()
-	{
-		shopUI.abilitiesShop.SetActive(true);
-	}
-
-	public void OpenRefineriesShop()
-	{
-		shopUI.refineriesShop.SetActive(true);
-	}
-
-	public void ShopBackButton()
-	{
-		if (shopUI.shipShop.activeSelf || shopUI.abilitiesShop.activeSelf || shopUI.refineriesShop.activeSelf)
-		{
-			shopUI.shipShop.SetActive(false);
-			shopUI.abilitiesShop.SetActive(false);
-			shopUI.refineriesShop.SetActive(false);
-		}
-		else
-		{
-			shopUI.mainShop.SetActive(false);
-		}
 	}
 }

@@ -57,8 +57,8 @@ public class Player : GameEntity
 	public int numberOfRefineries = 0;
 
 	[Header("Income")]
-	public float money;
-	public float income = 100f;
+	public int money = 500;
+	public int income;
 
 	[Header("Gameplay")]
 	public float moveSpeed = 2f;
@@ -90,7 +90,7 @@ public class Player : GameEntity
 	internal Vector2 _input;
 	internal Dictionary<string, Color> fogOfWar = new Dictionary<string, Color>();
 	internal List<GameObject> refineries = new List<GameObject>();
-	internal BoughtAmount boughtAmount;
+	internal BoughtAmount boughtAmount = new BoughtAmount();
 	internal bool isAbleToMove = false;
 	internal bool isAbleToAttack = false;
 
@@ -138,7 +138,7 @@ public class Player : GameEntity
 		}
 	}
 
-	public void CreateRefinery(Vector3 pos, float amount)
+	public void CreateRefinery(Vector3 pos, int amount)
 	{
 		var newRefinery = Instantiate(refinery, pos, transform.rotation, transform.parent);
 		newRefinery.GetComponentInChildren<SpriteRenderer>().color = new Color(

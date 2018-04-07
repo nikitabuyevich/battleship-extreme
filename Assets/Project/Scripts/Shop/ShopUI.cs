@@ -19,7 +19,26 @@ public class ShopUI : MonoBehaviour
 	public Text visionRadiusCurrentText;
 	public Text movesPerTurnCostText;
 	public Text movesPerTurnCurrentText;
-	public Button moveAcrossButtonText;
+	public Text moveAcrossCostText;
+
+	public Button moveAcrossButton;
+	public Button HealthButton;
+	public Button VisionRadiusButton;
+	public Button MovesPerTurnButton;
+
+	private int _moveAcrossCost;
+	internal int moveAcrossCost
+	{
+		set
+		{
+			_moveAcrossCost = value;
+			moveAcrossCostText.text = "$" + _moveAcrossCost;
+		}
+		get
+		{
+			return _moveAcrossCost;
+		}
+	}
 
 	private int _healthCost;
 	internal int healthCost
@@ -41,7 +60,7 @@ public class ShopUI : MonoBehaviour
 		set
 		{
 			_healthCurrent = value;
-			healthCurrentText.text = _healthCost.ToString();
+			healthCurrentText.text = _healthCurrent.ToString();
 		}
 		get
 		{
@@ -116,7 +135,28 @@ public class ShopUI : MonoBehaviour
 	public Text sideAttackRangeCurrentText;
 	public Text attacksPerTurnCostText;
 	public Text attacksPerTurnCurrentText;
-	public Button rotationsAreFree;
+	public Text rotationsAreFreeCostText;
+
+	public Button rotationsAreFreeButton;
+	public Button AttackButton;
+	public Button AttackRangeButton;
+	public Button SideAttackButton;
+	public Button SideAttackRangeButton;
+	public Button AttacksPerTurnButton;
+
+	private int _rotationsAreFreeCost;
+	internal int rotationsAreFreeCost
+	{
+		set
+		{
+			_rotationsAreFreeCost = value;
+			rotationsAreFreeCostText.text = "$" + _rotationsAreFreeCost;
+		}
+		get
+		{
+			return _rotationsAreFreeCost;
+		}
+	}
 
 	private int _attacksPerTurnCost;
 	internal int attacksPerTurnCost
@@ -221,7 +261,7 @@ public class ShopUI : MonoBehaviour
 	{
 		set
 		{
-			_attackPowerCurrent = value;
+			_attackRangeCurrent = value;
 			attackRangeCurrentText.text = _attackRangeCurrent.ToString();
 		}
 		get
@@ -261,6 +301,192 @@ public class ShopUI : MonoBehaviour
 	// REFINERIES SHOP
 	public Text buildRangeCostText;
 	public Text buildRangeCurrentText;
+	public Text level1RefineryCostText;
+	public Text level1RefineryHealthText;
+	public Text level1RefineryVisionRadiusText;
+	public Text level2RefineryCostText;
+	public Text level2RefineryHealthText;
+	public Text level2RefineryVisionRadiusText;
+	public Text level3RefineryCostText;
+	public Text level3RefineryHealthText;
+	public Text level3RefineryVisionRadiusText;
+	public Text level4RefineryCostText;
+	public Text level4RefineryHealthText;
+	public Text level4RefineryVisionRadiusText;
+
+	public Button BuildRangeButton;
+	public Button Level1RefineryButton;
+	public Button Level2RefineryButton;
+	public Button Level3RefineryButton;
+	public Button Level4RefineryButton;
+
+	private int _level4RefineryVisionRadius;
+	internal int level4RefineryVisionRadius
+	{
+		set
+		{
+			_level4RefineryVisionRadius = value;
+			level4RefineryVisionRadiusText.text = _level4RefineryVisionRadius.ToString();
+		}
+		get
+		{
+			return _level4RefineryVisionRadius;
+		}
+	}
+
+	private int _level4RefineryHealth;
+	internal int level4RefineryHealth
+	{
+		set
+		{
+			_level4RefineryHealth = value;
+			level4RefineryHealthText.text = _level4RefineryHealth.ToString();
+		}
+		get
+		{
+			return _level4RefineryHealth;
+		}
+	}
+
+	private int _level3RefineryVisionRadius;
+	internal int level3RefineryVisionRadius
+	{
+		set
+		{
+			_level3RefineryVisionRadius = value;
+			level3RefineryVisionRadiusText.text = _level3RefineryVisionRadius.ToString();
+		}
+		get
+		{
+			return _level3RefineryVisionRadius;
+		}
+	}
+
+	private int _level3RefineryHealth;
+	internal int level3RefineryHealth
+	{
+		set
+		{
+			_level3RefineryHealth = value;
+			level3RefineryHealthText.text = _level3RefineryHealth.ToString();
+		}
+		get
+		{
+			return _level3RefineryHealth;
+		}
+	}
+
+	private int _level2RefineryVisionRadius;
+	internal int level2RefineryVisionRadius
+	{
+		set
+		{
+			_level2RefineryVisionRadius = value;
+			level2RefineryVisionRadiusText.text = _level2RefineryVisionRadius.ToString();
+		}
+		get
+		{
+			return _level2RefineryVisionRadius;
+		}
+	}
+
+	private int _level2RefineryHealth;
+	internal int level2RefineryHealth
+	{
+		set
+		{
+			_level2RefineryHealth = value;
+			level2RefineryHealthText.text = _level2RefineryHealth.ToString();
+		}
+		get
+		{
+			return _level2RefineryHealth;
+		}
+	}
+
+	private int _level1RefineryVisionRadius;
+	internal int level1RefineryVisionRadius
+	{
+		set
+		{
+			_level1RefineryVisionRadius = value;
+			level1RefineryVisionRadiusText.text = _level1RefineryVisionRadius.ToString();
+		}
+		get
+		{
+			return _level1RefineryVisionRadius;
+		}
+	}
+
+	private int _level1RefineryHealth;
+	internal int level1RefineryHealth
+	{
+		set
+		{
+			_level1RefineryHealth = value;
+			level1RefineryHealthText.text = _level1RefineryHealth.ToString();
+		}
+		get
+		{
+			return _level1RefineryHealth;
+		}
+	}
+
+	private int _level4RefineryCost;
+	internal int level4RefineryCost
+	{
+		set
+		{
+			_level4RefineryCost = value;
+			level4RefineryCostText.text = "$" + _level4RefineryCost;
+		}
+		get
+		{
+			return _level4RefineryCost;
+		}
+	}
+
+	private int _level3RefineryCost;
+	internal int level3RefineryCost
+	{
+		set
+		{
+			_level3RefineryCost = value;
+			level3RefineryCostText.text = "$" + _level3RefineryCost;
+		}
+		get
+		{
+			return _level3RefineryCost;
+		}
+	}
+
+	private int _level2RefineryCost;
+	internal int level2RefineryCost
+	{
+		set
+		{
+			_level2RefineryCost = value;
+			level2RefineryCostText.text = "$" + _level2RefineryCost;
+		}
+		get
+		{
+			return _level2RefineryCost;
+		}
+	}
+
+	private int _level1RefineryCost;
+	internal int level1RefineryCost
+	{
+		set
+		{
+			_level1RefineryCost = value;
+			level1RefineryCostText.text = "$" + _level1RefineryCost;
+		}
+		get
+		{
+			return _level1RefineryCost;
+		}
+	}
 
 	private int _buildRangeCost;
 	internal int buildRangeCost

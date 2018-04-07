@@ -6,7 +6,7 @@ using Zenject;
 public class Refinery : GameEntity
 {
 	public GameObject ownedBy;
-	public float income;
+	public int income;
 
 	void Update()
 	{
