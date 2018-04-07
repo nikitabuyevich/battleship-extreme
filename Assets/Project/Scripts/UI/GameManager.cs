@@ -18,22 +18,34 @@ public class GameManager : MonoBehaviour
 
 	public void SetPlayer1Name(string name)
 	{
-		StaticVariables.player1Name = name;
+		if (!string.IsNullOrEmpty(name))
+		{
+			StaticVariables.player1Name = name;
+		}
 	}
 
 	public void SetPlayer2Name(string name)
 	{
-		StaticVariables.player2Name = name;
+		if (!string.IsNullOrEmpty(name))
+		{
+			StaticVariables.player2Name = name;
+		}
 	}
 
 	public void SetPlayer3Name(string name)
 	{
-		StaticVariables.player3Name = name;
+		if (!string.IsNullOrEmpty(name))
+		{
+			StaticVariables.player3Name = name;
+		}
 	}
 
 	public void SetPlayer4Name(string name)
 	{
-		StaticVariables.player4Name = name;
+		if (!string.IsNullOrEmpty(name))
+		{
+			StaticVariables.player4Name = name;
+		}
 	}
 
 	public void LoadStartMenu()
