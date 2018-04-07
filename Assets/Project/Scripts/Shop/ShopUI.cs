@@ -125,6 +125,7 @@ public class ShopUI : MonoBehaviour
 	}
 
 	// ABILITIES SHOP
+	public Text unlockedAttacksCostText;
 	public Text attackPowerCostText;
 	public Text attackPowerCurrentText;
 	public Text attackRangeCostText;
@@ -137,12 +138,68 @@ public class ShopUI : MonoBehaviour
 	public Text attacksPerTurnCurrentText;
 	public Text rotationsAreFreeCostText;
 
+	// Hide until player unlocks attack
+	public GameObject attackUpgrade;
+	public GameObject attackRangeUpgrade;
+	public GameObject sideAttackUpgrade;
+	public GameObject sideAttackRangeUpgrade;
+	public GameObject attacksPerTurnUpgrade;
+	public GameObject rotationsFreeUpgrade;
+
+	public Button unlockAttacksButton;
 	public Button rotationsAreFreeButton;
 	public Button AttackButton;
 	public Button AttackRangeButton;
 	public Button SideAttackButton;
 	public Button SideAttackRangeButton;
 	public Button AttacksPerTurnButton;
+
+	private bool _unlockedAttacks;
+	internal bool unlockedAttacks
+	{
+		set
+		{
+			_unlockedAttacks = value;
+			if (!_unlockedAttacks)
+			{
+				unlockAttacksButton.gameObject.SetActive(true);
+				attackUpgrade.SetActive(false);
+				attackRangeUpgrade.SetActive(false);
+				sideAttackUpgrade.SetActive(false);
+				sideAttackRangeUpgrade.SetActive(false);
+				attacksPerTurnUpgrade.SetActive(false);
+				rotationsFreeUpgrade.SetActive(false);
+			}
+			else
+			{
+				unlockAttacksButton.gameObject.SetActive(false);
+				attackUpgrade.SetActive(true);
+				attackRangeUpgrade.SetActive(true);
+				sideAttackUpgrade.SetActive(true);
+				sideAttackRangeUpgrade.SetActive(true);
+				attacksPerTurnUpgrade.SetActive(true);
+				rotationsFreeUpgrade.SetActive(true);
+			}
+		}
+		get
+		{
+			return _unlockedAttacks;
+		}
+	}
+
+	private int _unlockedAttacksCost;
+	internal int unlockedAttacksCost
+	{
+		set
+		{
+			_unlockedAttacksCost = value;
+			unlockedAttacksCostText.text = "$" + _unlockedAttacksCost;
+		}
+		get
+		{
+			return _unlockedAttacksCost;
+		}
+	}
 
 	private int _rotationsAreFreeCost;
 	internal int rotationsAreFreeCost

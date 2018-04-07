@@ -7,11 +7,12 @@
 	public static int moveAcross = 5000;
 
 	// ABILITIES
+	public static int unlockedAttacks = 2000;
 	public static int attack = 1000;
 	public static int attackRange = 1000;
 	public static int sideAttack = 750;
 	public static int sideAttackRange = 1000;
-	public static int attacksPerTurn = 2500;
+	public static int attacksPerTurn = 1250;
 	public static int rotationsAreFree = 5000;
 
 	// REFINERIES

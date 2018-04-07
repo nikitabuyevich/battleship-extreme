@@ -13,6 +13,7 @@
 	public int sideAttackRange = 0;
 	public int attacksPerTurn = 0;
 	public bool RotationsAreFree = false;
+	public bool unlockedAttack = false;
 
 	// REFINARIES
 	public int buildRange = 0;

@@ -139,16 +139,33 @@ public class ShopManager : MonoBehaviour
 		}
 	}
 
+	private void UpdateUnlockedAttacksButton(Player player)
+	{
+		var unlockedAttackCost = ShopValues.unlockedAttacks;
+		shopUI.unlockedAttacksCost = unlockedAttackCost;
+		shopUI.unlockAttacksButton.interactable = unlockedAttackCost <= player.money;
+	}
+
 	public void OpenAbilitiesShop()
 	{
 		var player = _turn.CurrentPlayer();
 
-		UpdateAttackButton(player);
-		UpdateAttackRangeButton(player);
-		UpdateSideAttackButton(player);
-		UpdateSideAttackRangeButton(player);
-		UpdateAttacksPerTurnButton(player);
-		UpdateRotationsAreFreeButton(player);
+		if (!player.boughtAmount.unlockedAttack)
+		{
+			shopUI.unlockedAttacks = false;
+			UpdateUnlockedAttacksButton(player);
+		}
+		else
+		{
+			UpdateAttackButton(player);
+			UpdateAttackRangeButton(player);
+			UpdateSideAttackButton(player);
+			UpdateSideAttackRangeButton(player);
+			UpdateAttacksPerTurnButton(player);
+			UpdateRotationsAreFreeButton(player);
+
+			shopUI.unlockedAttacks = true;
+		}
 
 		shopUI.abilitiesShop.SetActive(true);
 	}
@@ -336,6 +353,19 @@ public class ShopManager : MonoBehaviour
 		player.money -= shopUI.rotationsAreFreeCost;
 		player.rotationsAreFree = true;
 		UpdateRotationsAreFreeButton(player);
+		gameSceneManager.SetPlayerStats();
+	}
+
+	public void PurchaseUnlockAttacksUpgrade()
+	{
+		var player = _turn.CurrentPlayer();
+
+		player.boughtAmount.unlockedAttack = true;
+		player.boughtAmount.attacksPerTurn += 1;
+		player.money -= shopUI.unlockedAttacksCost;
+		player.numberOfAttacksPerTurn += 1;
+		shopUI.unlockedAttacks = true;
+		UpdateAttacksPerTurnButton(player);
 		gameSceneManager.SetPlayerStats();
 	}
 
