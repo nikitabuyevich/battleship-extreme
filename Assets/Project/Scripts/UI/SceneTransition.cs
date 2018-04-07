@@ -19,7 +19,7 @@ public class SceneTransition : ISceneTransition
 
 		while (t < 1f)
 		{
-			t += Time.deltaTime * 1.5f;
+			t += Time.deltaTime * 3f;
 			transitionBackground.GetComponent<Image>().color = new Color(0, 0, 0, t);
 			yield return null;
 		}
@@ -38,7 +38,7 @@ public class SceneTransition : ISceneTransition
 
 		while (t > 0f)
 		{
-			t -= Time.deltaTime * 1.5f;
+			t -= Time.deltaTime * 3f;
 			transitionBackground.GetComponent<Image>().color = new Color(0, 0, 0, t);
 			yield return null;
 		}
