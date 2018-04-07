@@ -6,6 +6,7 @@ public class GameInstaller : MonoInstaller
 {
     public GameObject level;
     public GameSceneManager gameSceneManager;
+    public ShopManager shopManager;
 
     public override void InstallBindings()
     {
@@ -39,5 +40,6 @@ public class GameInstaller : MonoInstaller
 
         Container.BindInstance(level);
         Container.BindInstance(gameSceneManager);
+        Container.BindInstance(shopManager);
     }
 }

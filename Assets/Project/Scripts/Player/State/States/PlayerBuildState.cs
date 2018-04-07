@@ -20,7 +20,7 @@ public class PlayerBuildState : IPlayerBuildState
 
   public void Enter(Player player)
   {
-    Debug.Log(player.name + " entered attack state!");
+    Debug.Log(player.name + " entered build state!");
     var mouseUI = player.mouseUI.GetComponent<MouseUI>();
     _mouse.Clear(mouseUI);
     drewBuildSuggestions = false;
@@ -28,7 +28,7 @@ public class PlayerBuildState : IPlayerBuildState
 
   public void Execute(Player player)
   {
-    if (!drewBuildSuggestions && _gameSceneManager.numberOfRefineries > 0)
+    if (!drewBuildSuggestions)
     {
       _mouse.DrawBuildRefinerySuggestions(player);
       drewBuildSuggestions = true;
@@ -39,10 +39,6 @@ public class PlayerBuildState : IPlayerBuildState
   }
 
   public void Exit(Player player) { }
-
-  public void AbilityRotate(Player player)
-  {
-    _ability.Rotate(player, false);
-  }
+  public void AbilityRotate(Player player) { }
   public void AbilityAttack(Player player) { }
 }

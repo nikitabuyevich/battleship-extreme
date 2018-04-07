@@ -96,6 +96,9 @@ public class Player : GameEntity
 	internal BoughtAmount boughtAmount = new BoughtAmount();
 	internal bool isAbleToMove = false;
 	internal bool isAbleToAttack = false;
+	internal int refineryHealth = 0;
+	internal int refineryVisionRadius = 0;
+	internal int refineryIncome = 0;
 
 	private IState currentlyRunningState;
 	private IState previouslyRunningState;
@@ -141,7 +144,7 @@ public class Player : GameEntity
 		}
 	}
 
-	public void CreateRefinery(Vector3 pos, int amount)
+	public void CreateRefinery(Vector3 pos)
 	{
 		var newRefinery = Instantiate(refinery, pos, transform.rotation, transform.parent);
 		newRefinery.GetComponentInChildren<SpriteRenderer>().color = new Color(
@@ -152,9 +155,16 @@ public class Player : GameEntity
 		);
 
 		this.refineries.Add(newRefinery);
-		newRefinery.GetComponent<Refinery>().ownedBy = this.gameObject;
-		newRefinery.GetComponent<Refinery>().income = amount;
-		income += amount;
+		var refineryComp = newRefinery.GetComponent<Refinery>();
+		refineryComp.ownedBy = this.gameObject;
+		refineryComp.health = this.refineryHealth;
+		refineryComp.visionRadius = this.refineryVisionRadius;
+		refineryComp.income = this.refineryIncome;
+		income += this.refineryIncome;
+
+		this.refineryHealth = 0;
+		this.refineryVisionRadius = 0;
+		this.refineryIncome = 0;
 	}
 
 	public void UseMoveTurn()
@@ -226,6 +236,13 @@ public class Player : GameEntity
 
 	public void SetInitialState()
 	{
+		// reset refinery resources
+		if (currentlyRunningState == _playerBuildState)
+		{
+			this.refineryHealth = 0;
+			this.refineryVisionRadius = 0;
+			this.refineryIncome = 0;
+		}
 		if (currentlyRunningState != _playerWaitingTurnState &&
 			previouslyRunningState != _playerWaitingTurnState &&
 			previouslyRunningState != null &&

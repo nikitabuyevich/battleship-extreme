@@ -1982,6 +1982,9 @@ MonoBehaviour:
   transition: {fileID: 557809269}
   transitionUI: {fileID: 311721230}
   transitionBackground: {fileID: 450380273}
+  moveButton: {fileID: 1589885560}
+  attackButton: {fileID: 1973723644}
+  rotateButton: {fileID: 1834037896}
   floor: {fileID: 501445989}
   screenWidth: 640
   screenHeight: 360
@@ -3048,7 +3051,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &433460449
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3520,6 +3523,11 @@ Prefab:
       propertyPath: maxHealth
       value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: 114968814741079056, guid: c01ec807514984da0954ee4339e6de2b,
+        type: 2}
+      propertyPath: numberOfAttacksPerTurn
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: c01ec807514984da0954ee4339e6de2b, type: 2}
   m_IsPrefabParent: 0
@@ -3904,6 +3912,11 @@ Prefab:
       propertyPath: maxHealth
       value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: 114968814741079056, guid: c01ec807514984da0954ee4339e6de2b,
+        type: 2}
+      propertyPath: numberOfAttacksPerTurn
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: c01ec807514984da0954ee4339e6de2b, type: 2}
   m_IsPrefabParent: 0
@@ -3956,7 +3969,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.3019608, g: 1, b: 0.08235294, a: 1}
+  m_Color: {r: 1, g: 0.7679513, b: 0.61764705, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -22988,7 +23001,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 583291922}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 300924189}
+        m_MethodName: PurchaseAttackUpgrade
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &583291922
@@ -23569,7 +23593,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 631224025}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 300924189}
+        m_MethodName: PurchaseSideAttackUpgrade
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &631224025
@@ -23761,7 +23796,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -24068,9 +24103,9 @@ MonoBehaviour:
     m_SelectOnRight: {fileID: 0}
   m_Transition: 1
   m_Colors:
-    m_NormalColor: {r: 0.3027383, g: 1, b: 0.08088237, a: 1}
-    m_HighlightedColor: {r: 0.19941178, g: 0.8308824, b: 0, a: 1}
-    m_PressedColor: {r: 0.15705884, g: 0.6544118, b: 0, a: 1}
+    m_NormalColor: {r: 1, g: 0.76862746, b: 0.61960787, a: 1}
+    m_HighlightedColor: {r: 1, g: 0.6332626, b: 0.39705884, a: 1}
+    m_PressedColor: {r: 1, g: 0.5125076, b: 0.19852942, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
@@ -24372,9 +24407,9 @@ MonoBehaviour:
     m_SelectOnRight: {fileID: 0}
   m_Transition: 1
   m_Colors:
-    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_NormalColor: {r: 0.7647059, g: 0.9221095, b: 1, a: 1}
+    m_HighlightedColor: {r: 0.39705884, g: 0.7990198, b: 1, a: 1}
+    m_PressedColor: {r: 0.11764705, g: 0.7058826, b: 1, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
@@ -25720,7 +25755,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 882822245}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 300924189}
+        m_MethodName: PurchaseAttackRangeUpgrade
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &882822245
@@ -26197,7 +26243,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 983751588}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 300924189}
+        m_MethodName: PurchaseSideAttackRangeUpgrade
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &983751588
@@ -27022,6 +27079,11 @@ Prefab:
       propertyPath: maxHealth
       value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: 114968814741079056, guid: c01ec807514984da0954ee4339e6de2b,
+        type: 2}
+      propertyPath: numberOfAttacksPerTurn
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: c01ec807514984da0954ee4339e6de2b, type: 2}
   m_IsPrefabParent: 0
@@ -27326,7 +27388,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -28305,7 +28367,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.52205884, g: 1, b: 0.9208925, a: 1}
+  m_Color: {r: 0.2647059, g: 0.4827586, b: 1, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -28394,6 +28456,11 @@ Prefab:
         type: 2}
       propertyPath: maxHealth
       value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 114968814741079056, guid: c01ec807514984da0954ee4339e6de2b,
+        type: 2}
+      propertyPath: numberOfAttacksPerTurn
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: c01ec807514984da0954ee4339e6de2b, type: 2}
@@ -29250,7 +29317,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -29931,7 +29998,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -28.273098, y: 1.9359422}
+  m_AnchoredPosition: {x: -147.8, y: 1.9359422}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1548186096
@@ -30282,9 +30349,9 @@ MonoBehaviour:
     m_SelectOnRight: {fileID: 0}
   m_Transition: 1
   m_Colors:
-    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_NormalColor: {r: 0.41960785, g: 0.9019608, b: 0.41960785, a: 1}
+    m_HighlightedColor: {r: 0, g: 0.8455882, b: 0, a: 1}
+    m_PressedColor: {r: 0, g: 0.5441177, b: 0, a: 1}
     m_DisabledColor: {r: 0.5803922, g: 0.5803922, b: 0.5803922, a: 1}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
@@ -30975,6 +31042,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   level: {fileID: 380947118}
   gameSceneManager: {fileID: 310367512}
+  shopManager: {fileID: 300924189}
 --- !u!114 &1683592299
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -31232,7 +31300,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1691946992}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 300924189}
+        m_MethodName: InitiatePotentialPurchaseOfLevel1Refinery
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &1691946992
@@ -31977,7 +32056,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1833159275
 RectTransform:
   m_ObjectHideFlags: 0
@@ -32067,7 +32146,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -139.76653, y: -0.18499756}
+  m_AnchoredPosition: {x: -207.6, y: -0.18499756}
   m_SizeDelta: {x: 64.8, y: 21.699997}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1834037896
@@ -32089,9 +32168,9 @@ MonoBehaviour:
     m_SelectOnRight: {fileID: 0}
   m_Transition: 1
   m_Colors:
-    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_NormalColor: {r: 0.23875432, g: 0.6267301, b: 1, a: 1}
+    m_HighlightedColor: {r: 0, g: 0.4852941, b: 0.9705882, a: 1}
+    m_PressedColor: {r: 0, g: 0.2757353, b: 0.5514706, a: 1}
     m_DisabledColor: {r: 0.5803922, g: 0.5803922, b: 0.5803922, a: 1}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
@@ -32672,7 +32751,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -208.86649, y: -0.18499756}
+  m_AnchoredPosition: {x: -137.6, y: -0.18499756}
   m_SizeDelta: {x: 64.8, y: 21.699997}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1973723644
@@ -32694,9 +32773,9 @@ MonoBehaviour:
     m_SelectOnRight: {fileID: 0}
   m_Transition: 1
   m_Colors:
-    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_NormalColor: {r: 1, g: 0.41911763, b: 0.41911763, a: 1}
+    m_HighlightedColor: {r: 0.6397059, g: 0, b: 0, a: 1}
+    m_PressedColor: {r: 0.41911763, g: 0, b: 0, a: 1}
     m_DisabledColor: {r: 0.5803922, g: 0.5803922, b: 0.5803922, a: 1}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
@@ -32709,7 +32788,7 @@ MonoBehaviour:
     m_HighlightedTrigger: Highlighted
     m_PressedTrigger: Pressed
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 1973723645}
   m_OnClick:
     m_PersistentCalls:
@@ -32856,7 +32935,7 @@ RectTransform:
   m_GameObject: {fileID: 1997707594}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.9874529, y: 1, z: 1}
   m_Children:
   - {fileID: 1376823586}
   m_Father: {fileID: 1171716228}
@@ -32864,7 +32943,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 117.8, y: 163.4255}
+  m_AnchoredPosition: {x: 91.9, y: 130.3}
   m_SizeDelta: {x: 52.23, y: 33.15}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1997707596
@@ -33102,7 +33181,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2023354332}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 300924189}
+        m_MethodName: PurchaseAttacksPerTurnUpgrade
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &2023354332
@@ -33362,7 +33452,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2100867286}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 300924189}
+        m_MethodName: PurchaseRotationsAreFreeUpgrade
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &2100867286

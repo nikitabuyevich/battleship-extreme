@@ -24,6 +24,14 @@ public class ShopManager : MonoBehaviour
 		shopUI.mainShop.SetActive(true);
 	}
 
+	private void CloseShop()
+	{
+		shopUI.shipShop.SetActive(false);
+		shopUI.abilitiesShop.SetActive(false);
+		shopUI.refineriesShop.SetActive(false);
+		shopUI.mainShop.SetActive(false);
+	}
+
 	private void UpdateHealthButton(Player player)
 	{
 		// health
@@ -263,5 +271,105 @@ public class ShopManager : MonoBehaviour
 		player.canMoveAcross = true;
 		UpdateMoveAcrossButton(player);
 		gameSceneManager.SetPlayerStats();
+	}
+
+	public void PurchaseAttackUpgrade()
+	{
+		var player = _turn.CurrentPlayer();
+
+		player.boughtAmount.attack += 1;
+		player.money -= shopUI.attackPowerCost;
+		player.attackPower += 1;
+		UpdateAttackButton(player);
+		gameSceneManager.SetPlayerStats();
+	}
+
+	public void PurchaseAttackRangeUpgrade()
+	{
+		var player = _turn.CurrentPlayer();
+
+		player.boughtAmount.attackRange += 1;
+		player.money -= shopUI.attackRangeCost;
+		player.numberOfAttackSpacesPerTurn += 1;
+		UpdateAttackRangeButton(player);
+		gameSceneManager.SetPlayerStats();
+	}
+
+	public void PurchaseSideAttackUpgrade()
+	{
+		var player = _turn.CurrentPlayer();
+
+		player.boughtAmount.sideAttack += 1;
+		player.money -= shopUI.sideAttackPowerCost;
+		player.sideHitAttackPower += 1;
+		UpdateSideAttackButton(player);
+		gameSceneManager.SetPlayerStats();
+	}
+
+	public void PurchaseSideAttackRangeUpgrade()
+	{
+		var player = _turn.CurrentPlayer();
+
+		player.boughtAmount.sideAttackRange += 1;
+		player.money -= shopUI.sideAttackRangeCost;
+		player.sideHitRange += 1;
+		UpdateSideAttackRangeButton(player);
+		gameSceneManager.SetPlayerStats();
+	}
+
+	public void PurchaseAttacksPerTurnUpgrade()
+	{
+		var player = _turn.CurrentPlayer();
+
+		player.boughtAmount.attacksPerTurn += 1;
+		player.money -= shopUI.attacksPerTurnCost;
+		player.numberOfAttacksPerTurn += 1;
+		UpdateAttacksPerTurnButton(player);
+		gameSceneManager.SetPlayerStats();
+	}
+
+	public void PurchaseRotationsAreFreeUpgrade()
+	{
+		var player = _turn.CurrentPlayer();
+
+		player.boughtAmount.RotationsAreFree = true;
+		player.money -= shopUI.rotationsAreFreeCost;
+		player.rotationsAreFree = true;
+		UpdateRotationsAreFreeButton(player);
+		gameSceneManager.SetPlayerStats();
+	}
+
+	public void PurchaseBuildRangeUpgrade()
+	{
+		var player = _turn.CurrentPlayer();
+
+		player.boughtAmount.buildRange += 1;
+		player.money -= shopUI.buildRangeCost;
+		player.buildRange += 1;
+		UpdateBuildRangeButton(player);
+		gameSceneManager.SetPlayerStats();
+	}
+
+	public void PurchaseLevel1Refinery()
+	{
+		var player = _turn.CurrentPlayer();
+
+		player.money -= shopUI.level1RefineryCost;
+		player.refineryHealth = ShopValues.level1RefineryHealth;
+		player.refineryVisionRadius = ShopValues.level1RefineryVisionRadius;
+		player.refineryIncome = ShopValues.level1RefineryIncome;
+		gameSceneManager.SetPlayerStats();
+	}
+
+	public void InitiatePotentialPurchaseOfLevel1Refinery()
+	{
+		var player = _turn.CurrentPlayer();
+
+		player.refineryHealth = ShopValues.level1RefineryHealth;
+		player.refineryVisionRadius = ShopValues.level1RefineryVisionRadius;
+		player.refineryIncome = ShopValues.level1RefineryIncome;
+		player.SetInitialState();
+		player.ChangeState(typeof(IPlayerBuildState));
+		CloseShop();
 	}
 }

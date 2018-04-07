@@ -4,14 +4,14 @@ public class OnPlayer : IOnPlayer
 {
   [Inject]
   private readonly GameSceneManager _gameSceneManager;
+  [Inject]
+  private readonly ShopManager _shopManager;
 
   private readonly IMouse _mouse;
-  private readonly IPlayerFogOfWar _playerFogOfWar;
 
-  public OnPlayer(IMouse mouse, IPlayerFogOfWar playerFogOfWar)
+  public OnPlayer(IMouse mouse)
   {
     _mouse = mouse;
-    _playerFogOfWar = playerFogOfWar;
   }
 
   public void Movement(Player player)
@@ -25,6 +25,7 @@ public class OnPlayer : IOnPlayer
       _mouse.Clear(mouseUI);
       player.isAbleToMove = false;
     }
+    _gameSceneManager.SetAbilityButtons();
   }
 
   public void Attack(Player player)
@@ -39,13 +40,14 @@ public class OnPlayer : IOnPlayer
       player.isAbleToAttack = false;
       player.SetInitialState();
     }
+    _gameSceneManager.SetAbilityButtons();
   }
 
   public void Build(Player player)
   {
+    _shopManager.PurchaseLevel1Refinery();
     player.numberOfRefineries += 1;
-    player.SetInitialState();
     _gameSceneManager.SetPlayerStats();
-    _playerFogOfWar.RevealPlayersRefineries(player);
+    player.SetInitialState();
   }
 }

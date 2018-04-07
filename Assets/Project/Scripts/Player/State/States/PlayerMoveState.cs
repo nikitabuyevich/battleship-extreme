@@ -36,6 +36,7 @@ public class PlayerMoveState : IPlayerMoveState
 		_mouse.Clear(mouseUI);
 		drewMouseSuggestions = false;
 		_gameMap.CheckAndHideGameEntities(player);
+		_playerFogOfWar.RevealPlayersRefineries(player);
 	}
 
 	public void Execute(Player player)

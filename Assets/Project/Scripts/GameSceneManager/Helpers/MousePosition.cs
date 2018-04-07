@@ -49,7 +49,7 @@ public class MousePosition : IMousePosition
     var buildPositions = _gameMap.GetBuildPositions(player);
     if (buildPositions.Contains(mousePos))
     {
-      player.CreateRefinery(mousePos, 100);
+      player.CreateRefinery(mousePos);
 
       _onPlayer.Build(player);
     }

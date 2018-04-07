@@ -24,7 +24,7 @@ public class PlayerFogOfWar : IPlayerFogOfWar
       {
         foreach (var visionPosition in visionPositions)
         {
-          ChangeAlphaLevelOfTile(tilemap, GetTileLocationOfPlayer(visionPosition), player.revealAlphaLevel);
+          ChangeAlphaLevelOfTile(tilemap, GetTileLocation(visionPosition), player.revealAlphaLevel);
         }
       }
     }
@@ -39,12 +39,12 @@ public class PlayerFogOfWar : IPlayerFogOfWar
     {
       foreach (var visionPosition in visionPositions)
       {
-        ChangeAlphaLevelOfTile(tilemap, GetTileLocationOfPlayer(visionPosition), alphaLevel);
+        ChangeAlphaLevelOfTile(tilemap, GetTileLocation(visionPosition), alphaLevel);
       }
     }
   }
 
-  private Vector3Int GetTileLocationOfPlayer(Vector3 pos)
+  private Vector3Int GetTileLocation(Vector3 pos)
   {
     var startingTileLocation = _reposition.GetStartingTileLocation();
 

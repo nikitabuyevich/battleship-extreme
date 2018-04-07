@@ -86,6 +86,11 @@ public class GameSceneManager : MonoBehaviour
 	public GameObject transitionUI;
 	public GameObject transitionBackground;
 
+	[Header("Abilities UI")]
+	public Button moveButton;
+	public Button attackButton;
+	public Button rotateButton;
+
 	[Header("Setup")]
 	public GameObject floor;
 	public int screenWidth = 640;
@@ -229,15 +234,6 @@ public class GameSceneManager : MonoBehaviour
 		}
 	}
 
-	public void AbilityBuildBtn()
-	{
-		if (numberOfRefineries > 0)
-		{
-			var player = _turn.CurrentPlayer();
-			player.ChangeState(typeof(IPlayerBuildState));
-		}
-	}
-
 	public void AbilityAttackBtn()
 	{
 		if (numberOfAttacks > 0)
@@ -268,6 +264,24 @@ public class GameSceneManager : MonoBehaviour
 
 		numberOfMoves = player.numberOfMovesPerTurn - numberOfMovesThisTurn;
 		numberOfAttacks = player.numberOfAttacksPerTurn - numberOfAttacksThisTurn;
+
+		SetAbilityButtons();
+	}
+
+	public void SetAbilityButtons()
+	{
+		var player = _turn.CurrentPlayer();
+
+		this.moveButton.interactable = this.numberOfMoves > 0;
+		this.attackButton.interactable = this.numberOfAttacks > 0;
+		if (player.rotationsAreFree)
+		{
+			this.rotateButton.interactable = true;
+		}
+		else
+		{
+			this.rotateButton.interactable = this.numberOfMoves > 0;
+		}
 	}
 
 	private void SetNewGame()
