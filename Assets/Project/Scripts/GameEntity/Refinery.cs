@@ -18,6 +18,7 @@ public class Refinery : GameEntity
 			player.gameSceneManager.GetComponent<GameSceneManager>().SetPlayerStats();
 			Destroy(this.gameObject);
 			Debug.Log(this.name + " has been destroyed!");
+			player.refineries.Remove(this.gameObject);
 		}
 	}
 }

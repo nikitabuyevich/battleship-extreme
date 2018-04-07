@@ -158,6 +158,7 @@ public class Player : GameEntity
 		var refineryComp = newRefinery.GetComponent<Refinery>();
 		refineryComp.ownedBy = this.gameObject;
 		refineryComp.health = this.refineryHealth;
+		refineryComp.maxHealth = this.refineryHealth;
 		refineryComp.visionRadius = this.refineryVisionRadius;
 		refineryComp.income = this.refineryIncome;
 		income += this.refineryIncome;

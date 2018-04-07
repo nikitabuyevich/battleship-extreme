@@ -372,4 +372,73 @@ public class ShopManager : MonoBehaviour
 		player.ChangeState(typeof(IPlayerBuildState));
 		CloseShop();
 	}
+
+	public void PurchaseLevel2Refinery()
+	{
+		var player = _turn.CurrentPlayer();
+
+		player.money -= shopUI.level2RefineryCost;
+		player.refineryHealth = ShopValues.level2RefineryHealth;
+		player.refineryVisionRadius = ShopValues.level2RefineryVisionRadius;
+		player.refineryIncome = ShopValues.level2RefineryIncome;
+		gameSceneManager.SetPlayerStats();
+	}
+
+	public void InitiatePotentialPurchaseOfLevel2Refinery()
+	{
+		var player = _turn.CurrentPlayer();
+
+		player.refineryHealth = ShopValues.level2RefineryHealth;
+		player.refineryVisionRadius = ShopValues.level2RefineryVisionRadius;
+		player.refineryIncome = ShopValues.level2RefineryIncome;
+		player.SetInitialState();
+		player.ChangeState(typeof(IPlayerBuildState));
+		CloseShop();
+	}
+
+	public void PurchaseLevel3Refinery()
+	{
+		var player = _turn.CurrentPlayer();
+
+		player.money -= shopUI.level3RefineryCost;
+		player.refineryHealth = ShopValues.level3RefineryHealth;
+		player.refineryVisionRadius = ShopValues.level3RefineryVisionRadius;
+		player.refineryIncome = ShopValues.level3RefineryIncome;
+		gameSceneManager.SetPlayerStats();
+	}
+
+	public void InitiatePotentialPurchaseOfLevel3Refinery()
+	{
+		var player = _turn.CurrentPlayer();
+
+		player.refineryHealth = ShopValues.level3RefineryHealth;
+		player.refineryVisionRadius = ShopValues.level3RefineryVisionRadius;
+		player.refineryIncome = ShopValues.level3RefineryIncome;
+		player.SetInitialState();
+		player.ChangeState(typeof(IPlayerBuildState));
+		CloseShop();
+	}
+
+	public void PurchaseLevel4Refinery()
+	{
+		var player = _turn.CurrentPlayer();
+
+		player.money -= shopUI.level4RefineryCost;
+		player.refineryHealth = ShopValues.level4RefineryHealth;
+		player.refineryVisionRadius = ShopValues.level4RefineryVisionRadius;
+		player.refineryIncome = ShopValues.level4RefineryIncome;
+		gameSceneManager.SetPlayerStats();
+	}
+
+	public void InitiatePotentialPurchaseOfLevel4Refinery()
+	{
+		var player = _turn.CurrentPlayer();
+
+		player.refineryHealth = ShopValues.level4RefineryHealth;
+		player.refineryVisionRadius = ShopValues.level4RefineryVisionRadius;
+		player.refineryIncome = ShopValues.level4RefineryIncome;
+		player.SetInitialState();
+		player.ChangeState(typeof(IPlayerBuildState));
+		CloseShop();
+	}
 }
