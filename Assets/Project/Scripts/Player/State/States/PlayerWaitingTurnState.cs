@@ -3,14 +3,10 @@
 public class PlayerWaitingTurnState : IPlayerWaitingTurnState
 {
 	private readonly IMouse _mouse;
-	private readonly IAbility _ability;
 
-	public PlayerWaitingTurnState(
-		IMouse mouse,
-		IAbility ability)
+	public PlayerWaitingTurnState(IMouse mouse)
 	{
 		_mouse = mouse;
-		_ability = ability;
 	}
 
 	public void Enter(Player player)
@@ -24,9 +20,6 @@ public class PlayerWaitingTurnState : IPlayerWaitingTurnState
 
 	public void Exit(Player player) { }
 
-	public void AbilityRotate(Player player)
-	{
-		_ability.Rotate(player, false);
-	}
+	public void AbilityRotate(Player player) { }
 	public void AbilityAttack(Player player) { }
 }

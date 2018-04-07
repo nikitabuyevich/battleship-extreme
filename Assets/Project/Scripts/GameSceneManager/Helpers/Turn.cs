@@ -38,8 +38,9 @@ public class Turn : ITurn
       }
     }
 
-    _gameSceneManager.numberOfMoves = CurrentPlayer().numberOfMovesPerTurn;
-    _gameSceneManager.numberOfAttacks = CurrentPlayer().numberOfAttacksPerTurn;
+    _gameSceneManager.numberOfMovesThisTurn = 0;
+    _gameSceneManager.numberOfAttacksThisTurn = 0;
+    _gameSceneManager.SetPlayerStats();
   }
 
   public void UpdatePlayerUI()
@@ -78,8 +79,8 @@ public class Turn : ITurn
 
     CurrentPlayer().ChangeState(typeof(IPlayerMoveState));
     CurrentPlayer().OnPlayerMovement += OnPlayerMovement;
-    _gameSceneManager.numberOfMoves = CurrentPlayer().numberOfMovesPerTurn;
-    _gameSceneManager.numberOfAttacks = CurrentPlayer().numberOfAttacksPerTurn;
+    _gameSceneManager.numberOfMovesThisTurn = 0;
+    _gameSceneManager.numberOfAttacksThisTurn = 0;
     _gameSceneManager.SetPlayerStats();
   }
 

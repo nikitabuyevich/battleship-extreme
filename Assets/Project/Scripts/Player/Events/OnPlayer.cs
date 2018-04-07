@@ -19,6 +19,7 @@ public class OnPlayer : IOnPlayer
     var mouseUI = player.mouseUI.GetComponent<MouseUI>();
 
     _gameSceneManager.numberOfMoves -= 1;
+    _gameSceneManager.numberOfMovesThisTurn += 1;
     if (_gameSceneManager.numberOfMoves == 0)
     {
       _mouse.Clear(mouseUI);
@@ -31,6 +32,7 @@ public class OnPlayer : IOnPlayer
     var mouseUI = player.mouseUI.GetComponent<MouseUI>();
 
     _gameSceneManager.numberOfAttacks -= 1;
+    _gameSceneManager.numberOfAttacksThisTurn += 1;
     if (_gameSceneManager.numberOfAttacks == 0)
     {
       _mouse.Clear(mouseUI);

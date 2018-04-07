@@ -19,6 +19,8 @@ public class ShopManager : MonoBehaviour
 
 	public void OpenShop()
 	{
+		var player = _turn.CurrentPlayer();
+		player.ChangeState(typeof(IPlayerShopingState));
 		shopUI.mainShop.SetActive(true);
 	}
 
@@ -51,7 +53,8 @@ public class ShopManager : MonoBehaviour
 	{
 		if (player.boughtAmount.moveAcross)
 		{
-			shopUI.moveAcrossButton.gameObject.SetActive(false);
+			shopUI.moveAcrossButton.interactable = false;
+			shopUI.moveAcrossCostText.text = "---";
 		}
 		else
 		{
@@ -117,7 +120,8 @@ public class ShopManager : MonoBehaviour
 	{
 		if (player.boughtAmount.RotationsAreFree)
 		{
-			shopUI.rotationsAreFreeButton.gameObject.SetActive(false);
+			shopUI.rotationsAreFreeButton.interactable = false;
+			shopUI.rotationsAreFreeCostText.text = "---";
 		}
 		else
 		{
@@ -209,6 +213,8 @@ public class ShopManager : MonoBehaviour
 		}
 		else
 		{
+			var player = _turn.CurrentPlayer();
+			player.SetInitialState();
 			shopUI.mainShop.SetActive(false);
 		}
 	}

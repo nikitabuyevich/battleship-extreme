@@ -99,6 +99,8 @@ public class GameSceneManager : MonoBehaviour
 
 	internal Player[] players;
 	internal int currentPlayersTurn = 0;
+	internal int numberOfMovesThisTurn = 0;
+	internal int numberOfAttacksThisTurn = 0;
 
 	private string _currentPlayer;
 	internal string currentPlayer
@@ -263,6 +265,9 @@ public class GameSceneManager : MonoBehaviour
 		// set player health information
 		healthCurrentText.text = player.health.ToString();
 		healthMaxText.text = player.maxHealth.ToString();
+
+		numberOfMoves = player.numberOfMovesPerTurn - numberOfMovesThisTurn;
+		numberOfAttacks = player.numberOfAttacksPerTurn - numberOfAttacksThisTurn;
 	}
 
 	private void SetNewGame()

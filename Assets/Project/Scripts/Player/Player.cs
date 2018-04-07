@@ -10,6 +10,7 @@ public class Player : GameEntity
 	private IPlayerMoveState _playerMoveState;
 	private IPlayerAttackState _playerAttackState;
 	private IPlayerBuildState _playerBuildState;
+	private IPlayerShopingState _playerShopingState;
 
 	private IPlayerMovement _playerMovement;
 	private IPlayerSpriteRenderer _spriteRenderer;
@@ -22,6 +23,7 @@ public class Player : GameEntity
 		IPlayerMoveState playerMoveState,
 		IPlayerAttackState playerAttackState,
 		IPlayerBuildState playerBuildState,
+		IPlayerShopingState playerShopingState,
 		IPlayerMovement playerMovement,
 		IPlayerSpriteRenderer spriteRenderer,
 		IGameMap gameMap,
@@ -31,6 +33,7 @@ public class Player : GameEntity
 		_playerMoveState = playerMoveState;
 		_playerAttackState = playerAttackState;
 		_playerBuildState = playerBuildState;
+		_playerShopingState = playerShopingState;
 
 		_playerMovement = playerMovement;
 		_spriteRenderer = spriteRenderer;
@@ -184,6 +187,10 @@ public class Player : GameEntity
 		else if (type == typeof(IPlayerBuildState))
 		{
 			ChangeState(_playerBuildState);
+		}
+		else if (type == typeof(IPlayerShopingState))
+		{
+			ChangeState(_playerShopingState);
 		}
 		else
 		{
