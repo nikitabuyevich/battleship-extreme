@@ -12,8 +12,6 @@ public class PlayerMoveState : IPlayerMoveState
 	private readonly IAbility _ability;
 	private readonly IGameMap _gameMap;
 
-	private bool drewMouseSuggestions = false;
-
 	public PlayerMoveState(
 		IFogOfWar fogOfWar,
 		IPlayerFogOfWar playerFogOfWar,
@@ -28,6 +26,8 @@ public class PlayerMoveState : IPlayerMoveState
 		_gameMap = gameMap;
 	}
 
+	private bool drewMouseSuggestions = false;
+
 	public void Enter(Player player)
 	{
 		Debug.Log(player.name + " entering move state");
@@ -36,6 +36,7 @@ public class PlayerMoveState : IPlayerMoveState
 		_mouse.Clear(mouseUI);
 		drewMouseSuggestions = false;
 		_gameMap.CheckAndHideGameEntities(player);
+		_playerFogOfWar.ChangeFogOfWar(player, player.revealAlphaLevel);
 		_playerFogOfWar.RevealPlayersRefineries(player);
 	}
 

@@ -458,7 +458,7 @@ public class GameMap : IGameMap
         {
           validPositions.Add(west);
         }
-        if (_playerCollisions.IsGameEntity(west) && !westFound)
+        if (!_playerCollisions.CanMoveToSpace(west) && !westFound)
         {
           validPositions.Add(west);
           westFound = true;
@@ -467,7 +467,7 @@ public class GameMap : IGameMap
         {
           validPositions.Add(east);
         }
-        if (_playerCollisions.IsGameEntity(east) && !eastFound)
+        if (!_playerCollisions.CanMoveToSpace(east) && !eastFound)
         {
           validPositions.Add(east);
           eastFound = true;
@@ -481,7 +481,7 @@ public class GameMap : IGameMap
         {
           validPositions.Add(north);
         }
-        if (_playerCollisions.IsGameEntity(north) && !northFound)
+        if (!_playerCollisions.CanMoveToSpace(north) && !northFound)
         {
           validPositions.Add(north);
           northFound = true;
@@ -490,7 +490,7 @@ public class GameMap : IGameMap
         {
           validPositions.Add(south);
         }
-        if (_playerCollisions.IsGameEntity(south) && !southFound)
+        if (!_playerCollisions.CanMoveToSpace(south) && !southFound)
         {
           validPositions.Add(south);
           southFound = true;
