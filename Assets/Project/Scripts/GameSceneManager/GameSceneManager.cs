@@ -106,6 +106,7 @@ public class GameSceneManager : MonoBehaviour
 	internal int currentPlayersTurn = 0;
 	internal int numberOfMovesThisTurn = 0;
 	internal int numberOfAttacksThisTurn = 0;
+	internal int numberOfTurns = 0;
 
 	private string _currentPlayer;
 	internal string currentPlayer
@@ -207,6 +208,7 @@ public class GameSceneManager : MonoBehaviour
 
 	public void EndTurnBtn()
 	{
+		numberOfTurns += 1;
 		transition.SetActive(true);
 		transitionUI.SetActive(true);
 		playersName.text = _turn.GetNextPlayer().name + "'s Turn";

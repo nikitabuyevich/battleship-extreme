@@ -11,6 +11,7 @@ TagManager:
   - Overall Parent
   - Transition Background
   - Transition UI
+  - Money
   layers:
   - Default
   - TransparentFX

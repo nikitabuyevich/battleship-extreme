@@ -10,17 +10,20 @@ public class PlayerMovement : IPlayerMovement
 
   private readonly IFogOfWar _fogOfWar;
   private readonly IPlayerFogOfWar _playerFogOfWar;
+  private readonly IPlayerMoney _playerMoney;
   private readonly IMouse _mouse;
   private readonly IGameMap _gameMap;
 
   public PlayerMovement(
     IFogOfWar fogOfWar,
     IPlayerFogOfWar playerFogOfWar,
+    IPlayerMoney playerMoney,
     IMouse mouse,
     IGameMap gameMap)
   {
     _fogOfWar = fogOfWar;
     _playerFogOfWar = playerFogOfWar;
+    _playerMoney = playerMoney;
     _mouse = mouse;
     _gameMap = gameMap;
   }
@@ -104,6 +107,7 @@ public class PlayerMovement : IPlayerMovement
     _playerFogOfWar.ChangeFogOfWar(player, player.revealAlphaLevel);
     player._isMoving = false;
     AddAllTilesOf(player);
+    _playerMoney.CheckIfOnMoney(player);
     _gameMap.CheckAndHideGameEntities(player);
 
     // check if more moves are available

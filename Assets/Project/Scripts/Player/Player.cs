@@ -14,6 +14,7 @@ public class Player : GameEntity
 
 	private IPlayerMovement _playerMovement;
 	private IPlayerSpriteRenderer _spriteRenderer;
+	private IPlayerMoney _playerMoney;
 	private IGameMap _gameMap;
 	private IMouse _mouse;
 
@@ -24,6 +25,7 @@ public class Player : GameEntity
 		IPlayerAttackState playerAttackState,
 		IPlayerBuildState playerBuildState,
 		IPlayerShopingState playerShopingState,
+		IPlayerMoney playerMoney,
 		IPlayerMovement playerMovement,
 		IPlayerSpriteRenderer spriteRenderer,
 		IGameMap gameMap,
@@ -37,6 +39,7 @@ public class Player : GameEntity
 
 		_playerMovement = playerMovement;
 		_spriteRenderer = spriteRenderer;
+		_playerMoney = playerMoney;
 		_gameMap = gameMap;
 		_mouse = mouse;
 	}
@@ -218,6 +221,7 @@ public class Player : GameEntity
 		previouslyRunningState = currentlyRunningState;
 		currentlyRunningState = newState;
 		currentlyRunningState.Enter(this);
+		_playerMoney.CheckIfOnMoney(this);
 	}
 
 	public void ExecuteStateUpdate()
