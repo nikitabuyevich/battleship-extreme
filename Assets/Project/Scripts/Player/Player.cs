@@ -116,6 +116,10 @@ public class Player : GameEntity
 		}
 
 		CheckHealth();
+		AbilityShortcuts();
+
+		// TODO: DELETE LATER
+		DebugMode();
 	}
 
 	private void CheckHealth()
@@ -254,6 +258,35 @@ public class Player : GameEntity
 			currentlyRunningState != previouslyRunningState)
 		{
 			SwitchToPreviouslyRunningState();
+		}
+	}
+
+	private void AbilityShortcuts()
+	{
+		if (Input.GetKeyDown(KeyCode.Alpha1))
+		{
+			gameSceneManager.GetComponent<GameSceneManager>().AbilityMoveBtn();
+		}
+
+		if (Input.GetKeyDown(KeyCode.Alpha2))
+		{
+			gameSceneManager.GetComponent<GameSceneManager>().AbilityAttackBtn();
+		}
+
+		if (Input.GetKeyDown(KeyCode.Alpha3))
+		{
+			currentlyRunningState.AbilityRotate(this);
+		}
+	}
+
+	// TODO: REMOVE LATER, JUST FOR DEBUGGING
+
+	private void DebugMode()
+	{
+		if (Input.GetKey(KeyCode.LeftControl) && Input.GetKey(KeyCode.LeftShift) && Input.GetKey(KeyCode.D))
+		{
+			money += 1000;
+			gameSceneManager.GetComponent<GameSceneManager>().SetPlayerStats();
 		}
 	}
 }
