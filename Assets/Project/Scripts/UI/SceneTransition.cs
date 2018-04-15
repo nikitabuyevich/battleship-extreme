@@ -13,14 +13,21 @@ public class SceneTransition : ISceneTransition
 		_turn = turn;
 	}
 
-	public IEnumerator BackgroundFadeIn(GameObject transitionBackground, bool goToNextPlayer)
+	public IEnumerator BackgroundFadeIn(GameObject transitionBackground, float maxAlphaAmount, bool goToNextPlayer)
 	{
 		var t = 0f;
 
 		while (t < 1f)
 		{
 			t += Time.deltaTime * 3f;
-			transitionBackground.GetComponent<Image>().color = new Color(0, 0, 0, t);
+			if (t < maxAlphaAmount)
+			{
+				transitionBackground.GetComponent<Image>().color = new Color(0, 0, 0, t);
+			}
+			else
+			{
+				transitionBackground.GetComponent<Image>().color = new Color(0, 0, 0, maxAlphaAmount);
+			}
 			yield return null;
 		}
 
@@ -31,9 +38,10 @@ public class SceneTransition : ISceneTransition
 		yield return 0;
 	}
 
-	public IEnumerator BackgroundFadeOut(GameObject transitionBackground, GameObject transition, GameObject transitionUI)
+	public IEnumerator BackgroundFadeOut(GameObject transitionBackground, GameObject transition, GameObject transitionUI, ShopManager shopManager)
 	{
 		var t = 1f;
+		shopManager.CloseShop();
 		transitionUI.SetActive(false);
 
 		while (t > 0f)

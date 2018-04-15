@@ -48,7 +48,7 @@ public class Turn : ITurn
     _gameSceneManager.SetPlayerStats();
   }
 
-  public void NextPlayer()
+  private void ClearCurrentPlayer()
   {
     CurrentPlayer().money += CurrentPlayer().income;
     var mouseUI = CurrentPlayer().mouseUI.GetComponent<MouseUI>();
@@ -56,63 +56,56 @@ public class Turn : ITurn
 
     CurrentPlayer().OnPlayerMovement -= OnPlayerMovement;
     CurrentPlayer().ChangeState(typeof(IPlayerWaitingTurnState));
+  }
 
-    if ((_gameSceneManager.currentPlayersTurn + 1) != _gameSceneManager.players.Length)
+  public Player GetNextPlayer()
+  {
+    var nextPlayersTurn = GetNextPlayersTurn(_gameSceneManager.currentPlayersTurn);
+    return GetPlayer(nextPlayersTurn);
+  }
+
+  private int GetNextPlayersTurn(int playersTurn)
+  {
+    if (playersTurn + 1 >= _gameSceneManager.players.Length)
     {
-      _gameSceneManager.currentPlayersTurn += 1;
-      if (_gameSceneManager.players[_gameSceneManager.currentPlayersTurn] == null)
-      {
-        if ((_gameSceneManager.currentPlayersTurn + 1) != _gameSceneManager.players.Length)
-        {
-          _gameSceneManager.currentPlayersTurn += 1;
-        }
-        else
-        {
-          _gameSceneManager.currentPlayersTurn = 0;
-        }
-      }
+      playersTurn = 0;
     }
     else
     {
-      _gameSceneManager.currentPlayersTurn = 0;
+      playersTurn += 1;
     }
 
-    CurrentPlayer().ChangeState(typeof(IPlayerMoveState));
-    CurrentPlayer().OnPlayerMovement += OnPlayerMovement;
+    if (_gameSceneManager.players[playersTurn] == null)
+    {
+      return GetNextPlayersTurn(playersTurn);
+    }
+
+    return playersTurn;
+  }
+
+  public void NextPlayer()
+  {
+    ClearCurrentPlayer();
+
+    var nextPlayersTurn = GetNextPlayersTurn(_gameSceneManager.currentPlayersTurn);
+    _gameSceneManager.currentPlayersTurn = nextPlayersTurn;
+    var nextPlayer = GetPlayer(nextPlayersTurn);
+
+    nextPlayer.ChangeState(typeof(IPlayerMoveState));
+    nextPlayer.OnPlayerMovement += OnPlayerMovement;
     _gameSceneManager.numberOfMovesThisTurn = 0;
     _gameSceneManager.numberOfAttacksThisTurn = 0;
     _gameSceneManager.SetPlayerStats();
   }
 
-  public Player GetNextPlayer()
-  {
-    var currentPlayersTurn = _gameSceneManager.currentPlayersTurn;
-    if ((currentPlayersTurn + 1) != _gameSceneManager.players.Length)
-    {
-      currentPlayersTurn += 1;
-      if (_gameSceneManager.players[currentPlayersTurn] == null)
-      {
-        if ((currentPlayersTurn + 1) != _gameSceneManager.players.Length)
-        {
-          currentPlayersTurn += 1;
-        }
-        else
-        {
-          currentPlayersTurn = 0;
-        }
-      }
-    }
-    else
-    {
-      currentPlayersTurn = 0;
-    }
-
-    return _gameSceneManager.players[currentPlayersTurn];
-  }
-
   public Player CurrentPlayer()
   {
     return _gameSceneManager.players[_gameSceneManager.currentPlayersTurn];
+  }
+
+  private Player GetPlayer(int playersTurn)
+  {
+    return _gameSceneManager.players[playersTurn];
   }
 
   private void OnPlayerMovement()

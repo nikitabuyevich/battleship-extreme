@@ -24,7 +24,7 @@ public class ShopManager : MonoBehaviour
 		shopUI.mainShop.SetActive(true);
 	}
 
-	private void CloseShop()
+	public void CloseShop()
 	{
 		shopUI.shipShop.SetActive(false);
 		shopUI.abilitiesShop.SetActive(false);

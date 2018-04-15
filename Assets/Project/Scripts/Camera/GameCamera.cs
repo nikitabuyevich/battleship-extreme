@@ -18,9 +18,12 @@ public class GameCamera : MonoBehaviour
 
 	void LateUpdate()
 	{
-		transform.position = new Vector3(
-			Mathf.Clamp(_turn.CurrentPlayer().transform.position.x + 0.5f, 7.5f, _gameMap.Get().xMax - 1.5f),
-			Mathf.Clamp(_turn.CurrentPlayer().transform.position.y + 0.5f, 3.5f, _gameMap.Get().yMax - 1.5f),
-			transform.position.z);
+		if (_turn.CurrentPlayer() != null)
+		{
+			transform.position = new Vector3(
+				Mathf.Clamp(_turn.CurrentPlayer().transform.position.x + 0.5f, 7.5f, _gameMap.Get().xMax - 1.5f),
+				Mathf.Clamp(_turn.CurrentPlayer().transform.position.y + 0.5f, 3.5f, _gameMap.Get().yMax - 1.5f),
+				transform.position.z);
+		}
 	}
 }

@@ -93,6 +93,7 @@ public class GameSceneManager : MonoBehaviour
 
 	[Header("Setup")]
 	public GameObject floor;
+	public ShopManager shopManager;
 	public int screenWidth = 640;
 	public int screenHeight = 360;
 	public bool gameIsFullscreen = true;
@@ -198,7 +199,8 @@ public class GameSceneManager : MonoBehaviour
 		endGameUI.SetActive(true);
 		winnerText.text = currentPlayer + " WON!";
 		endGameBackground.GetComponent<Image>().color = new Color(0, 0, 0, 0);
-		StartCoroutine(_sceneTransition.BackgroundFadeIn(endGameBackground, false));
+		var transparencyAlphaValue = 75f / 255f;
+		StartCoroutine(_sceneTransition.BackgroundFadeIn(endGameBackground, transparencyAlphaValue, false));
 	}
 
 	public void GoToMainMenu()
@@ -213,12 +215,12 @@ public class GameSceneManager : MonoBehaviour
 		transitionUI.SetActive(true);
 		playersName.text = _turn.GetNextPlayer().name + "'s Turn";
 		transitionBackground.GetComponent<Image>().color = new Color(0, 0, 0, 0);
-		StartCoroutine(_sceneTransition.BackgroundFadeIn(transitionBackground, true));
+		StartCoroutine(_sceneTransition.BackgroundFadeIn(transitionBackground, 1f, true));
 	}
 
 	public void NextPlayer()
 	{
-		StartCoroutine(_sceneTransition.BackgroundFadeOut(transitionBackground, transition, transitionUI));
+		StartCoroutine(_sceneTransition.BackgroundFadeOut(transitionBackground, transition, transitionUI, shopManager));
 	}
 
 	public void AbilityCancelBtn()

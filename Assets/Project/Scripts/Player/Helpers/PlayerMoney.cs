@@ -9,17 +9,20 @@ public class PlayerMoney : IPlayerMoney
 
   public void CheckIfOnMoney(Player player)
   {
-    var playerPos = player.transform.position;
-    if (_playerCollisions.IsOnMoney(playerPos))
+    if (player != null)
     {
-      var money = _playerCollisions.GetMoneyStandingOn(playerPos);
-      player.money += money.money;
-      var moneyFactory = money.spawner.GetComponent<MoneyFactory>();
-      moneyFactory.moneySpawned = false;
-      var gameSceneManager = player.gameSceneManager.GetComponent<GameSceneManager>();
-      moneyFactory.modifiedRespawnTime = gameSceneManager.numberOfTurns + (moneyFactory.respawnTime * gameSceneManager.numberOfPlayers);
-      money.MoneyCollected();
-      gameSceneManager.SetPlayerStats();
+      var playerPos = player.transform.position;
+      if (_playerCollisions.IsOnMoney(playerPos))
+      {
+        var money = _playerCollisions.GetMoneyStandingOn(playerPos);
+        player.money += money.money;
+        var moneyFactory = money.spawner.GetComponent<MoneyFactory>();
+        moneyFactory.moneySpawned = false;
+        var gameSceneManager = player.gameSceneManager.GetComponent<GameSceneManager>();
+        moneyFactory.modifiedRespawnTime = gameSceneManager.numberOfTurns + (moneyFactory.respawnTime * gameSceneManager.numberOfPlayers);
+        money.MoneyCollected();
+        gameSceneManager.SetPlayerStats();
+      }
     }
   }
 }

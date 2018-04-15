@@ -11,9 +11,12 @@ public class PlayerWaitingTurnState : IPlayerWaitingTurnState
 
 	public void Enter(Player player)
 	{
-		Debug.Log(player.name + " entered waiting state!");
-		var mouseUI = player.mouseUI.GetComponent<MouseUI>();
-		_mouse.Clear(mouseUI);
+		if (player != null)
+		{
+			Debug.Log(player.name + " entered waiting state!");
+			var mouseUI = player.mouseUI.GetComponent<MouseUI>();
+			_mouse.Clear(mouseUI);
+		}
 	}
 
 	public void Execute(Player player) { }
