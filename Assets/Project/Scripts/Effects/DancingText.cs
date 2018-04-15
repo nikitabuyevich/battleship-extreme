@@ -11,7 +11,7 @@ public class DancingText : MonoBehaviour
 
 	void Start()
 	{
-		scale = transform.localScale.magnitude;
+		scale = transform.localScale.x;
 	}
 
 	void LateUpdate()

@@ -1026,6 +1026,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 1723688431}
+  - component: {fileID: 1723688434}
   - component: {fileID: 1723688433}
   - component: {fileID: 1723688432}
   m_Layer: 5
@@ -1092,6 +1093,20 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1723688430}
+--- !u!114 &1723688434
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1723688430}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d4098655f83ee6d4ba2571b559126f6c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  minScale: 6
+  maxScale: 7.5
+  scalingSpeed: 2
 --- !u!1 &1835833734
 GameObject:
   m_ObjectHideFlags: 0
