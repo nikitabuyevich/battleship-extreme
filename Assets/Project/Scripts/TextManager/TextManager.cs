@@ -10,25 +10,11 @@ public class TextManager : MonoBehaviour
 
 	public GameObject chatPanel, textObject;
 
-	[SerializeField]
+	public Color announcement, action, info, regular;
+
 	List<Message> messageList = new List<Message>();
 
-	// Use this for initialization
-	void Start()
-	{
-
-	}
-
-	// Update is called once per frame
-	void Update()
-	{
-		if (Input.GetKeyDown(KeyCode.Space))
-		{
-			SendMessageToChat("You pressed space my guy!!");
-		}
-	}
-
-	public void SendMessageToChat(string text)
+	public void SendMessageToChat(string text, Message.MessageType messageType)
 	{
 		if (messageList.Count >= maxMessages)
 		{
@@ -38,22 +24,52 @@ public class TextManager : MonoBehaviour
 
 		var newTextObject = Instantiate(textObject, chatPanel.transform);
 
-		var newMessage = new Message(text, newTextObject);
+		var newMessage = new Message(text, MessageTypeColor(messageType), newTextObject);
 
 		messageList.Add(newMessage);
 	}
+
+	Color MessageTypeColor(Message.MessageType messageType)
+	{
+		var color = regular;
+
+		switch (messageType)
+		{
+			case Message.MessageType.action:
+				color = action;
+				break;
+			case Message.MessageType.announcement:
+				color = announcement;
+				break;
+			case Message.MessageType.info:
+				color = info;
+				break;
+		}
+
+		return color;
+	}
 }
 
-[System.Serializable]
 public class Message
 {
 	public string text;
 	public Text textObject;
+	public MessageType messageType;
 
-	public Message(string text, GameObject textObject)
+	public enum MessageType
+	{
+		announcement,
+		action,
+		info,
+		regular
+	}
+
+	public Message(string text, Color color, GameObject textObject)
 	{
 		this.text = text;
 		this.textObject = textObject.GetComponent<Text>();
 		this.textObject.text = text;
+		this.textObject.color = color;
 	}
+
 }
