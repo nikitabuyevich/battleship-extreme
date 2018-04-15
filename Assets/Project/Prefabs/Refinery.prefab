@@ -127,8 +127,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 3
+  maxHealth: 3
   visionRadius: 1
-  gameSceneManagerObj: {fileID: 0}
+  deathEffect: {fileID: 1772935932754460, guid: 13af557617bd2be4eb02d6c66d7d73bb,
+    type: 2}
   ownedBy: {fileID: 0}
   income: 0
 --- !u!212 &212906494523003418

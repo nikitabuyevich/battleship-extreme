@@ -49,7 +49,7 @@ public class MousePosition : IMousePosition
       }
 
       _onPlayer.Attack(player);
-      player.StartCoroutine(WaitUntilParticlesFade(player));
+      player.WaitUntilParticlesFade(1f);
     }
   }
 
@@ -63,30 +63,5 @@ public class MousePosition : IMousePosition
 
       _onPlayer.Build(player);
     }
-  }
-
-  private IEnumerator WaitUntilParticlesFade(Player player)
-  {
-    var gameSceneManager = player.gameSceneManager.GetComponent<GameSceneManager>();
-    var t = 0f;
-    player.ChangeState(typeof(IPlayerWaitingTurnState));
-
-    while (t < 1f)
-    {
-      t += Time.deltaTime;
-
-      yield return null;
-    }
-
-    if (gameSceneManager.numberOfAttacks <= 0)
-    {
-      player.ChangeState(typeof(IPlayerMoveState));
-    }
-    else
-    {
-      player.ChangeState(typeof(IPlayerAttackState));
-    }
-
-    yield return 0;
   }
 }

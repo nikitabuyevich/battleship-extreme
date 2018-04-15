@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Zenject;
@@ -93,6 +94,7 @@ public class Player : GameEntity
 	public GameObject refinery;
 	public GameObject mainHitEffect;
 	public GameObject sideHitEffect;
+	public GameObject deathEffect;
 
 	internal bool _isMoving = false;
 	internal Vector2 _input;
@@ -131,6 +133,7 @@ public class Player : GameEntity
 			gameSceneManager.GetComponent<GameSceneManager>().numberOfPlayers -= 1;
 			Destroy(this.gameObject);
 			Debug.Log(this.name + " has been destroyed!");
+			Instantiate(deathEffect, transform.position, transform.rotation, transform.parent);
 		}
 	}
 
@@ -271,6 +274,36 @@ public class Player : GameEntity
 	public void SpawnSideHitEffect(Vector3 pos)
 	{
 		Instantiate(sideHitEffect, pos, transform.rotation);
+	}
+
+	public void WaitUntilParticlesFade(float time)
+	{
+		StartCoroutine(WaitUntilParticlesFadeEnumerator(time));
+	}
+
+	private IEnumerator WaitUntilParticlesFadeEnumerator(float time)
+	{
+		var gameSceneManager = this.gameSceneManager.GetComponent<GameSceneManager>();
+		var t = 0f;
+		ChangeState(typeof(IPlayerWaitingTurnState));
+
+		while (t < time)
+		{
+			t += Time.deltaTime;
+
+			yield return null;
+		}
+
+		if (gameSceneManager.numberOfAttacks <= 0)
+		{
+			ChangeState(typeof(IPlayerMoveState));
+		}
+		else
+		{
+			ChangeState(typeof(IPlayerAttackState));
+		}
+
+		yield return 0;
 	}
 
 	private void AbilityShortcuts()

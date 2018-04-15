@@ -64,5 +64,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f0c8d88d7ba1564ebbc6928ac3716de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mainHitEffect: {fileID: 1202894459101044, guid: 693a91a7bde2e444a93193f53ff1e6a2,
-    type: 2}
+  particle: {fileID: 1202894459101044, guid: 693a91a7bde2e444a93193f53ff1e6a2, type: 2}

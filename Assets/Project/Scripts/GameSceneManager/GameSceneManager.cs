@@ -198,7 +198,7 @@ public class GameSceneManager : MonoBehaviour
 		endGameUI.SetActive(true);
 		winnerText.text = currentPlayer + " WON!";
 		endGameBackground.GetComponent<Image>().color = new Color(0, 0, 0, 0);
-		StartCoroutine(_sceneTransition.BackgroundFadeIn(endGameBackground, true));
+		StartCoroutine(_sceneTransition.BackgroundFadeIn(endGameBackground, false));
 	}
 
 	public void GoToMainMenu()

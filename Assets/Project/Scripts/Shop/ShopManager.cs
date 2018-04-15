@@ -252,7 +252,7 @@ public class ShopManager : MonoBehaviour
 		player.money -= shopUI.healthCost;
 		player.health += 1;
 		player.maxHealth += 1;
-		UpdateHealthButton(player);
+		OpenShipShop();
 		gameSceneManager.SetPlayerStats();
 	}
 
@@ -264,7 +264,7 @@ public class ShopManager : MonoBehaviour
 		player.money -= shopUI.visionRadiusCost;
 		player.visionRadius += 1;
 		player.numberOfMoveSpacesPerTurn += 1;
-		UpdateVisionRadiusButton(player);
+		OpenShipShop();
 		gameSceneManager.SetPlayerStats();
 	}
 
@@ -275,7 +275,7 @@ public class ShopManager : MonoBehaviour
 		player.boughtAmount.movesPerTurn += 1;
 		player.money -= shopUI.movesPerTurnCost;
 		player.numberOfMovesPerTurn += 1;
-		UpdateMovesPerTurnButton(player);
+		OpenShipShop();
 		gameSceneManager.SetPlayerStats();
 	}
 
@@ -286,7 +286,7 @@ public class ShopManager : MonoBehaviour
 		player.boughtAmount.moveAcross = true;
 		player.money -= shopUI.moveAcrossCost;
 		player.canMoveAcross = true;
-		UpdateMoveAcrossButton(player);
+		OpenShipShop();
 		gameSceneManager.SetPlayerStats();
 	}
 
@@ -297,7 +297,7 @@ public class ShopManager : MonoBehaviour
 		player.boughtAmount.attack += 1;
 		player.money -= shopUI.attackPowerCost;
 		player.attackPower += 1;
-		UpdateAttackButton(player);
+		OpenAbilitiesShop();
 		gameSceneManager.SetPlayerStats();
 	}
 
@@ -308,7 +308,7 @@ public class ShopManager : MonoBehaviour
 		player.boughtAmount.attackRange += 1;
 		player.money -= shopUI.attackRangeCost;
 		player.numberOfAttackSpacesPerTurn += 1;
-		UpdateAttackRangeButton(player);
+		OpenAbilitiesShop();
 		gameSceneManager.SetPlayerStats();
 	}
 
@@ -319,7 +319,7 @@ public class ShopManager : MonoBehaviour
 		player.boughtAmount.sideAttack += 1;
 		player.money -= shopUI.sideAttackPowerCost;
 		player.sideHitAttackPower += 1;
-		UpdateSideAttackButton(player);
+		OpenAbilitiesShop();
 		gameSceneManager.SetPlayerStats();
 	}
 
@@ -330,7 +330,7 @@ public class ShopManager : MonoBehaviour
 		player.boughtAmount.sideAttackRange += 1;
 		player.money -= shopUI.sideAttackRangeCost;
 		player.sideHitRange += 1;
-		UpdateSideAttackRangeButton(player);
+		OpenAbilitiesShop();
 		gameSceneManager.SetPlayerStats();
 	}
 
@@ -341,7 +341,7 @@ public class ShopManager : MonoBehaviour
 		player.boughtAmount.attacksPerTurn += 1;
 		player.money -= shopUI.attacksPerTurnCost;
 		player.numberOfAttacksPerTurn += 1;
-		UpdateAttacksPerTurnButton(player);
+		OpenAbilitiesShop();
 		gameSceneManager.SetPlayerStats();
 	}
 
@@ -352,7 +352,7 @@ public class ShopManager : MonoBehaviour
 		player.boughtAmount.RotationsAreFree = true;
 		player.money -= shopUI.rotationsAreFreeCost;
 		player.rotationsAreFree = true;
-		UpdateRotationsAreFreeButton(player);
+		OpenAbilitiesShop();
 		gameSceneManager.SetPlayerStats();
 	}
 
@@ -365,14 +365,7 @@ public class ShopManager : MonoBehaviour
 		player.money -= shopUI.unlockedAttacksCost;
 		player.numberOfAttacksPerTurn += 1;
 		shopUI.unlockedAttacks = true;
-
-		UpdateAttackButton(player);
-		UpdateAttackRangeButton(player);
-		UpdateSideAttackButton(player);
-		UpdateSideAttackRangeButton(player);
-		UpdateAttacksPerTurnButton(player);
-		UpdateRotationsAreFreeButton(player);
-
+		OpenAbilitiesShop();
 		gameSceneManager.SetPlayerStats();
 	}
 
@@ -383,7 +376,7 @@ public class ShopManager : MonoBehaviour
 		player.boughtAmount.buildRange += 1;
 		player.money -= shopUI.buildRangeCost;
 		player.buildRange += 1;
-		UpdateBuildRangeButton(player);
+		OpenRefineriesShop();
 		gameSceneManager.SetPlayerStats();
 	}
 
@@ -395,6 +388,7 @@ public class ShopManager : MonoBehaviour
 		player.refineryHealth = ShopValues.level1RefineryHealth;
 		player.refineryVisionRadius = ShopValues.level1RefineryVisionRadius;
 		player.refineryIncome = ShopValues.level1RefineryIncome;
+		OpenRefineriesShop();
 		gameSceneManager.SetPlayerStats();
 	}
 
@@ -418,6 +412,7 @@ public class ShopManager : MonoBehaviour
 		player.refineryHealth = ShopValues.level2RefineryHealth;
 		player.refineryVisionRadius = ShopValues.level2RefineryVisionRadius;
 		player.refineryIncome = ShopValues.level2RefineryIncome;
+		OpenRefineriesShop();
 		gameSceneManager.SetPlayerStats();
 	}
 
@@ -441,6 +436,7 @@ public class ShopManager : MonoBehaviour
 		player.refineryHealth = ShopValues.level3RefineryHealth;
 		player.refineryVisionRadius = ShopValues.level3RefineryVisionRadius;
 		player.refineryIncome = ShopValues.level3RefineryIncome;
+		OpenRefineriesShop();
 		gameSceneManager.SetPlayerStats();
 	}
 
@@ -464,6 +460,7 @@ public class ShopManager : MonoBehaviour
 		player.refineryHealth = ShopValues.level4RefineryHealth;
 		player.refineryVisionRadius = ShopValues.level4RefineryVisionRadius;
 		player.refineryIncome = ShopValues.level4RefineryIncome;
+		OpenRefineriesShop();
 		gameSceneManager.SetPlayerStats();
 	}
 

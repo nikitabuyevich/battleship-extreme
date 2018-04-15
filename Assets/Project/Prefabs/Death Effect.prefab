@@ -22,7 +22,7 @@ GameObject:
   - component: {fileID: 114670455416952528}
   - component: {fileID: 114482504937549686}
   m_Layer: 0
-  m_Name: Main Hit Effect
+  m_Name: Death Effect
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -64,4 +64,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f0c8d88d7ba1564ebbc6928ac3716de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  particle: {fileID: 1010997238095160, guid: df81ee05bdd81294c9c3bd367f4a6d60, type: 2}
+  particle: {fileID: 1010997238095160, guid: 6a3bcf0f0473bcd47b3c731f520d01d7, type: 2}

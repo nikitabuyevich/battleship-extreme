@@ -1,12 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Zenject;
 
 public class Refinery : GameEntity
 {
-	public GameObject ownedBy;
+	public GameObject deathEffect;
 	public int income;
+
+	internal GameObject ownedBy;
 
 	void Update()
 	{
@@ -19,6 +20,8 @@ public class Refinery : GameEntity
 			Destroy(this.gameObject);
 			Debug.Log(this.name + " has been destroyed!");
 			player.refineries.Remove(this.gameObject);
+			Instantiate(deathEffect, transform.position, transform.rotation, transform.parent);
+			player.WaitUntilParticlesFade(1.5f);
 		}
 	}
 }
