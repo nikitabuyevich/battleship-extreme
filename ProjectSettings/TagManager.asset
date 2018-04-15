@@ -58,6 +58,9 @@ TagManager:
   - name: Game
     uniqueID: 3491629821
     locked: 0
+  - name: Particles
+    uniqueID: 836817175
+    locked: 0
   - name: Transition
     uniqueID: 505045235
     locked: 0

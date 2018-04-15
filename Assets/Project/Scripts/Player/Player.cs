@@ -91,6 +91,8 @@ public class Player : GameEntity
 	public GameObject mouseUI;
 	public GameObject gameSceneManager;
 	public GameObject refinery;
+	public GameObject mainHitEffect;
+	public GameObject sideHitEffect;
 
 	internal bool _isMoving = false;
 	internal Vector2 _input;
