@@ -157,6 +157,11 @@ public class Mouse : IMouse
     }
   }
 
+  public void SetDefaultCursor(MouseUI mouseUI)
+  {
+    Cursor.SetCursor(null, Vector2.zero, mouseUI.cursorMode);
+  }
+
   public void Clear(MouseUI mouseUI)
   {
     ClearMouseUI(mouseUI, true);

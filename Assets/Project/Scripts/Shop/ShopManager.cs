@@ -365,7 +365,14 @@ public class ShopManager : MonoBehaviour
 		player.money -= shopUI.unlockedAttacksCost;
 		player.numberOfAttacksPerTurn += 1;
 		shopUI.unlockedAttacks = true;
+
+		UpdateAttackButton(player);
+		UpdateAttackRangeButton(player);
+		UpdateSideAttackButton(player);
+		UpdateSideAttackRangeButton(player);
 		UpdateAttacksPerTurnButton(player);
+		UpdateRotationsAreFreeButton(player);
+
 		gameSceneManager.SetPlayerStats();
 	}
 

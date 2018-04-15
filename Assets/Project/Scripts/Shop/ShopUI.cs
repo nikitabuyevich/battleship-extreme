@@ -572,6 +572,4 @@ public class ShopUI : MonoBehaviour
 			return _buildRangeCurrent;
 		}
 	}
-
-	void Test() { }
 }

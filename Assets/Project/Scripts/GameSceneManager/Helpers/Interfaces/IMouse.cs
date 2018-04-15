@@ -4,6 +4,7 @@ public interface IMouse
 {
   Vector3 GetMousePos(Player player);
   void SetAttackCursor(MouseUI mouseUI);
+  void SetDefaultCursor(MouseUI mouseUI);
   void DrawAttackSuggestions(Player player);
   void DrawMoveSuggestions(Player player);
   void DrawMoveSuggestionsHover(Player player);

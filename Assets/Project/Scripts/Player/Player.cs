@@ -263,6 +263,16 @@ public class Player : GameEntity
 		}
 	}
 
+	public void SpawnMainHitEffect(Vector3 pos)
+	{
+		Instantiate(mainHitEffect, pos, transform.rotation);
+	}
+
+	public void SpawnSideHitEffect(Vector3 pos)
+	{
+		Instantiate(sideHitEffect, pos, transform.rotation);
+	}
+
 	private void AbilityShortcuts()
 	{
 		if (Input.GetKeyDown(KeyCode.Alpha1))
