@@ -16,7 +16,7 @@
 	public static int rotationsAreFree = 5000;
 
 	// REFINERIES
-	public static int buildRange = 750;
+	public static int buildRange = 1000;
 	public static int level1Refinery = 500;
 	public static int level2Refinery = 1500;
 	public static int level3Refinery = 3000;

@@ -33,8 +33,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1925631706000964}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 2, y: 4, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -51,5 +51,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bebcbe299577e48c1bf4ca1d7e6d916b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  money: {fileID: 1010351797605144, guid: 3e106b5183a2b42eca8a3963e080e882, type: 2}
+  gameSceneManager: {fileID: 0}
+  money: {fileID: 1356068425333350, guid: 3e106b5183a2b42eca8a3963e080e882, type: 2}
   respawnTime: 4
