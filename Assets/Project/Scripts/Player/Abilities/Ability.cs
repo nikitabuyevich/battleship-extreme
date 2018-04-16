@@ -22,6 +22,7 @@ public class Ability : IAbility
 
   public void Rotate(Player player, bool reverse)
   {
+    PlaySelectSoundEffect();
     if (player.rotationsAreFree || _gameSceneManager.numberOfMoves > 0)
     {
       if (!player.rotationsAreFree)
@@ -87,5 +88,12 @@ public class Ability : IAbility
     {
       _mousePosition.Build(player);
     }
+  }
+
+  private void PlaySelectSoundEffect()
+  {
+    var soundEffectsManager = GameObject.Find("SoundEffectsManager").GetComponent<SoundEffectsManager>();
+    soundEffectsManager.musicSource.clip = soundEffectsManager.selectSoundEffect;
+    soundEffectsManager.musicSource.Play();
   }
 }
