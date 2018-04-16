@@ -10,6 +10,9 @@ public class Money : GameEntity
 
 	public void MoneyCollected()
 	{
+		var positionText = "(" + transform.position.x + ", " + transform.position.y + ")";
+		var textManager = GameObject.Find("TextManager").GetComponent<TextManager>();
+		textManager.SendMessageToChat("Money has been collected at position " + positionText, Message.MessageType.action);
 		Destroy(this.gameObject);
 	}
 }

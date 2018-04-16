@@ -126,6 +126,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ed3eb028a9cb458ab3e50438afda21a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  health: 3
+  maxHealth: 3
+  visionRadius: 1
+  textManager: {fileID: 0}
   money: 1000
 --- !u!212 &212520861997370172
 SpriteRenderer:

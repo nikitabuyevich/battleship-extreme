@@ -94,6 +94,7 @@ public class GameSceneManager : MonoBehaviour
 	[Header("Setup")]
 	public GameObject floor;
 	public ShopManager shopManager;
+	public TextManager textManager;
 	public int screenWidth = 640;
 	public int screenHeight = 360;
 	public bool gameIsFullscreen = true;
@@ -201,6 +202,7 @@ public class GameSceneManager : MonoBehaviour
 		endGameTransition.SetActive(true);
 		endGameUI.SetActive(true);
 		winnerText.text = currentPlayer + " WON!";
+		textManager.SendMessageToChat(currentPlayer + " is the winner!", Message.MessageType.announcement);
 		endGameBackground.GetComponent<Image>().color = new Color(0, 0, 0, 0);
 		var transparencyAlphaValue = 75f / 255f;
 		StartCoroutine(_sceneTransition.BackgroundFadeIn(endGameBackground, transparencyAlphaValue, false));
@@ -296,6 +298,7 @@ public class GameSceneManager : MonoBehaviour
 
 	private void SetNewGame()
 	{
+		textManager.SendMessageToChat("Started a new game of Sea Conquest!", Message.MessageType.announcement);
 		SetPlayerStats();
 		transition.SetActive(true);
 		transitionUI.SetActive(true);

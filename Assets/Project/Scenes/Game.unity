@@ -2493,6 +2493,7 @@ MonoBehaviour:
   rotateButton: {fileID: 1834037896}
   floor: {fileID: 501445989}
   shopManager: {fileID: 300924189}
+  textManager: {fileID: 792426400}
   screenWidth: 640
   screenHeight: 360
   gameIsFullscreen: 1
@@ -7157,9 +7158,9 @@ MonoBehaviour:
   maxMessages: 25
   chatPanel: {fileID: 2008849692}
   textObject: {fileID: 1670508811866308, guid: f1dfbd6366e110e47acc9f21f8f00800, type: 2}
-  announcement: {r: 0.21323532, g: 1, b: 1, a: 1}
-  action: {r: 1, g: 0, b: 0, a: 1}
-  info: {r: 0, g: 1, b: 0.04827571, a: 0}
+  announcement: {r: 0.21323532, g: 1, b: 0.31632873, a: 1}
+  action: {r: 1, g: 0.2117647, b: 0.2117647, a: 1}
+  info: {r: 0.21176471, g: 1, b: 1, a: 1}
   regular: {r: 1, g: 1, b: 1, a: 1}
 --- !u!4 &792426401
 Transform:
@@ -14745,7 +14746,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.066176474, g: 0.6135903, b: 1, a: 1}
+  m_Color: {r: 0.5514706, g: 0.06893382, b: 0.06893382, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:

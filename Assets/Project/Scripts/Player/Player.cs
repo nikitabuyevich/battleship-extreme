@@ -133,8 +133,8 @@ public class Player : GameEntity
 		{
 			initiatedDeath = true;
 			gameSceneManager.GetComponent<GameSceneManager>().numberOfPlayers -= 1;
-			Debug.Log(this.name + " has been destroyed!");
-			Instantiate(deathEffect, transform.position, transform.rotation, transform.parent);
+			var gameSceneManagerComp = gameSceneManager.GetComponent<GameSceneManager>();
+			gameSceneManagerComp.textManager.SendMessageToChat(this.name + " has been destroyed in battle!", Message.MessageType.info);
 			StartCoroutine(DelayDeathAnimation(0.25f));
 		}
 	}
