@@ -12,6 +12,9 @@ public class GameManager : MonoBehaviour
 
 	public void PlayGame()
 	{
+		var soundManager = GameObject.Find("SoundManager").GetComponent<SoundManager>();
+		soundManager.musicSource.clip = soundManager.mainThemeSong;
+		soundManager.musicSource.Play();
 		transition.SetActive(true);
 		StartCoroutine(BackgroundFadeIn());
 	}
@@ -51,6 +54,11 @@ public class GameManager : MonoBehaviour
 	public void LoadStartMenu()
 	{
 		SceneManager.LoadScene("Start Menu");
+	}
+
+	public void LoadOptionsMenu()
+	{
+		SceneManager.LoadScene("Options");
 	}
 
 	public void ExitGame()
