@@ -418,7 +418,7 @@ public class ShopManager : MonoBehaviour
 
 	public void PurchaseLevel1Refinery()
 	{
-		PlayPowerupSoundEffect();
+		PlayPlaceSoundEffect();
 		var player = _turn.CurrentPlayer();
 
 		player.money -= shopUI.level1RefineryCost;
@@ -444,7 +444,7 @@ public class ShopManager : MonoBehaviour
 
 	public void PurchaseLevel2Refinery()
 	{
-		PlayPowerupSoundEffect();
+		PlayPlaceSoundEffect();
 		var player = _turn.CurrentPlayer();
 
 		player.money -= shopUI.level2RefineryCost;
@@ -470,7 +470,7 @@ public class ShopManager : MonoBehaviour
 
 	public void PurchaseLevel3Refinery()
 	{
-		PlayPowerupSoundEffect();
+		PlayPlaceSoundEffect();
 		var player = _turn.CurrentPlayer();
 
 		player.money -= shopUI.level3RefineryCost;
@@ -496,7 +496,7 @@ public class ShopManager : MonoBehaviour
 
 	public void PurchaseLevel4Refinery()
 	{
-		PlayPowerupSoundEffect();
+		PlayPlaceSoundEffect();
 		var player = _turn.CurrentPlayer();
 
 		player.money -= shopUI.level4RefineryCost;
@@ -550,6 +550,13 @@ public class ShopManager : MonoBehaviour
 	{
 		var soundEffectsManager = GameObject.Find("SoundEffectsManager").GetComponent<SoundEffectsManager>();
 		soundEffectsManager.musicSource.clip = soundEffectsManager.powerupSoundEffect;
+		soundEffectsManager.musicSource.Play();
+	}
+
+	private void PlayPlaceSoundEffect()
+	{
+		var soundEffectsManager = GameObject.Find("SoundEffectsManager").GetComponent<SoundEffectsManager>();
+		soundEffectsManager.musicSource.clip = soundEffectsManager.placeSoundEffect;
 		soundEffectsManager.musicSource.Play();
 	}
 }

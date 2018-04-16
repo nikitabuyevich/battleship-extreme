@@ -14,6 +14,7 @@ public class PlayerMoney : IPlayerMoney
       var playerPos = player.transform.position;
       if (_playerCollisions.IsOnMoney(playerPos))
       {
+        player.PlayPowerUpSoundEffect();
         var money = _playerCollisions.GetMoneyStandingOn(playerPos);
         player.money += money.money;
         var moneyFactory = money.spawner.GetComponent<MoneyFactory>();

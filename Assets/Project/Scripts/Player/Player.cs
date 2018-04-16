@@ -351,14 +351,7 @@ public class Player : GameEntity
 		Destroy(this.gameObject);
 	}
 
-	private void PlayDestroySoundEffect()
-	{
-		var soundEffectsManager = GameObject.Find("SoundEffectsManager").GetComponent<SoundEffectsManager>();
-		soundEffectsManager.musicSource.clip = soundEffectsManager.destroySoundEffect;
-		soundEffectsManager.musicSource.Play();
-	}
-
-	private void PlayPowerUpSoundEffect()
+	internal void PlayPowerUpSoundEffect()
 	{
 		var soundEffectsManager = GameObject.Find("SoundEffectsManager").GetComponent<SoundEffectsManager>();
 		soundEffectsManager.musicSource.clip = soundEffectsManager.powerupSoundEffect;
@@ -367,4 +360,12 @@ public class Player : GameEntity
 			soundEffectsManager.musicSource.Play();
 		}
 	}
+
+	private void PlayDestroySoundEffect()
+	{
+		var soundEffectsManager = GameObject.Find("SoundEffectsManager").GetComponent<SoundEffectsManager>();
+		soundEffectsManager.musicSource.clip = soundEffectsManager.destroySoundEffect;
+		soundEffectsManager.musicSource.Play();
+	}
+
 }
