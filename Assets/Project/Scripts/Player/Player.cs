@@ -109,6 +109,7 @@ public class Player : GameEntity
 
 	private IState currentlyRunningState;
 	private IState previouslyRunningState;
+	private bool initiatedDeath = false;
 
 	void Update()
 	{
@@ -128,12 +129,13 @@ public class Player : GameEntity
 
 	private void CheckHealth()
 	{
-		if (health <= 0)
+		if (health <= 0 && !initiatedDeath)
 		{
+			initiatedDeath = true;
 			gameSceneManager.GetComponent<GameSceneManager>().numberOfPlayers -= 1;
-			Destroy(this.gameObject);
 			Debug.Log(this.name + " has been destroyed!");
 			Instantiate(deathEffect, transform.position, transform.rotation, transform.parent);
+			StartCoroutine(DelayDeathAnimation(0.25f));
 		}
 	}
 
@@ -294,13 +296,16 @@ public class Player : GameEntity
 			yield return null;
 		}
 
-		if (gameSceneManager.numberOfAttacks <= 0)
+		if (!gameSceneManager.gameOver)
 		{
-			ChangeState(typeof(IPlayerMoveState));
-		}
-		else
-		{
-			ChangeState(typeof(IPlayerAttackState));
+			if (gameSceneManager.numberOfAttacks <= 0)
+			{
+				ChangeState(typeof(IPlayerMoveState));
+			}
+			else
+			{
+				ChangeState(typeof(IPlayerAttackState));
+			}
 		}
 
 		yield return 0;
@@ -331,7 +336,35 @@ public class Player : GameEntity
 		if (Input.GetKey(KeyCode.LeftControl) && Input.GetKey(KeyCode.LeftShift) && Input.GetKey(KeyCode.D))
 		{
 			money += 1000;
-			gameSceneManager.GetComponent<GameSceneManager>().SetPlayerStats();
+			var gameSceneManagerComp = gameSceneManager.GetComponent<GameSceneManager>();
+			gameSceneManagerComp.SetPlayerStats();
+			gameSceneManagerComp.shopManager.UpdateAll(this);
+			PlayPowerUpSoundEffect();
+		}
+	}
+
+	private IEnumerator DelayDeathAnimation(float amount)
+	{
+		yield return new WaitForSeconds(amount);
+		Instantiate(deathEffect, transform.position, transform.rotation, transform.parent);
+		PlayDestroySoundEffect();
+		Destroy(this.gameObject);
+	}
+
+	private void PlayDestroySoundEffect()
+	{
+		var soundEffectsManager = GameObject.Find("SoundEffectsManager").GetComponent<SoundEffectsManager>();
+		soundEffectsManager.musicSource.clip = soundEffectsManager.destroySoundEffect;
+		soundEffectsManager.musicSource.Play();
+	}
+
+	private void PlayPowerUpSoundEffect()
+	{
+		var soundEffectsManager = GameObject.Find("SoundEffectsManager").GetComponent<SoundEffectsManager>();
+		soundEffectsManager.musicSource.clip = soundEffectsManager.powerupSoundEffect;
+		if (!soundEffectsManager.musicSource.isPlaying)
+		{
+			soundEffectsManager.musicSource.Play();
 		}
 	}
 }

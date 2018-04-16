@@ -18,7 +18,7 @@ public class GameCamera : MonoBehaviour
 
 	void LateUpdate()
 	{
-		if (_turn.CurrentPlayer() != null)
+		if (_turn != null && _turn.CurrentPlayer() != null)
 		{
 			transform.position = new Vector3(
 				Mathf.Clamp(_turn.CurrentPlayer().transform.position.x + 0.5f, 7.5f, _gameMap.Get().xMax - 1.5f),

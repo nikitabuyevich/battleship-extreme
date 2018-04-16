@@ -108,6 +108,7 @@ public class GameSceneManager : MonoBehaviour
 	internal int numberOfMovesThisTurn = 0;
 	internal int numberOfAttacksThisTurn = 0;
 	internal int numberOfTurns = 0;
+	internal bool gameOver = false;
 
 	private string _currentPlayer;
 	internal string currentPlayer
@@ -195,6 +196,8 @@ public class GameSceneManager : MonoBehaviour
 
 	private void DeclareWinner()
 	{
+		gameOver = true;
+		PlayWinningTheme();
 		endGameTransition.SetActive(true);
 		endGameUI.SetActive(true);
 		winnerText.text = currentPlayer + " WON!";
@@ -205,11 +208,13 @@ public class GameSceneManager : MonoBehaviour
 
 	public void GoToMainMenu()
 	{
+		PlayTitleScreenThemeSong();
 		SceneManager.LoadScene("Main Menu");
 	}
 
 	public void EndTurnBtn()
 	{
+		PlayEndTurnSoundEffect();
 		numberOfTurns += 1;
 		transition.SetActive(true);
 		transitionUI.SetActive(true);
@@ -220,6 +225,7 @@ public class GameSceneManager : MonoBehaviour
 
 	public void NextPlayer()
 	{
+		PlaySelectSoundEffect();
 		StartCoroutine(_sceneTransition.BackgroundFadeOut(transitionBackground, transition, transitionUI, shopManager));
 	}
 
@@ -295,5 +301,33 @@ public class GameSceneManager : MonoBehaviour
 		transitionUI.SetActive(true);
 		playersName.text = _turn.CurrentPlayer().name + "'s Turn";
 		transitionBackground.GetComponent<Image>().color = new Color(0, 0, 0, 1);
+	}
+
+	private void PlaySelectSoundEffect()
+	{
+		var soundEffectsManager = GameObject.Find("SoundEffectsManager").GetComponent<SoundEffectsManager>();
+		soundEffectsManager.musicSource.clip = soundEffectsManager.selectSoundEffect;
+		soundEffectsManager.musicSource.Play();
+	}
+
+	private void PlayEndTurnSoundEffect()
+	{
+		var soundEffectsManager = GameObject.Find("SoundEffectsManager").GetComponent<SoundEffectsManager>();
+		soundEffectsManager.musicSource.clip = soundEffectsManager.endTurnSoundEffect;
+		soundEffectsManager.musicSource.Play();
+	}
+
+	private void PlayWinningTheme()
+	{
+		var soundManager = GameObject.Find("SoundManager").GetComponent<SoundManager>();
+		soundManager.musicSource.clip = soundManager.winThemeSong;
+		soundManager.musicSource.Play();
+	}
+
+	private void PlayTitleScreenThemeSong()
+	{
+		var soundManager = GameObject.Find("SoundManager").GetComponent<SoundManager>();
+		soundManager.musicSource.clip = soundManager.titleScreenThemeSong;
+		soundManager.musicSource.Play();
 	}
 }

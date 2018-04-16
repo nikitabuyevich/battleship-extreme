@@ -12,6 +12,7 @@ public class GameManager : MonoBehaviour
 
 	public void PlayGame()
 	{
+		PlaySelectSoundEffect();
 		var soundManager = GameObject.Find("SoundManager").GetComponent<SoundManager>();
 		soundManager.musicSource.clip = soundManager.mainThemeSong;
 		soundManager.musicSource.Play();
@@ -53,21 +54,25 @@ public class GameManager : MonoBehaviour
 
 	public void LoadStartMenu()
 	{
+		PlaySelectSoundEffect();
 		SceneManager.LoadScene("Start Menu");
 	}
 
 	public void LoadOptionsMenu()
 	{
+		PlaySelectSoundEffect();
 		SceneManager.LoadScene("Options");
 	}
 
 	public void ExitGame()
 	{
+		PlaySelectSoundEffect();
 		Application.Quit();
 	}
 
 	public void BackToMainMenu()
 	{
+		PlaySelectSoundEffect();
 		SceneManager.LoadScene("Main Menu");
 	}
 
@@ -86,4 +91,10 @@ public class GameManager : MonoBehaviour
 		yield return 0;
 	}
 
+	private void PlaySelectSoundEffect()
+	{
+		var soundEffectsManager = GameObject.Find("SoundEffectsManager").GetComponent<SoundEffectsManager>();
+		soundEffectsManager.musicSource.clip = soundEffectsManager.selectSoundEffect;
+		soundEffectsManager.musicSource.Play();
+	}
 }

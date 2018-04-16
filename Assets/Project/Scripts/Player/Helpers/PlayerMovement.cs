@@ -86,6 +86,7 @@ public class PlayerMovement : IPlayerMovement
 
   public IEnumerator Move(Player player)
   {
+    PlayMoveSoundEffect();
     var mouseUI = player.mouseUI.GetComponent<MouseUI>();
     _mouse.Clear(mouseUI);
     _playerFogOfWar.ChangeFogOfWar(player, player.visitedAlphaLevel);
@@ -137,5 +138,12 @@ public class PlayerMovement : IPlayerMovement
         player.fogOfWar.Add(_fogOfWar.GetFogOfWarKey(tilemap.name, tilePosition.Current), currentTileColor);
       }
     }
+  }
+
+  private void PlayMoveSoundEffect()
+  {
+    var soundEffectsManager = GameObject.Find("SoundEffectsManager").GetComponent<SoundEffectsManager>();
+    soundEffectsManager.musicSource.clip = soundEffectsManager.moveSoundEffect;
+    soundEffectsManager.musicSource.Play();
   }
 }

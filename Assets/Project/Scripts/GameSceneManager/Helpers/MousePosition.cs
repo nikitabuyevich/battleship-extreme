@@ -22,6 +22,7 @@ public class MousePosition : IMousePosition
 
   public void Attack(Player player)
   {
+    var hitSomething = false;
     var mousePos = _mouse.GetMousePos(player);
     var validAttackPositions = _gameMap.GetValidAttackPositions(player);
     if (validAttackPositions.Contains(mousePos))
@@ -32,6 +33,7 @@ public class MousePosition : IMousePosition
       var gameEntity = _playerCollisions.GetGameEntity(mousePos);
       if (gameEntity != null)
       {
+        hitSomething = true;
         gameEntity.health -= player.attackPower;
       }
 
@@ -44,12 +46,21 @@ public class MousePosition : IMousePosition
         var sideHitGameEntity = _playerCollisions.GetGameEntity(sideAttackPosition);
         if (sideHitGameEntity != null)
         {
+          hitSomething = true;
           sideHitGameEntity.health -= player.sideHitAttackPower;
         }
       }
 
       _onPlayer.Attack(player);
       player.WaitUntilParticlesFade(1f);
+      if (hitSomething)
+      {
+        PlayHitSoundEffect();
+      }
+      else
+      {
+        PlayAttackSoundEffect();
+      }
     }
   }
 
@@ -63,5 +74,19 @@ public class MousePosition : IMousePosition
 
       _onPlayer.Build(player);
     }
+  }
+
+  private void PlayAttackSoundEffect()
+  {
+    var soundEffectsManager = GameObject.Find("SoundEffectsManager").GetComponent<SoundEffectsManager>();
+    soundEffectsManager.musicSource.clip = soundEffectsManager.attackSoundEffect;
+    soundEffectsManager.musicSource.Play();
+  }
+
+  private void PlayHitSoundEffect()
+  {
+    var soundEffectsManager = GameObject.Find("SoundEffectsManager").GetComponent<SoundEffectsManager>();
+    soundEffectsManager.musicSource.clip = soundEffectsManager.hitSoundEffect;
+    soundEffectsManager.musicSource.Play();
   }
 }

@@ -20,7 +20,6 @@ public class SoundManager : MonoBehaviour
 		}
 
 		DontDestroyOnLoad(gameObject);
-		Debug.Log(musicSource.isPlaying);
 		musicSource.clip = titleScreenThemeSong;
 		musicSource.Play();
 	}

@@ -19,13 +19,18 @@ public class ShopManager : MonoBehaviour
 
 	public void OpenShop()
 	{
+		PlaySelectSoundEffect();
 		var player = _turn.CurrentPlayer();
 		player.ChangeState(typeof(IPlayerShopingState));
 		shopUI.mainShop.SetActive(true);
 	}
 
-	public void CloseShop()
+	public void CloseShop(bool playSelect)
 	{
+		if (playSelect)
+		{
+			PlaySelectSoundEffect();
+		}
 		shopUI.shipShop.SetActive(false);
 		shopUI.abilitiesShop.SetActive(false);
 		shopUI.refineriesShop.SetActive(false);
@@ -72,7 +77,13 @@ public class ShopManager : MonoBehaviour
 		}
 	}
 
-	public void OpenShipShop()
+	public void OpenShipShopBtn()
+	{
+		PlaySelectSoundEffect();
+		OpenShipShop();
+	}
+
+	private void OpenShipShop()
 	{
 		var player = _turn.CurrentPlayer();
 
@@ -146,7 +157,13 @@ public class ShopManager : MonoBehaviour
 		shopUI.unlockAttacksButton.interactable = unlockedAttackCost <= player.money;
 	}
 
-	public void OpenAbilitiesShop()
+	public void OpenAbilitiesShopBtn()
+	{
+		PlaySelectSoundEffect();
+		OpenAbilitiesShop();
+	}
+
+	private void OpenAbilitiesShop()
 	{
 		var player = _turn.CurrentPlayer();
 
@@ -214,7 +231,13 @@ public class ShopManager : MonoBehaviour
 		shopUI.level4RefineryVisionRadius = ShopValues.level4RefineryVisionRadius;
 	}
 
-	public void OpenRefineriesShop()
+	public void OpenRefineriesShopBtn()
+	{
+		PlaySelectSoundEffect();
+		OpenRefineriesShop();
+	}
+
+	private void OpenRefineriesShop()
 	{
 		var player = _turn.CurrentPlayer();
 
@@ -230,6 +253,7 @@ public class ShopManager : MonoBehaviour
 
 	public void BackButton()
 	{
+		PlaySelectSoundEffect();
 		if (shopUI.shipShop.activeSelf || shopUI.abilitiesShop.activeSelf || shopUI.refineriesShop.activeSelf)
 		{
 			shopUI.shipShop.SetActive(false);
@@ -246,6 +270,7 @@ public class ShopManager : MonoBehaviour
 
 	public void PurchaseHealthUpgrade()
 	{
+		PlayPowerupSoundEffect();
 		var player = _turn.CurrentPlayer();
 
 		player.boughtAmount.health += 1;
@@ -258,6 +283,7 @@ public class ShopManager : MonoBehaviour
 
 	public void PurchaseVisionRadiusUpgrade()
 	{
+		PlayPowerupSoundEffect();
 		var player = _turn.CurrentPlayer();
 
 		player.boughtAmount.visionRadius += 1;
@@ -270,6 +296,7 @@ public class ShopManager : MonoBehaviour
 
 	public void PurchaseMovesPerTurnUpgrade()
 	{
+		PlayPowerupSoundEffect();
 		var player = _turn.CurrentPlayer();
 
 		player.boughtAmount.movesPerTurn += 1;
@@ -281,6 +308,7 @@ public class ShopManager : MonoBehaviour
 
 	public void PurchaseMoveAcrossUpgrade()
 	{
+		PlayPowerupSoundEffect();
 		var player = _turn.CurrentPlayer();
 
 		player.boughtAmount.moveAcross = true;
@@ -292,6 +320,7 @@ public class ShopManager : MonoBehaviour
 
 	public void PurchaseAttackUpgrade()
 	{
+		PlayPowerupSoundEffect();
 		var player = _turn.CurrentPlayer();
 
 		player.boughtAmount.attack += 1;
@@ -303,6 +332,7 @@ public class ShopManager : MonoBehaviour
 
 	public void PurchaseAttackRangeUpgrade()
 	{
+		PlayPowerupSoundEffect();
 		var player = _turn.CurrentPlayer();
 
 		player.boughtAmount.attackRange += 1;
@@ -314,6 +344,7 @@ public class ShopManager : MonoBehaviour
 
 	public void PurchaseSideAttackUpgrade()
 	{
+		PlayPowerupSoundEffect();
 		var player = _turn.CurrentPlayer();
 
 		player.boughtAmount.sideAttack += 1;
@@ -325,6 +356,7 @@ public class ShopManager : MonoBehaviour
 
 	public void PurchaseSideAttackRangeUpgrade()
 	{
+		PlayPowerupSoundEffect();
 		var player = _turn.CurrentPlayer();
 
 		player.boughtAmount.sideAttackRange += 1;
@@ -336,6 +368,7 @@ public class ShopManager : MonoBehaviour
 
 	public void PurchaseAttacksPerTurnUpgrade()
 	{
+		PlayPowerupSoundEffect();
 		var player = _turn.CurrentPlayer();
 
 		player.boughtAmount.attacksPerTurn += 1;
@@ -347,6 +380,7 @@ public class ShopManager : MonoBehaviour
 
 	public void PurchaseRotationsAreFreeUpgrade()
 	{
+		PlayPowerupSoundEffect();
 		var player = _turn.CurrentPlayer();
 
 		player.boughtAmount.RotationsAreFree = true;
@@ -358,6 +392,7 @@ public class ShopManager : MonoBehaviour
 
 	public void PurchaseUnlockAttacksUpgrade()
 	{
+		PlayPowerupSoundEffect();
 		var player = _turn.CurrentPlayer();
 
 		player.boughtAmount.unlockedAttack = true;
@@ -371,6 +406,7 @@ public class ShopManager : MonoBehaviour
 
 	public void PurchaseBuildRangeUpgrade()
 	{
+		PlayPowerupSoundEffect();
 		var player = _turn.CurrentPlayer();
 
 		player.boughtAmount.buildRange += 1;
@@ -382,6 +418,7 @@ public class ShopManager : MonoBehaviour
 
 	public void PurchaseLevel1Refinery()
 	{
+		PlayPowerupSoundEffect();
 		var player = _turn.CurrentPlayer();
 
 		player.money -= shopUI.level1RefineryCost;
@@ -389,6 +426,7 @@ public class ShopManager : MonoBehaviour
 		player.refineryVisionRadius = ShopValues.level1RefineryVisionRadius;
 		player.refineryIncome = ShopValues.level1RefineryIncome;
 		OpenRefineriesShop();
+		CloseShop(false);
 		gameSceneManager.SetPlayerStats();
 	}
 
@@ -401,11 +439,12 @@ public class ShopManager : MonoBehaviour
 		player.refineryIncome = ShopValues.level1RefineryIncome;
 		player.SetInitialState();
 		player.ChangeState(typeof(IPlayerBuildState));
-		CloseShop();
+		CloseShop(true);
 	}
 
 	public void PurchaseLevel2Refinery()
 	{
+		PlayPowerupSoundEffect();
 		var player = _turn.CurrentPlayer();
 
 		player.money -= shopUI.level2RefineryCost;
@@ -413,6 +452,7 @@ public class ShopManager : MonoBehaviour
 		player.refineryVisionRadius = ShopValues.level2RefineryVisionRadius;
 		player.refineryIncome = ShopValues.level2RefineryIncome;
 		OpenRefineriesShop();
+		CloseShop(false);
 		gameSceneManager.SetPlayerStats();
 	}
 
@@ -425,11 +465,12 @@ public class ShopManager : MonoBehaviour
 		player.refineryIncome = ShopValues.level2RefineryIncome;
 		player.SetInitialState();
 		player.ChangeState(typeof(IPlayerBuildState));
-		CloseShop();
+		CloseShop(true);
 	}
 
 	public void PurchaseLevel3Refinery()
 	{
+		PlayPowerupSoundEffect();
 		var player = _turn.CurrentPlayer();
 
 		player.money -= shopUI.level3RefineryCost;
@@ -437,6 +478,7 @@ public class ShopManager : MonoBehaviour
 		player.refineryVisionRadius = ShopValues.level3RefineryVisionRadius;
 		player.refineryIncome = ShopValues.level3RefineryIncome;
 		OpenRefineriesShop();
+		CloseShop(false);
 		gameSceneManager.SetPlayerStats();
 	}
 
@@ -449,11 +491,12 @@ public class ShopManager : MonoBehaviour
 		player.refineryIncome = ShopValues.level3RefineryIncome;
 		player.SetInitialState();
 		player.ChangeState(typeof(IPlayerBuildState));
-		CloseShop();
+		CloseShop(true);
 	}
 
 	public void PurchaseLevel4Refinery()
 	{
+		PlayPowerupSoundEffect();
 		var player = _turn.CurrentPlayer();
 
 		player.money -= shopUI.level4RefineryCost;
@@ -461,6 +504,7 @@ public class ShopManager : MonoBehaviour
 		player.refineryVisionRadius = ShopValues.level4RefineryVisionRadius;
 		player.refineryIncome = ShopValues.level4RefineryIncome;
 		OpenRefineriesShop();
+		CloseShop(false);
 		gameSceneManager.SetPlayerStats();
 	}
 
@@ -473,6 +517,39 @@ public class ShopManager : MonoBehaviour
 		player.refineryIncome = ShopValues.level4RefineryIncome;
 		player.SetInitialState();
 		player.ChangeState(typeof(IPlayerBuildState));
-		CloseShop();
+		CloseShop(true);
+	}
+
+	public void UpdateAll(Player player)
+	{
+		UpdateHealthButton(player);
+		UpdateVisionRadiusButton(player);
+		UpdateMovesPerTurnButton(player);
+		UpdateMoveAcrossButton(player);
+		UpdateAttackButton(player);
+		UpdateAttackRangeButton(player);
+		UpdateSideAttackButton(player);
+		UpdateSideAttackRangeButton(player);
+		UpdateAttacksPerTurnButton(player);
+		UpdateRotationsAreFreeButton(player);
+		UpdateBuildRangeButton(player);
+		UpdateLevel1RefineryButton(player);
+		UpdateLevel2RefineryButton(player);
+		UpdateLevel3RefineryButton(player);
+		UpdateLevel4RefineryButton(player);
+	}
+
+	private void PlaySelectSoundEffect()
+	{
+		var soundEffectsManager = GameObject.Find("SoundEffectsManager").GetComponent<SoundEffectsManager>();
+		soundEffectsManager.musicSource.clip = soundEffectsManager.selectSoundEffect;
+		soundEffectsManager.musicSource.Play();
+	}
+
+	private void PlayPowerupSoundEffect()
+	{
+		var soundEffectsManager = GameObject.Find("SoundEffectsManager").GetComponent<SoundEffectsManager>();
+		soundEffectsManager.musicSource.clip = soundEffectsManager.powerupSoundEffect;
+		soundEffectsManager.musicSource.Play();
 	}
 }

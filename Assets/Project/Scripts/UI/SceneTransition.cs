@@ -41,7 +41,7 @@ public class SceneTransition : ISceneTransition
 	public IEnumerator BackgroundFadeOut(GameObject transitionBackground, GameObject transition, GameObject transitionUI, ShopManager shopManager)
 	{
 		var t = 1f;
-		shopManager.CloseShop();
+		shopManager.CloseShop(false);
 		transitionUI.SetActive(false);
 
 		while (t > 0f)

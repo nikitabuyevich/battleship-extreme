@@ -7,18 +7,22 @@ public class SoundEffectsManager : MonoBehaviour
 	public AudioSource musicSource;
 
 	public AudioClip attackSoundEffect;
+	public AudioClip destroySoundEffect;
+	public AudioClip hitSoundEffect;
+	public AudioClip pickupSoundEffect;
+	public AudioClip placeSoundEffect;
+	public AudioClip selectSoundEffect;
+	public AudioClip powerupSoundEffect;
+	public AudioClip moveSoundEffect;
+	public AudioClip endTurnSoundEffect;
 
 	void Start()
 	{
-		DontDestroyOnLoad(this.gameObject);
-		musicSource.clip = attackSoundEffect;
-	}
-
-	void Update()
-	{
-		if (Input.GetKeyDown(KeyCode.Space))
+		if (FindObjectsOfType(GetType()).Length > 1)
 		{
-			musicSource.Play();
+			Destroy(gameObject);
 		}
+
+		DontDestroyOnLoad(gameObject);
 	}
 }
