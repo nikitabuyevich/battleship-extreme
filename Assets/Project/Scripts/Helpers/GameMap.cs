@@ -87,21 +87,155 @@ public class GameMap : IGameMap
   public List<Vector3> GetBuildPositions(Player player)
   {
     var buildPositions = new List<Vector3>();
+    var westBlocked = false;
+    var eastBlocked = false;
+    var northBlocked = false;
+    var southBlocked = false;
+    var northWestBlocked = false;
+    var northEastBlocked = false;
+    var southWestBlocked = false;
+    var southEastBlocked = false;
 
-    // Reveal square vision
-    for (int i = -(player.buildRange * 2 - player.buildRange); i < (player.buildRange + 1); i++)
+    for (int i = 1; i < player.buildRange + 1; i++)
     {
-      for (int j = -(player.buildRange * 2 - player.buildRange); j < (player.buildRange + 1); j++)
-      {
-        var buildPosition = new Vector3(
-          player.transform.position.x + j,
-          player.transform.position.y + i,
-          player.transform.position.z
-        );
+      var west = new Vector3(
+        player.transform.position.x - i,
+        player.transform.position.y,
+        player.transform.position.z
+      );
+      var east = new Vector3(
+        player.transform.position.x + i,
+        player.transform.position.y,
+        player.transform.position.z
+      );
+      var north = new Vector3(
+        player.transform.position.x,
+        player.transform.position.y - i,
+        player.transform.position.z
+      );
+      var south = new Vector3(
+        player.transform.position.x,
+        player.transform.position.y + i,
+        player.transform.position.z
+      );
 
-        if (_playerCollisions.CanMoveToSpace(buildPosition) && player.transform.position != buildPosition)
+      if (!westBlocked)
+      {
+        if (_playerCollisions.CanMoveToSpace(west) && player.transform.position != west)
         {
-          buildPositions.Add(buildPosition);
+          buildPositions.Add(west);
+        }
+        else
+        {
+          westBlocked = true;
+        }
+      }
+
+      if (!eastBlocked)
+      {
+        if (_playerCollisions.CanMoveToSpace(east) && player.transform.position != east)
+        {
+          buildPositions.Add(east);
+        }
+        else
+        {
+          eastBlocked = true;
+        }
+      }
+
+      if (!northBlocked)
+      {
+        if (_playerCollisions.CanMoveToSpace(north) && player.transform.position != north)
+        {
+          buildPositions.Add(north);
+        }
+        else
+        {
+          northBlocked = true;
+        }
+      }
+
+      if (!southBlocked)
+      {
+        if (_playerCollisions.CanMoveToSpace(south) && player.transform.position != south)
+        {
+          buildPositions.Add(south);
+        }
+        else
+        {
+          southBlocked = true;
+        }
+      }
+
+      var northWest = new Vector3(
+        player.transform.position.x - i,
+        player.transform.position.y + i,
+        player.transform.position.z
+      );
+
+      var northEast = new Vector3(
+        player.transform.position.x + i,
+        player.transform.position.y + i,
+        player.transform.position.z
+      );
+
+      var southWest = new Vector3(
+        player.transform.position.x - i,
+        player.transform.position.y - i,
+        player.transform.position.z
+      );
+
+      var southEast = new Vector3(
+        player.transform.position.x + i,
+        player.transform.position.y - i,
+        player.transform.position.z
+      );
+
+      if (!northWestBlocked)
+      {
+        if (_playerCollisions.CanMoveToSpace(northWest) && player.transform.position != northWest)
+        {
+          buildPositions.Add(northWest);
+        }
+        else
+        {
+          northWestBlocked = true;
+        }
+      }
+
+      if (!northEastBlocked)
+      {
+        if (_playerCollisions.CanMoveToSpace(northEast) && player.transform.position != northEast)
+        {
+          buildPositions.Add(northEast);
+        }
+        else
+        {
+          northEastBlocked = true;
+        }
+      }
+
+      if (!southWestBlocked)
+      {
+        if (_playerCollisions.CanMoveToSpace(southWest) && player.transform.position != southWest)
+        {
+          buildPositions.Add(southWest);
+        }
+        else
+        {
+          southWestBlocked = true;
+        }
+      }
+
+      if (!southEastBlocked)
+      {
+        if (_playerCollisions.CanMoveToSpace(southEast) && player.transform.position != southEast)
+        {
+          buildPositions.Add(southEast);
+        }
+        else
+        {
+          southEastBlocked = true;
         }
       }
     }
