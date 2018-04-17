@@ -1,9 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Zenject;
 
 public class Refinery : GameEntity
 {
+
 	public GameObject deathEffect;
 	public int income;
 
@@ -16,12 +18,14 @@ public class Refinery : GameEntity
 		if (health <= 0 && !initiatedDeath)
 		{
 			initiatedDeath = true;
-			var player = ownedBy.GetComponent<Player>();
-			player.numberOfRefineries -= 1;
-			player.income -= income;
+			var refineryOwner = ownedBy.GetComponent<Player>();
+			refineryOwner.numberOfRefineries -= 1;
+			refineryOwner.income -= income;
+			refineryOwner.refineries.Remove(this.gameObject);
+
+			var gameSceneManager = GameObject.Find("GameSceneManager").GetComponent<GameSceneManager>();
+			var player = gameSceneManager.GetCurrentPlayer();
 			player.gameSceneManager.GetComponent<GameSceneManager>().SetPlayerStats();
-			Debug.Log(this.name + " has been destroyed!");
-			player.refineries.Remove(this.gameObject);
 			StartCoroutine(DelayDeathAnimation(0.25f));
 			player.WaitUntilParticlesFade(1.5f);
 		}

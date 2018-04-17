@@ -280,6 +280,11 @@ public class GameSceneManager : MonoBehaviour
 		SetAbilityButtons();
 	}
 
+	public Player GetCurrentPlayer()
+	{
+		return _turn.CurrentPlayer();
+	}
+
 	public void SetAbilityButtons()
 	{
 		var player = _turn.CurrentPlayer();
