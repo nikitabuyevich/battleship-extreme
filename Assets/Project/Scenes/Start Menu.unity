@@ -2793,7 +2793,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: SEA CONQUEROR
+  m_Text: SEA CONQUEST
 --- !u!222 &1723688433
 CanvasRenderer:
   m_ObjectHideFlags: 0
